@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'last_name',//BY mahdi for last name default value
+        'username',//BY mahdi for username default value
     ];
 
     /**

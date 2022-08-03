@@ -14,7 +14,7 @@ class CreatePersonalAccessTokensTable extends Migration
     public function up()
     {
         Schema::create('personal_access_tokens', function (Blueprint $table) {
-            $table->collation = 'utf8mb4_general_ci';
+            $table->collation = 'utf8mb4_general_ci';//BY Mahdi FOr utf8mb4_general_ci collation
             $table->id();
             $table->morphs('tokenable');
             $table->string('name');
