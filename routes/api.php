@@ -19,3 +19,4 @@ Route::get('/getAllTasks',[App\Http\Controllers\ParsApiController::class, 'getAl
 Route::get('/getAllTasks/{user_id}',[App\Http\Controllers\ParsApiController::class, 'getAllTasksUser'])->where('user_id', '[0-9]+')->middleware('token');
 Route::get('/getUser/{user_id}',[App\Http\Controllers\ParsApiController::class, 'getUser'])->where('user_id', '[0-9]+')->middleware('token');
 Route::get('/getAllUser',[App\Http\Controllers\ParsApiController::class, 'getAllUser'])->middleware('token');
+Route::post('/addTasks',[App\Http\Controllers\TasksApiController::class, 'add'])->middleware('token');
