@@ -54,7 +54,7 @@ return [
 
     'url' => env('APP_URL', 'http://localhost/ParsLaravel'),
 
-    'asset_url' => (strpos(strtolower($_SERVER['REQUEST_URI']), '/public') !== false?"":"public/").env('ASSET_URL', null),
+    'asset_url' => (strpos(strtolower($_SERVER['REQUEST_URI']), '/public') !== false?"":"public").env('ASSET_URL', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'fa',
 
     /*
     |--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'fa',
 
     /*
     |--------------------------------------------------------------------------
@@ -106,7 +106,7 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => 'fa_ir',
 
     /*
     |--------------------------------------------------------------------------
