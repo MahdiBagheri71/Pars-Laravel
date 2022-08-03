@@ -54,7 +54,7 @@ return [
 
     'url' => env('APP_URL', 'http://localhost/ParsLaravel'),
 
-    'asset_url' => env('ASSET_URL', null),
+    'asset_url' => (strpos(strtolower($_SERVER['REQUEST_URI']), '/public') !== false?"":"public/").env('ASSET_URL', null),
 
     /*
     |--------------------------------------------------------------------------
