@@ -54,7 +54,7 @@ return [
 
     'url' => env('APP_URL', 'http://localhost/ParsLaravel'),
 
-    'asset_url' => (strpos(strtolower($_SERVER['REQUEST_URI']), '/public') !== false?"":"public").env('ASSET_URL', null),
+    'asset_url' => (strpos(strtolower($_SERVER['REQUEST_URI']), '/public') !== false?"":"public").env('ASSET_URL', null),//for root dir by mahdi
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'fa',
+    'locale' => 'fa',//change persian lang by mahdi
 
     /*
     |--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'fa',
+    'fallback_locale' => 'fa',//change persian lang by mahdi
 
     /*
     |--------------------------------------------------------------------------
@@ -106,7 +106,7 @@ return [
     |
     */
 
-    'faker_locale' => 'fa_ir',
+    'faker_locale' => 'fa_ir',//change persian lang by mahdi
 
     /*
     |--------------------------------------------------------------------------

@@ -25,4 +25,16 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    /**
+     * Show the application dashboard.
+     *
+     * BY Mahdi
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function dashboard()
+    {
+        return view('home');
+    }
 }
