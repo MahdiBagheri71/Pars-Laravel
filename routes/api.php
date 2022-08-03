@@ -14,3 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/me',[App\Http\Controllers\ParsApiController::class, 'getMe'])->middleware('token');
+
+Route::get('/getAllTasks',[App\Http\Controllers\ParsApiController::class, 'getAllTasks'])->middleware('token');
