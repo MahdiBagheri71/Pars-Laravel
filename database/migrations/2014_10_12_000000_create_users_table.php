@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('is_admin');//By mahdi for check admin User
+            $table->string('api_token', 80)->unique()->nullable();//By mahdi api_token
             $table->rememberToken();
             $table->timestamps();
         });
@@ -35,7 +36,8 @@ class CreateUsersTable extends Migration
                     'last_name' => 'باقری ورنوسفادرانی',
                     'email' => 'MB730@rocketmail.com',
                     'username' => 'Mahdi71',
-                    'password' => '$2y$10$FeRF1yiwt8IqhcKArFiiru63o5k8VGkGbykVxfzH0PrHKdH4yfZAa',//123456789
+                    'password' =>  Hash::make('123456789'),//123456789
+                    'api_token' => '6F8iwqdZadgEjakiCt37wBSdp',
                     'is_admin' => 1
                 ),
 
@@ -44,7 +46,8 @@ class CreateUsersTable extends Migration
                     'last_name' => 'زمانی',
                     'email' => 'Mohsen@gmail.com',
                     'username' => 'Mohsen',
-                    'password' => '$2y$10$FeRF1yiwt8IqhcKArFiiru63o5k8VGkGbykVxfzH0PrHKdH4yfZAa',//123456789
+                    'password' => Hash::make('123456789'),//123456789
+                    'api_token' => Str::random(25),
                     'is_admin' => 0
                 ),
 
@@ -54,7 +57,8 @@ class CreateUsersTable extends Migration
                     'last_name' => 'قاسمی',
                     'email' => 'behrooz@gmail.com',
                     'username' => 'behrooz',
-                    'password' => '$2y$10$FeRF1yiwt8IqhcKArFiiru63o5k8VGkGbykVxfzH0PrHKdH4yfZAa',//123456789
+                    'password' => Hash::make('123456789'),//123456789
+                    'api_token' => Str::random(25),
                     'is_admin' => 0
                 )
             )

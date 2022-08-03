@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -72,6 +73,7 @@ class RegisterController extends Controller
             'is_admin' => 0,//BY Mahdi for is_admin to false
             'last_name' => $data['last_name'],//BY Mahdi for last_name value
             'username' => $data['username'],//BY Mahdi for username value
+            'api_token' =>  Str::random(25),//BY Mahdi for api_token value
             'password' => Hash::make($data['password']),
         ]);
     }

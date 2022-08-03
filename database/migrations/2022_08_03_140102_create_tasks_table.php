@@ -19,11 +19,13 @@ class CreateTasksTable extends Migration
             $table->id();
             $table->string('name', 255);
             $table->text('note');
-            $table->set('state', ['cancel', 'success'  , 'retarded' , 'delete']);
+            $table->set('state', ['cancel', 'success'  , 'retarded' , 'delete', 'doing']);
             $table->date('date');
             $table->time('time', 0);
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('create_by_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('create_by_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -38,6 +40,7 @@ class CreateTasksTable extends Migration
 
         Schema::dropIfExists('tasks', function (Blueprint $table) {
             $table->dropForeign('tasks_user_id_foreign');
+            $table->dropForeign('tasks_create_by_id_foreign');
 
         });
     }

@@ -24,6 +24,7 @@ class User extends Authenticatable
         'last_name',//BY mahdi for last name default value
         'username',//BY mahdi for username default value
         'is_admin',//BY mahdi for is_admin default value
+        'api_token',//BY mahdi for api_token default value
     ];
 
     /**
@@ -34,6 +35,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'email_verified_at',//BY mahdi NOt Show
+        // 'api_token',//BY mahdi NOt Show
     ];
 
     /**
