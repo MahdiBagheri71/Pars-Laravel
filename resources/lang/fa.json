@@ -713,5 +713,8 @@
     "Username" : "نام کاربری",
     "Last Name" : "نام خانوادگی",
     "You are logged in!" : "شما وارد شدید!",
-    "E-Mail Address Or Username" : "آدرس ایمیل یا نام کاربری"
+    "E-Mail Address Or Username" : "آدرس ایمیل یا نام کاربری",
+    "Admin" : "مدیر",
+    "Employee" : "کارمند",
+    "" : ""
 }
