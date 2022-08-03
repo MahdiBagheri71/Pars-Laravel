@@ -32,11 +32,21 @@ class ParsApiController extends Controller
 
 
     /**
-     * get info user login token api
+     * get all tasks api
      * return json
      */
     public function getAllTasks(Request $request)
     {
         return response()->json(['tasks' =>Tasks::all()], 200);
+    }
+
+
+    /**
+     * get all tasks user api
+     * return json
+     */
+    public function getAllTasksUser(Request $request,$user_id)
+    {
+        return response()->json(['tasks' =>Tasks::where('user_id',$user_id)->get()], 200);
     }
 }
