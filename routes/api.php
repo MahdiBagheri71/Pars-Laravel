@@ -13,12 +13,16 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('/me',[App\Http\Controllers\ParsApiController::class, 'getMe'])->middleware('token');
 
-Route::get('/getAllTasks',[App\Http\Controllers\ParsApiController::class, 'getAllTasks'])->middleware('token');
-Route::get('/getAllTasks/{user_id}',[App\Http\Controllers\ParsApiController::class, 'getAllTasksUser'])->where('user_id', '[0-9]+')->middleware('token');
+//user access api
+Route::get('/me',[App\Http\Controllers\ParsApiController::class, 'getMe'])->middleware('token');
 Route::get('/getUser/{user_id}',[App\Http\Controllers\ParsApiController::class, 'getUser'])->where('user_id', '[0-9]+')->middleware('token');
 Route::get('/getAllUser',[App\Http\Controllers\ParsApiController::class, 'getAllUser'])->middleware('token');
-Route::post('/addTasks',[App\Http\Controllers\TasksApiController::class, 'add'])->middleware('token');
-Route::post('/updateTasks/{id}',[App\Http\Controllers\TasksApiController::class, 'update'])->where('id', '[0-9]+')->middleware('token');
-Route::delete('/deleteTasks/{id}',[App\Http\Controllers\TasksApiController::class, 'delete'])->where('id', '[0-9]+')->middleware('token');
+
+
+//admin acess api
+Route::get('/getAllTasks',[App\Http\Controllers\ParsApiController::class, 'getAllTasks'])->middleware('admin');
+Route::get('/getAllTasks/{user_id}',[App\Http\Controllers\ParsApiController::class, 'getAllTasksUser'])->where('user_id', '[0-9]+')->middleware('admin');
+Route::post('/addTasks',[App\Http\Controllers\TasksApiController::class, 'add'])->middleware('admin');
+Route::post('/updateTasks/{id}',[App\Http\Controllers\TasksApiController::class, 'update'])->where('id', '[0-9]+')->middleware('admin');
+Route::delete('/deleteTasks/{id}',[App\Http\Controllers\TasksApiController::class, 'delete'])->where('id', '[0-9]+')->middleware('admin');
