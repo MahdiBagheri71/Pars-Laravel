@@ -52,25 +52,45 @@ class TasksApiController extends Controller
         return response()->json(['result' => __('Tasks created successfully') , 'id' => $task], 200);
     }
 
-    // function update(Request $request, $id) {
-    //     $this->validate($request, [
-    //         'title' => 'required|max:64|min:3',
-    //         'content' => 'required|max:256'
-    //     ]);
+    public function update(Request $request, $id) {
 
-    //     $note = Note::find($id);
+        $user = User::where('api_token', $request->input('token','')) -> first();
 
-    //     if(!$note) {
-    //         response()->json(['error' => 'item not found'], 404);
-    //     }
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|max:255|min:3',
+                'note' => 'required',
+                'status' => 'required|in:cancel,success,retarded,delete,doing,planned',
+                'date' => 'required|date_format:Y-m-d',
+                'time' => 'required|date_format:H:i:s',
+                'user_id' => 'required|integer|exists:users,id'
+            ]
+        );
 
-    //     $note->title = $request->input('title');
-    //     $note->content = $request->input('content');
+        if ($validator->fails())
+        {
+            // The given data did not pass validation
+            return response()->json(['errors' => $validator->messages() ], 403);
+        }
 
-    //     $note->save();
+        $task = Tasks::find($id);
 
-    //     return response()->json(['result' => $note], 201);
-    // }
+        if(!$task) {
+            return  response()->json(['error' => __('Tasks not found')], 404);
+        }
+
+        $task->name = $request->input('name');
+        $task->note = $request->input('note');
+        $task->status = $request->input('status');
+        $task->date = $request->input('date');
+        $task->time = $request->input('time');
+        $task->user_id = $request->input('user_id');
+
+        $task->save();
+
+        return response()->json(['result' => $task], 201);
+    }
 
     // function delete($id) {
     //     $note = Note::find($id);
