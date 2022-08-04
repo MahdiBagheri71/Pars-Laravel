@@ -10,6 +10,21 @@ class Tasks extends Model
     use HasFactory;
 
      /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'note',
+        'status',
+        'date',
+        'time',
+        'user_id',
+        'create_by_id',
+    ];
+
+     /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>

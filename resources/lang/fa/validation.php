@@ -188,5 +188,8 @@ return [
         'price' => 'قیمت',
         'pic' => 'تصویر',
         'link' => 'لینک',
+        //By mahdi for tasks
+        'status' => 'وضعیت',
+        'user_id' => 'آی دی کاربر'
     ],
 ];

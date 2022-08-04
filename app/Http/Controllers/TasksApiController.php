@@ -2,31 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Tasks;
 use App\Models\User;
 
 class TasksApiController extends Controller
 {
+    protected function failedValidation(Validator $validator)
+    {
+        throw (new ValidationException($validator))
+                    ->errorBag($this->errorBag)
+                    ->redirectTo($this->getRedirectUrl());
+    }
 
-    function add(Request $request) {
+    public function add(Request $request) {
 
         $user = User::where('api_token', $request->input('token','')) -> first();
 
-        $this->validate($request, [
-            'name' => 'required|max:255|min:3',
-            'note' => 'required',
-            'state' => 'required|in:cancel,success,retarded,delete,doing',
-            'date' => 'required|date_format:Y-m-d',
-            'time' => 'required|date_format:H:i:s',
-            'user_id' => 'required|integer'
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|max:255|min:3',
+                'note' => 'required',
+                'status' => 'required|in:cancel,success,retarded,delete,doing,planned',
+                'date' => 'required|date_format:Y-m-d',
+                'time' => 'required|date_format:H:i:s',
+                'user_id' => 'required|integer|exists:users,id'
+            ]
+        );
+
+        if ($validator->fails())
+        {
+            // The given data did not pass validation
+            return response()->json(['errors' => $validator->messages() ], 403);
+        }
 
 
         $task = Tasks::create([
             'name' => $request->input('name'),
             'note' => $request->input('note'),
-            'state' => $request->input('state'),
+            'status' => $request->input('status'),
             'date' => $request->input('date'),
             'time' => $request->input('time'),
             'user_id' => $request->input('user_id'),

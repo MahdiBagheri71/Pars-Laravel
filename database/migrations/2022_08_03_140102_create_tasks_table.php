@@ -19,7 +19,7 @@ class CreateTasksTable extends Migration
             $table->id();
             $table->string('name', 255);
             $table->text('note');
-            $table->string('state',50);// ['cancel', 'success'  , 'retarded' , 'delete', 'doing']
+            $table->string('status',50);// ['cancel', 'success'  , 'retarded' , 'delete', 'doing','planned']
             $table->date('date');
             $table->time('time', 0);
             $table->unsignedBigInteger('user_id');
