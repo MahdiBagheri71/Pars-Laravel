@@ -54,8 +54,6 @@ class TasksApiController extends Controller
 
     public function update(Request $request, $id) {
 
-        $user = User::where('api_token', $request->input('token','')) -> first();
-
         $validator = Validator::make(
             $request->all(),
             [
@@ -88,18 +86,18 @@ class TasksApiController extends Controller
 
         $task->save();
 
-        return response()->json(['result' => $task], 201);
+        return response()->json(['result' => $task], 200);
     }
 
-    // function delete($id) {
-    //     $note = Note::find($id);
+    public function delete($id) {
+        $task = Tasks::find($id);
 
-    //     if(!$note) {
-    //         response()->json(['error' => 'item not found'], 404);
-    //     }
+        if(!$task) {
+            return response()->json(['error' => __('Tasks not found')], 404);
+        }
 
-    //     $note->delete();
+        $task->delete();
 
-    //     return response()->json(['result' => 'item deleted successfully'], 201);
-    // }
+        return response()->json(['result' => __('Tasks deleted successfully')], 200);
+    }
 }

@@ -21,3 +21,4 @@ Route::get('/getUser/{user_id}',[App\Http\Controllers\ParsApiController::class, 
 Route::get('/getAllUser',[App\Http\Controllers\ParsApiController::class, 'getAllUser'])->middleware('token');
 Route::post('/addTasks',[App\Http\Controllers\TasksApiController::class, 'add'])->middleware('token');
 Route::post('/updateTasks/{id}',[App\Http\Controllers\TasksApiController::class, 'update'])->where('id', '[0-9]+')->middleware('token');
+Route::delete('/deleteTasks/{id}',[App\Http\Controllers\TasksApiController::class, 'delete'])->where('id', '[0-9]+')->middleware('token');
