@@ -20,3 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');//change to dashboard by Mahdi
+
+Route::get('/fullcalendar', function () {//by Mahdi
+    return view('fullcalendar');
+});
