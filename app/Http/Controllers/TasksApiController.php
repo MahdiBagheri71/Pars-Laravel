@@ -9,13 +9,6 @@ use App\Models\User;
 
 class TasksApiController extends Controller
 {
-    protected function failedValidation(Validator $validator)
-    {
-        throw (new ValidationException($validator))
-                    ->errorBag($this->errorBag)
-                    ->redirectTo($this->getRedirectUrl());
-    }
-
     public function add(Request $request) {
 
         $user = User::where('api_token', $request->input('token','')) -> first();
