@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/me',[App\Http\Controllers\ParsApiController::class, 'getMe'])->middleware('token');
 Route::get('/getUser/{user_id}',[App\Http\Controllers\ParsApiController::class, 'getUser'])->where('user_id', '[0-9]+')->middleware('token');
 Route::get('/getAllUser',[App\Http\Controllers\ParsApiController::class, 'getAllUser'])->middleware('token');
+Route::get('/getTasksMe',[App\Http\Controllers\ParsApiController::class, 'getTasksMe'])->middleware('token');
+Route::post('/setStatusTasks/{id}',[App\Http\Controllers\TasksApiController::class, 'setStatus'])->where('id', '[0-9]+')->middleware('token');
 
 
 //admin acess api

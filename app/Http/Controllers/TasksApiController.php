@@ -82,6 +82,36 @@ class TasksApiController extends Controller
         return response()->json(['result' => $task], 200);
     }
 
+    public function setStatus(Request $request, $id) {
+
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'status' => 'in:cancel,success,retarded,delete,doing,planned',
+            ]
+        );
+
+        if ($validator->fails())
+        {
+            // The given data did not pass validation
+            return response()->json(['errors' => $validator->messages() ], 403);
+        }
+
+
+        $user = User::where('api_token', $request->input('token',''))->first();
+        $task = Tasks::where('id',$id)->where('user_id',$user->id)->first();
+
+        if(!$task) {
+            return  response()->json(['error' => __('Tasks not found')], 404);
+        }
+
+        $task->status = $request->input('status',$task->status);
+
+        $task->save();
+
+        return response()->json(['result' => $task], 200);
+    }
+
     public function delete($id) {
         $task = Tasks::find($id);
 

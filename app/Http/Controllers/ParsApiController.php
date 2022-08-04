@@ -21,6 +21,17 @@ class ParsApiController extends Controller
 
 
     /**
+     * get tasks mw api
+     * return json
+     */
+    public function getTasksMe(Request $request)
+    {
+        $user = User::where('api_token', $request->input('token','')) -> first();
+        return response()->json(['tasks' =>Tasks::where('user_id',$user->id)->get()], 200);
+    }
+
+
+    /**
      * get all tasks api
      * return json
      */
