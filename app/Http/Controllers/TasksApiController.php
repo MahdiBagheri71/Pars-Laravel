@@ -59,12 +59,11 @@ class TasksApiController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'name' => 'required|max:255|min:3',
-                'note' => 'required',
-                'status' => 'required|in:cancel,success,retarded,delete,doing,planned',
-                'date' => 'required|date_format:Y-m-d',
-                'time' => 'required|date_format:H:i:s',
-                'user_id' => 'required|integer|exists:users,id'
+                'name' => 'max:255|min:3',
+                'status' => 'in:cancel,success,retarded,delete,doing,planned',
+                'date' => 'date_format:Y-m-d',
+                'time' => 'date_format:H:i:s',
+                'user_id' => 'integer|exists:users,id'
             ]
         );
 
@@ -80,12 +79,12 @@ class TasksApiController extends Controller
             return  response()->json(['error' => __('Tasks not found')], 404);
         }
 
-        $task->name = $request->input('name');
-        $task->note = $request->input('note');
-        $task->status = $request->input('status');
-        $task->date = $request->input('date');
-        $task->time = $request->input('time');
-        $task->user_id = $request->input('user_id');
+        $task->name = $request->input('name',$task->name);
+        $task->note = $request->input('note',$task->note);
+        $task->status = $request->input('status',$task->status);
+        $task->date = $request->input('date',$task->date);
+        $task->time = $request->input('time',$task->time);
+        $task->user_id = $request->input('user_id',$task->user_id );
 
         $task->save();
 
