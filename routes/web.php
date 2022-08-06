@@ -20,7 +20,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');//change to dashboard by Mahdi
+Route::get('/tasksCalendar', [App\Http\Controllers\HomeController::class, 'tasksCalendar'])->name('tasksCalendar');//change by Mahdi
 
-Route::get('/fullcalendar', function () {//by Mahdi
-    return view('fullcalendar');
-});
+// Route::get('/fullcalendar', function () {//by Mahdi
+//     return view('fullcalendar');
+// });

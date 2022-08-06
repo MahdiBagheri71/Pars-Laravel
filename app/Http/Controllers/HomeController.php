@@ -23,7 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('dashboard.home');
     }
 
     /**
@@ -35,6 +35,18 @@ class HomeController extends Controller
      */
     public function dashboard()
     {
-        return view('home');
+        return view('dashboard.home');
+    }
+
+    /**
+     * Show the application tasksCalendar.
+     *
+     * BY Mahdi
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function tasksCalendar()
+    {
+        return view('dashboard.tasksCalendar');
     }
 }
