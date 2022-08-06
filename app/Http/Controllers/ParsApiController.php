@@ -22,7 +22,7 @@ class ParsApiController extends Controller
 
 
     /**
-     * get tasks mw api
+     * get tasks me api
      * return json
      */
     public function getTasksMe(Request $request)
@@ -33,7 +33,7 @@ class ParsApiController extends Controller
 
 
     /**
-     * get tasks mw api
+     * get tasks me by date api
      * return json
      */
     public function getTasksMeDate(Request $request)
@@ -61,14 +61,86 @@ class ParsApiController extends Controller
         ->where('time','<=','23:59:59')
         ->get();
 
+        $color = [
+            "cancel" => '#f0077f',
+            "success" => '#4cd548',
+            "retarded" => "#eecd18",
+            "delete" => "#bf565b",
+            "doing" => "#2094fb",
+            "planned" => "#04a1bb"
+        ];
+
 
         if($request->type == 'fullcalendar'){
             $fullcaledar_task = array();
             foreach($tasks as $task){
                 $fullcaledar_task[]=[
-                    'title' => $task->name,
+                    'id' => $task->id,
+                    'title' => $task->name.' ('.$task->note.') ',
                     'start' => $task->date.' '.$task->time,
-                    'end' => $task->date.' '.$task->time
+                    'end' => $task->date.' '.$task->time,
+                    'color' => isset($color[$task->status])?$color[$task->status]:'#7b8a8c',
+
+                ];
+            }
+
+            return response()->json($fullcaledar_task, 200);
+        }
+
+        return response()->json(['tasks' =>$tasks], 200);
+    }
+
+
+
+
+    /**
+     * get all tasks by date api
+     * return json
+     */
+    public function getAllTasksDate(Request $request)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'start' => 'required|date_format:Y-m-d',
+                'end' => 'required|date_format:Y-m-d',
+            ]
+        );
+
+        if ($validator->fails())
+        {
+            // The given data did not pass validation
+            return response()->json(['errors' => $validator->messages() ], 403);
+        }
+
+        $user = User::where('api_token', $request->input('token','')) -> first();
+
+        $tasks = Tasks::where('date','>=',$request->input('start'))
+        ->where('date','<=',$request->input('end'))
+        ->where('time','>=','00:00:00')
+        ->where('time','<=','23:59:59')
+        ->get();
+
+        $color = [
+            "cancel" => '#f0077f',
+            "success" => '#4cd548',
+            "retarded" => "#eecd18",
+            "delete" => "#bf565b",
+            "doing" => "#2094fb",
+            "planned" => "#04a1bb"
+        ];
+
+
+        if($request->type == 'fullcalendar'){
+            $fullcaledar_task = array();
+            foreach($tasks as $task){
+                $fullcaledar_task[]=[
+                    'id' => $task->id,
+                    'title' => $task->name.' ('.$task->note.') ',
+                    'start' => $task->date.' '.$task->time,
+                    'end' => $task->date.' '.$task->time,
+                    'color' => isset($color[$task->status])?$color[$task->status]:'#7b8a8c',
+
                 ];
             }
 

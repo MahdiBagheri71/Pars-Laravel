@@ -25,6 +25,7 @@ Route::post('/setStatusTasks/{id}',[App\Http\Controllers\TasksApiController::cla
 
 //admin acess api
 Route::get('/getAllTasks',[App\Http\Controllers\ParsApiController::class, 'getAllTasks'])->middleware('admin');
+Route::get('/getAllTasksDate',[App\Http\Controllers\ParsApiController::class, 'getAllTasksDate'])->middleware('admin');
 Route::get('/getAllTasks/{user_id}',[App\Http\Controllers\ParsApiController::class, 'getAllTasksUser'])->where('user_id', '[0-9]+')->middleware('admin');
 Route::post('/addTasks',[App\Http\Controllers\TasksApiController::class, 'add'])->middleware('admin');
 Route::post('/updateTasks/{id}',[App\Http\Controllers\TasksApiController::class, 'update'])->where('id', '[0-9]+')->middleware('admin');

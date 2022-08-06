@@ -53,169 +53,173 @@ $.ajaxSetup({
 
 var calendar = $('#calendar').fullCalendar({
 
-                    editable: true,
+    header: {
+        left: 'prev,next today myCustomButton',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+    },
 
-                    events: SITEURL + "/api/getTasksMeDate?token=6F8iwqdZadgEjakiCt37wBSdp&type=fullcalendar",
+    editable: true,
 
-                    displayEventTime: false,
+    events: SITEURL + "/api/getTasksMeDate?token={{Auth::user()->api_token}}&type=fullcalendar",
 
-                    editable: true,
+    displayEventTime: false,
 
-                    eventRender: function (event, element, view) {
+    eventRender: function (event, element, view) {
 
-                        if (event.allDay === 'true') {
+        if (event.allDay === 'true') {
 
-                                event.allDay = true;
+            event.allDay = true;
 
-                        } else {
+        } else {
 
-                                event.allDay = false;
+            event.allDay = false;
 
-                        }
+        }
 
-                    },
+    },
 
-                    selectable: true,
+    selectable: {{Auth::user()->is_admin == 1 ? 'true' : 'false' }},
 
-                    selectHelper: true,
+    selectHelper: true,
 
-                    select: function (start, end, allDay) {
+    select: function (start, end, allDay) {
 
-                        var title = prompt('Event Title:');
+        var title = prompt('Event Title:');
 
-                        if (title) {
+        if (title) {
 
-                            var start = $.fullCalendar.formatDate(start, "Y-MM-DD");
+            var start = $.fullCalendar.formatDate(start, "Y-MM-DD");
 
-                            var end = $.fullCalendar.formatDate(end, "Y-MM-DD");
+            var end = $.fullCalendar.formatDate(end, "Y-MM-DD");
 
-                            $.ajax({
+            $.ajax({
 
-                                url: SITEURL + "/fullcalenderAjax",
+                url: SITEURL + "/fullcalenderAjax",
 
-                                data: {
+                data: {
 
-                                    title: title,
+                    title: title,
 
-                                    start: start,
+                    start: start,
 
-                                    end: end,
+                    end: end,
 
-                                    type: 'add'
+                    type: 'add'
 
-                                },
+                },
 
-                                type: "POST",
+                type: "POST",
 
-                                success: function (data) {
+                success: function (data) {
 
-                                    displayMessage("Event Created Successfully");
+                    displayMessage("Event Created Successfully");
 
 
 
-                                    calendar.fullCalendar('renderEvent',
+                    calendar.fullCalendar('renderEvent',
 
-                                        {
+                        {
 
-                                            id: data.id,
+                            id: data.id,
 
-                                            title: title,
+                            title: title,
 
-                                            start: start,
+                            start: start,
 
-                                            end: end,
+                            end: end,
 
-                                            allDay: allDay
+                            allDay: allDay
 
-                                        },true);
+                        },true);
 
 
 
-                                    calendar.fullCalendar('unselect');
+                    calendar.fullCalendar('unselect');
 
-                                }
+                }
 
-                            });
+            });
 
-                        }
+        }
 
-                    },
+    },
 
-                    eventDrop: function (event, delta) {
+    eventDrop: function (event, delta) {
 
-                        var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD");
+        var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD");
 
-                        var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD");
+        var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD");
 
 
 
-                        $.ajax({
+        $.ajax({
 
-                            url: SITEURL + '/fullcalenderAjax',
+            url: SITEURL + '/fullcalenderAjax',
 
-                            data: {
+            data: {
 
-                                title: event.title,
+                title: event.title,
 
-                                start: start,
+                start: start,
 
-                                end: end,
+                end: end,
 
-                                id: event.id,
+                id: event.id,
 
-                                type: 'update'
+                type: 'update'
 
-                            },
+            },
 
-                            type: "POST",
+            type: "POST",
 
-                            success: function (response) {
+            success: function (response) {
 
-                                displayMessage("Event Updated Successfully");
+                displayMessage("Event Updated Successfully");
 
-                            }
+            }
 
-                        });
+        });
 
-                    },
+    },
 
-                    eventClick: function (event) {
+    eventClick: function (event) {
 
-                        var deleteMsg = confirm("Do you really want to delete?");
+    var deleteMsg = confirm("Do you really want to delete?");
 
-                        if (deleteMsg) {
+    if (deleteMsg) {
 
-                            $.ajax({
+    $.ajax({
 
-                                type: "POST",
+        type: "POST",
 
-                                url: SITEURL + '/fullcalenderAjax',
+        url: SITEURL + '/fullcalenderAjax',
 
-                                data: {
+        data: {
 
-                                        id: event.id,
+                id: event.id,
 
-                                        type: 'delete'
+                type: 'delete'
 
-                                },
+        },
 
-                                success: function (response) {
+        success: function (response) {
 
-                                    calendar.fullCalendar('removeEvents', event.id);
+            calendar.fullCalendar('removeEvents', event.id);
 
-                                    displayMessage("Event Deleted Successfully");
+            displayMessage("Event Deleted Successfully");
 
-                                }
+        }
 
-                            });
+    });
 
-                        }
+    }
 
-                    }
+    }
 
 
 
-                });
+    });
 
 
 
