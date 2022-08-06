@@ -721,5 +721,18 @@
     "Tasks created successfully" : "وظیفه با موفقیت ایجاد گردید",
     "Access has not been enabled for this account." : "دسترسی برای این حساب فعال نشده است.",
     "Tasks deleted successfully" : "وظیفه با موفقیت حذف گردید",
-    "Calendar Tasks" : "تقویم وظایف"
+    "Calendar Tasks" : "تقویم وظایف",
+    "Note" : "متن",
+    "Status" : "وضعیت",
+    "cancel" : "لغو شده",
+    "success" : "انجام شده",
+    "retarded" : "عقب افتاده",
+    "doing" : "در حال انجام",
+    "planned" : "برنامه ریزی شده",
+    "delete" : "حذف شده",
+    "Date" : "تاریخ",
+    "Time" : "زمان",
+    "User" : "کاربر",
+    "Create By" : "ایجاد شده بوسیله",
+    "" : ""
 }

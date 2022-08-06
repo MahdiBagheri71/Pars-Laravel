@@ -20,6 +20,62 @@
 @endsection
 
 @section('content')
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 class="modal-title" id="taskModalLabel"></h5>
+        </div>
+        <div class="modal-body" style="text-align: center">
+            <div>
+                {{__('Note')}} :
+                <pre id="note-modal"></pre>
+            </div>
+            <div>
+                {{__('Status')}} :
+                <select  class="form-select" aria-label="{{__('Status')}}" id="select-status" style="text-align: center;">
+                    <option value="cancel" style="background : #f0077f;">{{__('cancel')}}</option>
+                    <option value="success" style="background : #4cd548;">{{__('success')}}</option>
+                    <option value="retarded" style="background : #eecd18;">{{__('retarded')}}</option>
+                    <option value="doing" style="background : #2094fb;">{{__('doing')}}</option>
+                    <option value="planned" style="background : #04a1bb;">{{__('planned')}}</option>
+                    {!! Auth::user()->is_admin == 1 ?  '<option value="delete" style="background : #bf565b;">'.__('delete').'</option>' : '' !!}
+                </select>
+
+                <span id="status-modal"></span>
+
+            </div>
+            <div>
+                {{__('Date')}} :
+                <span id="date-modal"></span>
+            </div>
+            <div>
+                {{__('Time')}} :
+                <span id="time-modal"></span>
+            </div>
+            <div>
+                {{__('User')}} :
+                <span id="user_id-modal"></span>
+            </div>
+            <div>
+                {{__('Create By')}} :
+                <span id="create_by_id-modal"></span>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('Close')}}</button>
+          <button type="button" id="btn-save-task" class="btn btn-primary">{{__('Save')}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 <div class="container">
 
     <h1 style="text-align: center">{{ __('Calendar Tasks') }}</h1>
@@ -62,7 +118,7 @@ $(document).ready(function () {
             right: 'month,agendaWeek,agendaDay'
         },
 
-        editable: true,
+        editable: false,
 
         events: SITEURL + "/api/getTasksMeDate?token={{Auth::user()->api_token}}&type=fullcalendar",
 
@@ -148,75 +204,48 @@ $(document).ready(function () {
 
         },
 
-        eventDrop: function (event, delta) {
-
-            var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD");
-
-            var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD");
-
-
+        eventClick: function (event) {
 
             $.ajax({
 
-                url: SITEURL + '/fullcalenderAjax',
+                url: SITEURL + "/api/getTask/"+event.id,
 
                 data: {
 
-                    title: event.title,
-
-                    start: start,
-
-                    end: end,
-
-                    id: event.id,
-
-                    type: 'update'
+                    token: '{{Auth::user()->api_token}}'
 
                 },
 
-                type: "POST",
+                type: "GET",
 
-                success: function (response) {
+                success: function (data) {
+                    if(data && data.id){
+                        console.log(data);
+                        $('#taskModalLabel').text(data.name)
+                        $('#note-modal').text(data.note)
+                        $('#date-modal').text(data.date)
+                        $('#time-modal').text(data.time)
+                        getuserinfo(SITEURL,data.user_id,'#user_id-modal');
+                        getuserinfo(SITEURL,data.create_by_id,'#create_by_id-modal');
+                        if(data.status == 'delete'){
+                            $('#btn-save-task').hide();
+                            $('#status-modal').show();
+                            $('#select-status').hide();
+                            $('#status-modal').text(data.status);
+                        }else{
+                            $('#status-modal').hide();
+                            $('#btn-save-task').show();
+                            $('#select-status').show();
+                            $('#select-status').val(data.status);
+                        }
+                        $('#taskModal').modal('show');
 
-                    displayMessage("Event Updated Successfully");
+                        // displayMessage("Event Created Successfully");
 
+                    }
                 }
 
             });
-
-        },
-
-        eventClick: function (event) {
-
-            var deleteMsg = confirm("Do you really want to delete?");
-
-            if (deleteMsg) {
-
-                $.ajax({
-
-                    type: "POST",
-
-                    url: SITEURL + '/fullcalenderAjax',
-
-                    data: {
-
-                            id: event.id,
-
-                            type: 'delete'
-
-                    },
-
-                    success: function (response) {
-
-                        calendar.fullCalendar('removeEvents', event.id);
-
-                        displayMessage("Event Deleted Successfully");
-
-                    }
-
-                });
-
-            }
 
         }
 
@@ -226,6 +255,31 @@ $(document).ready(function () {
 
 });
 
+
+function getuserinfo(url,id,elemnt_id){
+    $.ajax({
+
+        url: url + "/api/getUser/"+id,
+
+        data: {
+
+            token: '{{Auth::user()->api_token}}'
+
+        },
+
+        type: "GET",
+
+        success: function (data) {
+            if(data && data.id){
+                console.log(data);
+                $(elemnt_id).text( data.name + ' '+data. last_name);
+            }
+
+            return "";
+        }
+
+    });
+}
 
 
 function displayMessage(message) {

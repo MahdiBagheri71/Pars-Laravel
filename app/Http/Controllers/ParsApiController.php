@@ -33,6 +33,17 @@ class ParsApiController extends Controller
 
 
     /**
+     * get tasks id api
+     * return json
+     */
+    public function getTask(Request $request ,$id)
+    {
+        $user = User::where('api_token', $request->input('token','')) -> first();
+        return response()->json(Tasks::where('user_id',$user->id)->where('id',$id)->first(), 200);
+    }
+
+
+    /**
      * get tasks me by date api
      * return json
      */
@@ -177,7 +188,7 @@ class ParsApiController extends Controller
      */
     public function getUser(Request $request,$user_id)
     {
-        return response()->json(['user' => User::where('id',$user_id)->select('id', 'name', 'last_name')->get()], 200);
+        return response()->json(User::where('id',$user_id)->select('id', 'name', 'last_name')->first(), 200);
     }
 
 
