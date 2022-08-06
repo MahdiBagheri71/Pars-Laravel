@@ -32,6 +32,7 @@
           <h5 class="modal-title" id="taskModalLabel"></h5>
         </div>
         <div class="modal-body" style="text-align: center">
+            <input type="hidden" id="task-id">
             <div>
                 {{__('Note')}} :
                 <pre id="note-modal"></pre>
@@ -104,6 +105,34 @@ $(document).ready(function () {
 
         }
 
+    });
+
+
+    $('#btn-save-task').click(function(){
+        $.ajax({
+
+            url: SITEURL + "/api/setStatusTasks/"+ $('#task-id').val(),
+
+            data: {
+
+                token: '{{Auth::user()->api_token}}',
+
+                status :  $('#select-status').val()
+
+            },
+
+            type: "POST",
+
+            success: function (data) {
+                if(data && data.result && data.result.id){
+                    console.log(data);
+                    $('#taskModal').modal('hide');
+                    displayMessage('{{ __("Task status updated successfully")}}');
+                    window.location.reload()
+                }
+            }
+
+        });
     });
 
 
@@ -212,7 +241,7 @@ $(document).ready(function () {
 
                 data: {
 
-                    token: '{{Auth::user()->api_token}}'
+                    token: '{{Auth::user()->api_token}}',
 
                 },
 
@@ -221,6 +250,7 @@ $(document).ready(function () {
                 success: function (data) {
                     if(data && data.id){
                         console.log(data);
+                        $('#task-id').val(data.id)
                         $('#taskModalLabel').text(data.name)
                         $('#note-modal').text(data.note)
                         $('#date-modal').text(data.date)
@@ -284,7 +314,7 @@ function getuserinfo(url,id,elemnt_id){
 
 function displayMessage(message) {
 
-    toastr.success(message, 'Event');
+    toastr.success(message, '{{__("Tasks")}}');
 
 }
 

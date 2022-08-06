@@ -734,5 +734,6 @@
     "Time" : "زمان",
     "User" : "کاربر",
     "Create By" : "ایجاد شده بوسیله",
-    "" : ""
+    "Task status updated successfully" : "وضعیت وظیفه با موفقیت به روز شد",
+    "Tasks" : "وظایف"
 }
