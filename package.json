@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "@fullcalendar/core": "^5.11.2",
-        "@fullcalendar/vue": "^5.11.2"
+        "@fullcalendar/vue": "^5.11.2",
+        "persian-datepicker": "^0.5.11"
     }
 }
