@@ -44,6 +44,17 @@ class ParsApiController extends Controller
 
 
     /**
+     * get tasks id api
+     * return json
+     */
+    public function getTaskAdmin(Request $request ,$id)
+    {
+        $user = User::where('api_token', $request->input('token','')) -> first();
+        return response()->json(Tasks::where('id',$id)->first(), 200);
+    }
+
+
+    /**
      * get tasks me by date api
      * return json
      */
@@ -129,8 +140,13 @@ class ParsApiController extends Controller
         $tasks = Tasks::where('date','>=',$request->input('start'))
         ->where('date','<=',$request->input('end'))
         ->where('time','>=','00:00:00')
-        ->where('time','<=','23:59:59')
-        ->get();
+        ->where('time','<=','23:59:59');
+
+        if($request->type == 'fullcalendar'){
+            $tasks = $tasks->join('users', 'tasks.user_id', '=', 'users.id')->select('tasks.*', 'users.name AS user_name', 'users.last_name AS user_last_name');
+        }
+
+        $tasks = $tasks->get();
 
         $color = [
             "cancel" => '#f0077f',
@@ -147,11 +163,10 @@ class ParsApiController extends Controller
             foreach($tasks as $task){
                 $fullcaledar_task[]=[
                     'id' => $task->id,
-                    'title' => $task->name.' ('.$task->note.') ',
+                    'title' =>  $task->user_name.' '.$task->user_last_name .' : '.$task->name.' ('.$task->note.') ',
                     'start' => $task->date.' '.$task->time,
                     'end' => $task->date.' '.$task->time,
                     'color' => isset($color[$task->status])?$color[$task->status]:'#7b8a8c',
-
                 ];
             }
 

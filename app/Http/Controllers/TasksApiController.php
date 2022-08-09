@@ -87,7 +87,7 @@ class TasksApiController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'status' => 'in:cancel,success,retarded,delete,doing,planned',
+                'status' => 'in:cancel,success,retarded,doing,planned',
             ]
         );
 

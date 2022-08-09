@@ -31,3 +31,4 @@ Route::get('/getAllTasks/{user_id}',[App\Http\Controllers\ParsApiController::cla
 Route::post('/addTasks',[App\Http\Controllers\TasksApiController::class, 'add'])->middleware('admin');
 Route::post('/updateTasks/{id}',[App\Http\Controllers\TasksApiController::class, 'update'])->where('id', '[0-9]+')->middleware('admin');
 Route::delete('/deleteTasks/{id}',[App\Http\Controllers\TasksApiController::class, 'delete'])->where('id', '[0-9]+')->middleware('admin');
+Route::get('/getTaskAdmin/{id}',[App\Http\Controllers\ParsApiController::class, 'getTaskAdmin'])->where('id', '[0-9]+')->middleware('admin');
