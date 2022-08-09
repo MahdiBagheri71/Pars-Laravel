@@ -2,14 +2,16 @@
 
 @section('js_header')
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<link rel="stylesheet" href="{{ url('/') }}/{{ asset('css/fullcalendar.min.css') }}" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
+<script src="{{ url('/') }}/{{ asset('js/jquery.min.js') }}"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="{{ url('/') }}/{{ asset('js/moment.min.js') }}"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/locale/fa.js"></script>
+<script src="{{ url('/') }}/{{ asset('js/moment-jalaali.js') }}"></script>
+
+<script src="{{ url('/') }}/{{ asset('js/fullcalendar.min.js') }}"></script>
+<script src="{{ url('/') }}/{{ asset('js/fa.js') }}"></script>
 
 
 
@@ -138,6 +140,12 @@ $(document).ready(function () {
 
 
     var calendar = $('#calendar').fullCalendar({
+
+        isJalaali : true,
+
+        isRTL : true ,
+
+        lang : 'fa',
 
         locale: 'fa',
 
