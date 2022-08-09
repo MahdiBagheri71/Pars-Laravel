@@ -314,18 +314,14 @@ $(document).ready(function () {
 
         displayEventTime: true,
 
-        eventRender: function (event, element, view) {
-
-            if (event.allDay === 'true') {
-
-                event.allDay = true;
-
-            } else {
-
-                event.allDay = false;
-
-            }
-
+        eventRender: function(eventObj, $el) {
+            $el.popover({
+                title: eventObj.title,
+                content: eventObj.description,
+                trigger: 'hover',
+                placement: 'top',
+                container: 'body'
+            });
         },
 
         selectable: {{Auth::user()->is_admin == 1 ? 'true' : 'false' }},

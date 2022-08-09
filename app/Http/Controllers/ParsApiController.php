@@ -98,7 +98,8 @@ class ParsApiController extends Controller
             foreach($tasks as $task){
                 $fullcaledar_task[]=[
                     'id' => $task->id,
-                    'title' => $task->name.' ('.$task->note.') ',
+                    'title' => $task->name,
+                    'description' => $task->note,
                     'start' => $task->date.' '.$task->time,
                     'end' => $task->date.' '.$task->time,
                     'color' => isset($color[$task->status])?$color[$task->status]:'#7b8a8c',
@@ -163,7 +164,8 @@ class ParsApiController extends Controller
             foreach($tasks as $task){
                 $fullcaledar_task[]=[
                     'id' => $task->id,
-                    'title' =>  $task->user_name.' '.$task->user_last_name .' : '.$task->name.' ('.$task->note.') ',
+                    'title' =>  $task->user_name.' '.$task->user_last_name .' : '.$task->name,
+                    'description' => $task->note,
                     'start' => $task->date.' '.$task->time,
                     'end' => $task->date.' '.$task->time,
                     'color' => isset($color[$task->status])?$color[$task->status]:'#7b8a8c',
