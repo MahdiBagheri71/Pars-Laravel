@@ -736,5 +736,6 @@
     "Create By" : "ایجاد شده بوسیله",
     "Task status updated successfully" : "وضعیت وظیفه با موفقیت به روز شد",
     "Tasks" : "وظایف",
-    "Add Task" : "افزودن وظیفه"
+    "Add Task" : "افزودن وظیفه",
+    "The provided credentials are incorrect." : "مقادیر ارسال شده اشتباه می باشد."
 }
