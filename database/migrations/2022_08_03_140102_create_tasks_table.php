@@ -44,4 +44,9 @@ class CreateTasksTable extends Migration
 
         });
     }
+
+    public function addTasks()
+    {
+        # code...
+    }
 }
