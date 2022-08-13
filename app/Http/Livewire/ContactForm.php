@@ -13,8 +13,6 @@ class ContactForm extends Component
 
     public $last_name;
 
-    public $message;
-
 
 
     protected $rules = [
@@ -49,9 +47,7 @@ class ContactForm extends Component
 
         ]);
 
-        $this->message = '<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>
-با موفقیت ذخیره گردید
-<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+        session()->flash('message', 'Contact successfully created.');
 
         $this->name = '';
         $this->email = '';

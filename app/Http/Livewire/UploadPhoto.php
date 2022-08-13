@@ -34,6 +34,8 @@ class UploadPhoto extends Component
         $this->photo->store('photos');
 
 
+        return redirect()->to('/');
+
     }
 
 }

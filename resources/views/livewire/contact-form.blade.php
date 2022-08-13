@@ -1,6 +1,18 @@
 <form wire:submit.prevent="submit" style="color:#fff";>
 
-    {!! $message !!}
+    <div>
+
+        @if (session()->has('message'))
+
+            <div class="alert alert-success">
+
+                {{ session('message') }}
+
+            </div>
+
+        @endif
+
+    </div>
 
     <input type="text" wire:model="name">
 
