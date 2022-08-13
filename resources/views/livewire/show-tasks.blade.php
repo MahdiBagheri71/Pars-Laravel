@@ -1,16 +1,39 @@
 <div>
-{{--    <input wire:model="search_tasks" type="text" placeholder="Search tasks..."/>--}}
-
     <div class="col-md-12" style="text-align: center;">
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">{{__('Name')}}</th>
-                    <th scope="col">{{__('Note')}}</th>
-                    <th scope="col">{{__('Status')}}</th>
-                    <th scope="col">{{__('Date')}}</th>
-                    <th scope="col">{{__('Time')}}</th>
+                    <th scope="col">
+                        <a href="#" wire:click="orderBy('name')">
+                            {{__('Name')}}
+                            {!! $order_by == 'name' ? $order_icon:'' !!}
+                        </a>
+                    </th>
+                    <th scope="col">
+                        <a href="#" wire:click="orderBy('note')">
+                            {{__('Note')}}
+                            {!! $order_by == 'note' ? $order_icon:'' !!}
+                        </a>
+                    </th>
+                    <th scope="col">
+                        <a href="#" wire:click="orderBy('status')">
+                            {{__('Status')}}
+                            {!! $order_by == 'status' ? $order_icon:'' !!}
+                        </a>
+                    </th>
+                    <th scope="col">
+                        <a href="#" wire:click="orderBy('date')">
+                            {{__('Date')}}
+                            {!! $order_by == 'date' ? $order_icon:'' !!}
+                        </a>
+                    </th>
+                    <th scope="col">
+                        <a href="#" wire:click="orderBy('time')">
+                            {{__('Time')}}
+                            {!! $order_by == 'time' ? $order_icon:'' !!}
+                        </a>
+                    </th>
                     <th scope="col">{{__('User')}}</th>
                     <th scope="col">{{__('Create By')}}</th>
                     <th scope="col">{{__('Action')}}</th>
