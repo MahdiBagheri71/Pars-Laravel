@@ -21,6 +21,7 @@
                 font-family: 'Nunito', sans-serif;
             }
         </style>
+        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     </head>
     <body class="antialiased">
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
@@ -82,6 +83,31 @@
         </div>
         <div class="max-w-12xl mx-auto sm:px-12 lg:px-12">
             @livewire('show-tasks')
+        </div>
+        <div wire:poll.keep-alive>
+
+            Current time: {{ now() }}
+
+        </div>
+
+        <div>
+
+            <div x-data="{ open: false }">
+
+                <button @click="open = true">Show More...</button>
+
+
+
+                <ul x-show="open" @click.outside="open = false">
+
+                    <li><button wire:click="archive">Archive</button></li>
+
+                    <li><button wire:click="delete">Delete</button></li>
+
+                </ul>
+
+            </div>
+
         </div>
     </body>
 </html>
