@@ -19,12 +19,17 @@ class ShowTasks extends Component
     protected $paginationTheme = 'bootstrap';
 
     public function updatingSearch()
-
     {
-
         $this->resetPage();
 
     }
+
+
+
+    public function delete($task_id){
+        Tasks::where('id', $task_id)->delete();
+    }
+
     public function render()
     {
         $tasks = Tasks::join('users', 'users.id', '=', 'tasks.user_id')
@@ -32,8 +37,6 @@ class ShowTasks extends Component
             ->select('tasks.*', 'users.name as user_name', 'users.last_name as user_last_name', 'creator.name as creator_name', 'creator.last_name as creator_last_name');
 
 
-
-//            ->where('name', 'like', '%'.$this->search_tasks.'%');
         if(Auth::user()->is_admin != 1){
             $tasks->where('users.id', Auth::user()->id);
         }
