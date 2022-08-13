@@ -74,40 +74,40 @@
                     </div>
                 </div>
             </div>
-            <div class="max-w-12xl mx-auto sm:px-12 lg:px-12">
-                @livewire('contact-form')
-            </div>
+{{--            <div class="max-w-12xl mx-auto sm:px-12 lg:px-12">--}}
+{{--                @livewire('contact-form')--}}
+{{--            </div>--}}
         </div>
-        <div class="max-w-12xl mx-auto sm:px-12 lg:px-12">
-            @livewire('upload-photo')
-        </div>
-        <div class="max-w-12xl mx-auto sm:px-12 lg:px-12">
-            @livewire('show-tasks')
-        </div>
-        <div wire:poll.keep-alive>
+{{--        <div class="max-w-12xl mx-auto sm:px-12 lg:px-12">--}}
+{{--            @livewire('upload-photo')--}}
+{{--        </div>--}}
+{{--        <div class="max-w-12xl mx-auto sm:px-12 lg:px-12">--}}
+{{--            @livewire('show-tasks')--}}
+{{--        </div>--}}
+{{--        <div wire:poll.keep-alive>--}}
 
-            Current time: {{ now() }}
+{{--            Current time: {{ now() }}--}}
 
-        </div>
+{{--        </div>--}}
 
-        <div>
+{{--        <div>--}}
 
-            <div x-data="{ open: false }">
+{{--            <div x-data="{ open: false }">--}}
 
-                <button @click="open = true">Show More...</button>
+{{--                <button @click="open = true">Show More...</button>--}}
 
 
 
-                <ul x-show="open" @click.outside="open = false">
+{{--                <ul x-show="open" @click.outside="open = false">--}}
 
-                    <li><button wire:click="archive">Archive</button></li>
+{{--                    <li><button wire:click="archive">Archive</button></li>--}}
 
-                    <li><button wire:click="delete">Delete</button></li>
+{{--                    <li><button wire:click="delete">Delete</button></li>--}}
 
-                </ul>
+{{--                </ul>--}}
 
-            </div>
+{{--            </div>--}}
 
-        </div>
+{{--        </div>--}}
     </body>
 </html>

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class TasksController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -17,26 +17,19 @@ class HomeController extends Controller
     }
 
     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
-    {
-        return view('dashboard.home');
-    }
-
-    /**
-     * Show the application dashboard.
+     * Show the application tasksCalendar.
      *
      * BY Mahdi
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function dashboard()
+    public function tasksCalendar()
     {
-        return view('dashboard.home');
+        return view('dashboard.tasksCalendar');
     }
 
 
+    public function tasksList(){
+        return view('dashboard.tasksList');
+    }
 }

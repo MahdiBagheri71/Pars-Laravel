@@ -737,5 +737,6 @@
     "Task status updated successfully" : "وضعیت وظیفه با موفقیت به روز شد",
     "Tasks" : "وظایف",
     "Add Task" : "افزودن وظیفه",
-    "The provided credentials are incorrect." : "مقادیر ارسال شده اشتباه می باشد."
+    "The provided credentials are incorrect." : "مقادیر ارسال شده اشتباه می باشد.",
+    "List Tasks" : "لیست وظایف"
 }
