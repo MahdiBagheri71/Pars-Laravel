@@ -73,9 +73,12 @@
                     </div>
                 </div>
             </div>
-            <div class="max-w-12xl mx-auto sm:px-12 lg:px-12">
-                @livewire('contact-form')
-            </div>
+                <div class="max-w-12xl mx-auto sm:px-12 lg:px-12">
+                    @livewire('contact-form')
+                </div>
+                <div class="max-w-12xl mx-auto sm:px-12 lg:px-12">
+                    @livewire('upload-photo')
+                </div>
         </div>
     </body>
 </html>
