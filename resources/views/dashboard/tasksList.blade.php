@@ -15,6 +15,7 @@
                 <div class="card">
                     <div class="card-header">{{ __('Tasks') }}</div>
                     <div class="card-body">
+{{--                        live wire show taks--}}
                         @livewire('show-tasks')
                     </div>
                 </div>
