@@ -48,6 +48,7 @@ class TasksController extends Controller
         //get task
         $task = Tasks::where('id',$task_id);
 
+        //not admin for user id task
         if(Auth::user()->is_admin != 1) {
             $task = $task->where('user_id', Auth::user()->id);
         }
@@ -59,6 +60,7 @@ class TasksController extends Controller
             return redirect()->route('tasksList');
         }
 
+        //not admin for not delete status
         if(Auth::user()->is_admin != 1 && $task->status == 'delete') {
             return redirect()->route('tasksList');
         }

@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost/Pars-Laravel'),
+    'url' => env('APP_URL', null),
 
 //    'asset_url' => ( (isset($_SERVER['REQUEST_URI']) && strpos(strtolower($_SERVER['REQUEST_URI']), '/public') !== false )?"":"public").env('ASSET_URL', null),//for root dir by mahdi
     'asset_url' => env('ASSET_URL', null),//for root dir by mahdi

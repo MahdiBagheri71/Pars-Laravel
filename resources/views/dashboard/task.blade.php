@@ -3,6 +3,12 @@
 @section('js_header')
     @livewireStyles
     @livewireScripts
+    <style>
+
+        label{
+            font-weight: bolder !important;
+        }
+    </style>
 @endsection
 
 

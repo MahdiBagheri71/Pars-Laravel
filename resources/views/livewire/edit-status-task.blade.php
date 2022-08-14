@@ -15,19 +15,19 @@
     </div>
 
     <div class="form-group">
-        <label>{{__('Name')}}</label>
+        <label>{{__('Name')}} : </label>
         <div>{{$task->name}}</div>
     </div>
 
     <div class="form-group">
-        <label>{{__('Note')}}</label>
-        <pre>
+        <label>{{__('Note')}} : </label>
+        <div style="white-space: pre-wrap; white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;">
             {{$task->note}}
-        </pre>
+        </div>
     </div>
 
     <div class="form-group">
-        <label>{{__('Status')}}</label>
+        <label>{{__('Status')}} : </label>
         <select wire:model="status" class="form-select" aria-label="{{__('Status')}}" style="text-align: center;">
             <option value="cancel" style="background : #f0077f;" {{$task->status == 'cancel' ? 'selected':''}}>{{__('cancel')}}</option>
             <option value="success" style="background : #4cd548;" {{$task->status == 'success' ? 'selected':''}} >{{__('success')}}</option>
@@ -39,12 +39,12 @@
     </div>
 
     <div class="form-group">
-        <label>{{__('Date')}}</label>
+        <label>{{__('Date')}} : </label>
         <div>{{$task->date}}</div>
     </div>
 
     <div class="form-group">
-        <label>{{__('Time')}}</label>
+        <label>{{__('Time')}} : </label>
         <div>{{$task->time}}</div>
     </div>
 

@@ -16,7 +16,6 @@ class EditStatusTask extends Component
      */
     public function mount()
     {
-
         //set var
         $this->task_id = $this->task->id;
         $this->status = $this->task->status;
@@ -29,6 +28,9 @@ class EditStatusTask extends Component
         'status' => 'required|in:cancel,success,retarded,doing,planned',
     ];
 
+    /**
+     * update task status
+     */
     public function submit()
     {
         //validate
