@@ -70,4 +70,16 @@ class TasksController extends Controller
             'users' => Auth::user()->is_admin != 1 ? [] : User::all()//get list user for tasks user id & create user filter
         ]);
     }
+
+    public function create(){
+
+        //not admin not allow
+        if(Auth::user()->is_admin != 1 ) {
+            return redirect()->route('tasksList');
+        }
+
+        return view('dashboard.taskCreate',[
+            'users' => User::all()//get list user for tasks user id & create user filter
+        ]);
+    }
 }

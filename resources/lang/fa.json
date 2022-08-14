@@ -740,5 +740,6 @@
     "Add Task" : "افزودن وظیفه",
     "The provided credentials are incorrect." : "مقادیر ارسال شده اشتباه می باشد.",
     "List Tasks" : "لیست وظایف",
-    "Task" : "وظیفه"
+    "Task" : "وظیفه",
+    "Task Create" : "ایجاد وظیفه"
 }

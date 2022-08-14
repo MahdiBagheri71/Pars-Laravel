@@ -46,6 +46,9 @@ class EditTask extends Component
         'user_id' => 'required|integer|exists:users,id'
     ];
 
+    /**
+     * update task
+     */
     public function submit()
     {
 

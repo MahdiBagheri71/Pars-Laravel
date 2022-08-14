@@ -14,6 +14,20 @@
                 <div class="card">
                     <div class="card-header">{{ __('Tasks') }}</div>
                     <div class="card-body">
+
+                        <div>
+
+                            @if (session()->has('message'))
+
+                                <div class="alert alert-{{session('type') == 'error' ? 'danger':'success'}}">
+
+                                    {{ session('message') }}
+
+                                </div>
+
+                            @endif
+
+                        </div>
 {{--                        live wire show taks--}}
                         @livewire('show-tasks')
                     </div>

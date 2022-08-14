@@ -1,5 +1,14 @@
 <div>
+
+    {{--        create task for admin--}}
+    @if (Auth::user()->is_admin == 1)
+        <div style="margin: 0 0 13px;">
+            <a href="{{ route('taskCreate') }}" type="button" class="btn btn-primary">{{__('Create')}}</a>
+        </div>
+    @endif
+
     <div class="col-md-12" style="text-align: center;">
+
 {{--        tabel list taks--}}
         <table class="table table-bordered table-striped">
             <thead>

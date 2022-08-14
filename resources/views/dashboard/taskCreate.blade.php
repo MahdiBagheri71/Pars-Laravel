@@ -20,16 +20,11 @@
                 <div class="card">
                     <div class="card-header d-flex">
                         <a class="nav-link" href="{{ route('tasksList') }}">{{ __('Tasks') }}</a>
-                        > {{ __('Task') }}
+                        > {{ __('Task Create') }}
                     </div>
                     <div class="card-body">
-                        @if(Auth::user()->is_admin == 1)
-                            {{--                        live wire edite taks--}}
-                            @livewire('edit-task',['task'=>$task,'users'=>$users])
-                        @else
-                            {{--                        live wire edite status taks--}}
-                            @livewire('edit-status-task',['task'=>$task])
-                        @endif
+                        {{--                        live wire show taks--}}
+                        @livewire('create-task',['users'=>$users])
                     </div>
                 </div>
             </div>

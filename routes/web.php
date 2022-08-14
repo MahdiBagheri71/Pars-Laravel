@@ -23,6 +23,7 @@ Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])-
 Route::get('/tasksCalendar', [App\Http\Controllers\TasksController::class, 'tasksCalendar'])->name('tasksCalendar');//change by Mahdi
 Route::get('/tasksList', [App\Http\Controllers\TasksController::class, 'tasksList'])->name('tasksList');//change by Mahdi
 Route::get('/task/{task_id}', [App\Http\Controllers\TasksController::class, 'taskShow'])->where('task_id', '[0-9]+')->name('taskShow');//change by Mahdi
+Route::get('/taskCreate', [App\Http\Controllers\TasksController::class, 'create'])->name('taskCreate');//change by Mahdi
 
 // Route::get('/fullcalendar', function () {//by Mahdi
 //     return view('fullcalendar');
