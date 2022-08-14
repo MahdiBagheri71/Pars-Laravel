@@ -49,7 +49,7 @@
     </div>
 
     <br>
-
+    <a href="{{ route('tasksList') }}" type="button" class="btn btn-dark">{{__('Cancel')}}</a>
     <button type="submit" class="btn btn-success">{{__('Save')}}</button>
 
 </form>

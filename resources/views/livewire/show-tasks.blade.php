@@ -110,7 +110,11 @@
                     <td>{{$task->name}}</td>
                     <td style="white-space: pre-wrap; white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;">{!! $task->note !!}</td>
                     <td>{{__($task->status)}}</td>
-                    <td>{{$task->date}}</td>
+                    <td>
+                        {{\Morilog\Jalali\CalendarUtils::strftime('Y-m-d', strtotime($task->date))}}
+                        <br>
+                        {{$task->date}}
+                    </td>
                     <td>{{$task->time}}</td>
                     <td>{{$task->user_name . ' ' .$task->user_last_name}}</td>
                     <td>{{$task->creator_name . ' ' .$task->creator_last_name}}</td>

@@ -12,7 +12,9 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">{{ __('Tasks') }}</div>
+                    <div class="card-header">
+                        <a class="nav-link" href="{{ route('tasksList') }}">{{ __('Tasks') }}</a>
+                    </div>
                     <div class="card-body">
 
                         <div>
