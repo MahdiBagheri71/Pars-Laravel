@@ -12,10 +12,13 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">{{ __('Tasks') }}</div>
+                    <div class="card-header d-flex">
+                        <a class="nav-link" href="{{ route('tasksList') }}">{{ __('Tasks') }}</a>
+                        > {{ __('Task') }}
+                    </div>
                     <div class="card-body">
-{{--                        live wire show taks--}}
-                        @livewire('show-tasks')
+                        {{--                        live wire show taks--}}
+                        @livewire('edit-task',['task'=>$task,'users'=>$users])
                     </div>
                 </div>
             </div>
