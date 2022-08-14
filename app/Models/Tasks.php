@@ -33,4 +33,12 @@ class Tasks extends Model
         'created_at',
         'updated_at'
     ];
+
+    /**
+     * Get the comments for the blog post.
+     */
+    public function user()
+    {
+        return $this->hasMany(User::class);
+    }
 }

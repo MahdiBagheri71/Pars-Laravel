@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tasks;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class TasksController extends Controller
@@ -45,16 +46,26 @@ class TasksController extends Controller
      */
     public function taskShow($task_id){
         //get task
-        $task = Tasks::where('id',$task_id)->first();
+        $task = Tasks::where('id',$task_id);
+
+        if(Auth::user()->is_admin != 1) {
+            $task = $task->where('user_id', Auth::user()->id);
+        }
+
+        $task = $task->first();
 
         //not exist task
         if(!$task){
             return redirect()->route('tasksList');
         }
 
+        if(Auth::user()->is_admin != 1 && $task->status == 'delete') {
+            return redirect()->route('tasksList');
+        }
+
         return view('dashboard.task',[
             'task' => $task,
-            'users' => User::all()//get list user for tasks user id & create user filter
+            'users' => Auth::user()->is_admin != 1 ? [] : User::all()//get list user for tasks user id & create user filter
         ]);
     }
 }

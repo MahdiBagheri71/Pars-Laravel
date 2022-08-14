@@ -2,16 +2,16 @@
 
 @section('js_header')
 
-<link rel="stylesheet" href="{{ url('/') }}/{{ asset('css/fullcalendar.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/fullcalendar.min.css') }}" />
 
-<script src="{{ url('/') }}/{{ asset('js/jquery.min.js') }}"></script>
+<script src="{{ asset('js/jquery.min.js') }}"></script>
 
-<script src="{{ url('/') }}/{{ asset('js/moment.min.js') }}"></script>
+<script src="{{ asset('js/moment.min.js') }}"></script>
 
-<script src="{{ url('/') }}/{{ asset('js/moment-jalaali.js') }}"></script>
+<script src="{{ asset('js/moment-jalaali.js') }}"></script>
 
-<script src="{{ url('/') }}/{{ asset('js/fullcalendar.min.js') }}"></script>
-<script src="{{ url('/') }}/{{ asset('js/fa.js') }}"></script>
+<script src="{{ asset('js/fullcalendar.min.js') }}"></script>
+<script src="{{ asset('js/fa.js') }}"></script>
 
 
 
@@ -87,10 +87,10 @@
     @if(Auth::user()->is_admin == 1 )
 
 
-        <link rel="stylesheet" href="{{ url('/') }}/{{ asset('css/persian-datepicker.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/persian-datepicker.min.css') }}" />
 
-        <script src="{{ url('/') }}/{{ asset('js/persian-date.min.js') }}"></script>
-        <script src="{{ url('/') }}/{{ asset('js/persian-datepicker.min.js') }}"></script>
+        <script src="{{ asset('js/persian-date.min.js') }}"></script>
+        <script src="{{ asset('js/persian-datepicker.min.js') }}"></script>
         <!-- Modal Add Tasks-->
         <div class="modal fade" id="taskAddModal" tabindex="-1" aria-labelledby="taskAddModalLabel" aria-hidden="true">
             <div class="modal-dialog">

@@ -17,8 +17,13 @@
                         > {{ __('Task') }}
                     </div>
                     <div class="card-body">
-                        {{--                        live wire show taks--}}
-                        @livewire('edit-task',['task'=>$task,'users'=>$users])
+                        @if(Auth::user()->is_admin == 1)
+                            {{--                        live wire show taks--}}
+                            @livewire('edit-task',['task'=>$task,'users'=>$users])
+                        @else
+                            {{--                        live wire show taks--}}
+                            @livewire('edit-status-task',['task'=>$task])
+                        @endif
                     </div>
                 </div>
             </div>

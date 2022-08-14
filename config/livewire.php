@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'asset_url' => 'http://localhost/Pars-Laravel/'.( (isset($_SERVER['REQUEST_URI']) && strpos(strtolower($_SERVER['REQUEST_URI']), '/public') !== false )?"":"public"),
+    'asset_url' => 'http://localhost/Pars-Laravel/public',
 
     /*
     |--------------------------------------------------------------------------
