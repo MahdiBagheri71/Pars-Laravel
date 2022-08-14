@@ -18,12 +18,12 @@ class UserApiController extends Controller
     public function login()
     {
         \request()->validate([
-            'login' => 'required',
+            'user_login' => 'required',
             'password' => 'required'
         ]);
-        $login = request()->input('login');
-        $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-        $user = User::where($fieldType, \request('login'))->first();
+        $user_login = request()->input('user_login');
+        $fieldType = filter_var($user_login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $user = User::where($fieldType, \request('user_login'))->first();
         if (! $user || ! Hash::check(\request('password'), $user->password)) {
             return __('The provided credentials are incorrect.');
         }

@@ -28,41 +28,6 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-        //By Mahdi Insert user
-        DB::table('users')->insert(
-            array(
-                array(
-                    'name' => 'مهدی',
-                    'last_name' => 'باقری ورنوسفادرانی',
-                    'email' => 'MB730@rocketmail.com',
-                    'username' => 'Mahdi71',
-                    'password' =>  Hash::make('123456789'),//123456789
-                    'api_token' => '6F8iwqdZadgEjakiCt37wBSdp',
-                    'is_admin' => 1
-                ),
-
-                array(
-                    'name' => 'محسن',
-                    'last_name' => 'زمانی',
-                    'email' => 'Mohsen@gmail.com',
-                    'username' => 'Mohsen',
-                    'password' => Hash::make('123456789'),//123456789
-                    'api_token' => Str::random(25),
-                    'is_admin' => 0
-                ),
-
-
-                array(
-                    'name' => 'بهروز',
-                    'last_name' => 'قاسمی',
-                    'email' => 'behrooz@gmail.com',
-                    'username' => 'behrooz',
-                    'password' => Hash::make('123456789'),//123456789
-                    'api_token' => Str::random(25),
-                    'is_admin' => 0
-                )
-            )
-        );
 
     }
 

@@ -4,7 +4,6 @@
     @livewireStyles
     @livewireScripts
     <style>
-
         label{
             font-weight: bolder !important;
         }

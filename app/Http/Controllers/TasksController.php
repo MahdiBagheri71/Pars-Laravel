@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tasks;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 class TasksController extends Controller
 {
@@ -37,19 +35,27 @@ class TasksController extends Controller
      * @return View
      */
     public function tasksList(){
-        return view('dashboard.tasksList');
+        //check permission view task
+        if(Auth::user()->canany(['view tasks', 'view all tasks'])){
+            return view('dashboard.tasksList');
+        }
+        return redirect()->route('dashboard');
     }
 
     /**
      * @param $task_id
      * @return View
      */
-    public function taskShow($task_id){
+    public function edit($task_id){
         //get task
         $task = Tasks::where('id',$task_id);
 
+//        $per = Auth::user()->hasDirectPermission('edit tasks');
+//        $per = Auth::user()->hasRole('admin');
+//        dd($per);
+
         //not admin for user id task
-        if(Auth::user()->is_admin != 1) {
+        if(!Auth::user()->hasDirectPermission('view all tasks')) {
             $task = $task->where('user_id', Auth::user()->id);
         }
 
@@ -71,6 +77,9 @@ class TasksController extends Controller
         ]);
     }
 
+    /**
+     * @return view create task
+     */
     public function create(){
 
         //not admin not allow
