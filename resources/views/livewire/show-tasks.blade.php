@@ -27,7 +27,7 @@
             </div>
         @endif
     </div>
-    <div class="col-md-12 text-center">
+    <div class="col-md-12 text-center table-responsive">
 
 {{--        tabel list taks--}}
         <table class="table table-bordered table-striped">
@@ -80,7 +80,7 @@
                         <input class="form-control" wire:model="search_tasks.note" type="text" placeholder="{{__('Note')}}"/>
                     </th>
                     <th scope="col">
-                        <select wire:model="search_tasks.status" class="form-select" aria-label="{{__('Status')}}" style="text-align: center;">
+                        <select wire:model="search_tasks.status" class="form-select custom-select" aria-label="{{__('Status')}}" style="text-align: center;">
                             <option value="" style="background : #fff;">{{__('Select')}}</option>
                             <option value="cancel" style="background : #f0077f;">{{__('cancel')}}</option>
                             <option value="success" style="background : #4cd548;">{{__('success')}}</option>
@@ -91,16 +91,16 @@
                         </select>
                     </th>
                     <th scope="col">
-                        <input readonly="readonly" class="readonly form-control" wire:model="search_tasks.date_start" id="startDate" placeholder="{{__('Date Start')}}"/>
-                        <input readonly="readonly" class="readonly form-control" wire:model="search_tasks.date_end" id="toDate" placeholder="{{__('Date End')}}"/>
+                        <input readonly="readonly" class="readonly form-control text-center" wire:model="search_tasks.date_start" id="startDate" placeholder="{{__('Date Start')}}"/>
+                        <input readonly="readonly" class="readonly form-control text-center" wire:model="search_tasks.date_end" id="endDate" placeholder="{{__('Date End')}}"/>
                     </th>
                     <th scope="col">
-                        <input class="form-control" wire:model="search_tasks.time_start" type="time" placeholder="{{__('Time Start')}}"/>
-                        <input class="form-control" wire:model="search_tasks.time_end" type="time" placeholder="{{__('Time End')}}"/>
+                        <input readonly="readonly" class="readonly form-control text-center" wire:model="search_tasks.time_start" id="startTime" placeholder="{{__('Time Start')}}"/>
+                        <input readonly="readonly" class="readonly form-control text-center" wire:model="search_tasks.time_end" id="endTime" placeholder="{{__('Time End')}}"/>
                     </th>
                     <th scope="col">
                         @if (Auth::user()->hasRole('admin'))
-                            <select wire:model="search_tasks.user_id" class="form-select" aria-label="{{__('User')}}" style="text-align: center;">
+                            <select wire:model="search_tasks.user_id" class="custom-select form-select" aria-label="{{__('User')}}" style="text-align: center;">
                                 <option value="">{{__('Select')}}</option>
                                 @foreach ($users as $user)
                                     <option value="{{$user->id}}}">{{$user->name.' '.$user->last_name}}</option>
@@ -110,7 +110,7 @@
                     </th>
                     <th scope="col">
                         @if (Auth::user()->hasRole('admin'))
-                            <select wire:model="search_tasks.create_by" class="form-select" aria-label="{{__('Create By')}}" style="text-align: center;">
+                            <select wire:model="search_tasks.create_by" class="custom-select form-select" aria-label="{{__('Create By')}}" style="text-align: center;">
                                 <option value="">{{__('Select')}}</option>
                                 @foreach ($users as $user)
                                     <option value="{{$user->id}}}">{{$user->name.' '.$user->last_name}}</option>
@@ -132,8 +132,8 @@
                     <td>{{__($task->status)}}</td>
                     <td>
                         {{\Morilog\Jalali\CalendarUtils::strftime('Y-m-d', strtotime($task->date))}}
-                        <br>
-                        {{$task->date}}
+{{--                        <br>--}}
+{{--                        {{$task->date}}--}}
                     </td>
                     <td>{{$task->time}}</td>
                     <td>{{$task->user->user_name . ' ' .$task->user->user_last_name}}</td>

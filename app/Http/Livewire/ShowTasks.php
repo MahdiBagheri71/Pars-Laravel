@@ -23,7 +23,7 @@ class ShowTasks extends Component
     public $search_tasks = [];
 
     //order by
-    public $order_by ='id';
+    public $order_by ='date';
     public $order = 'asc';//desc
 
     //message alert
@@ -94,16 +94,17 @@ class ShowTasks extends Component
                         $this->checkValidateJalali( $value, $fail);
                     },
                 ],
-                'time_start' => 'date_format:H:i:s|before_or_equal:time_end',
-                'time_end' => 'date_format:H:i:s|after_or_equal:time_start',
+                'time_start' => 'date_format:H:i|before_or_equal:time_end',
+                'time_end' => 'date_format:H:i|after_or_equal:time_start',
                 'user_id' => 'exists:users,id',
-                'create_by' => 'integer|exists:users,id',
+                'create_by' => 'exists:users,id',
             ]
         );
 
         //select tasks join user
         $tasks = Tasks::with(['user:id,name as user_name,last_name as user_last_name','creator:id,name as creator_name,last_name as creator_last_name']);
 
+        //validator fail
         if ($validator->fails())
         {
             // The given data did not pass validation
@@ -120,46 +121,57 @@ class ShowTasks extends Component
 
         //filter name
         if(isset($this->search_tasks['name']) && !$validator->errors()->has('name')){
+            $this->resetPage();
             $tasks->where('tasks.name', 'like', '%'.$this->search_tasks['name'].'%');
         }
 
         //filter note
         if(isset($this->search_tasks['note']) && !$validator->errors()->has('note')){
+            $this->resetPage();
             $tasks->where('tasks.note', 'like', '%'.$this->search_tasks['note'].'%');
         }
 
         //filter status
         if(isset($this->search_tasks['status']) && $this->search_tasks['status']  && !$validator->errors()->has('status')){
+            $this->resetPage();
             $tasks->where('tasks.status', $this->search_tasks['status']);
         }
 
         //filter user_id
         if(isset($this->search_tasks['user_id']) && $this->search_tasks['user_id']  && !$validator->errors()->has('user_id')){
+            $this->resetPage();
             $tasks->where('tasks.user_id', $this->search_tasks['user_id']);
         }
 
         //filter create by id
         if(isset($this->search_tasks['create_by']) && $this->search_tasks['create_by']  && !$validator->errors()->has('create_by')){
+            $this->resetPage();
             $tasks->where('tasks.create_by_id', $this->search_tasks['create_by']);
         }
 
         //filter date start
         if(isset($this->search_tasks['date_start']) && $this->search_tasks['date_start'] && !$validator->errors()->has('date_start')){
-            $tasks->where('tasks.date' , '>=', $this->search_tasks['date_start']);
+            $this->resetPage();
+            $date = \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d', $this->search_tasks['date_start'])->format('Y-m-d');
+            $tasks->where('tasks.date' , '>=',  $date);
         }
 
         //filter date end
         if(isset($this->search_tasks['date_end']) && $this->search_tasks['date_end'] && !$validator->errors()->has('date_end')){
-            $tasks->where('tasks.date' , '<=', $this->search_tasks['date_end']);
+            $this->resetPage();
+            $date = \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d', $this->search_tasks['date_end'])->format('Y-m-d');
+            $tasks->where('tasks.date' , '<=', $date);
         }
 
         //filter time start
         if(isset($this->search_tasks['time_start']) && $this->search_tasks['time_start'] && !$validator->errors()->has('time_start')){
+            $this->resetPage();
             $tasks->where('tasks.time' , '>=', $this->search_tasks['time_start']);
         }
 
         //filter time end
         if(isset($this->search_tasks['time_end']) && $this->search_tasks['time_end'] && !$validator->errors()->has('time_end')){
+            $this->resetPage();
             $tasks->where('tasks.time' , '<=', $this->search_tasks['time_end']);
         }
 
