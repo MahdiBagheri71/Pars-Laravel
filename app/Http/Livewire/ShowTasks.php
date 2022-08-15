@@ -47,7 +47,6 @@ class ShowTasks extends Component
     public function refresh()
     {
         $this->modal_task = false;
-        $this->resetPage();
     }
 
     /**

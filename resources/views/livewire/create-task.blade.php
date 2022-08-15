@@ -70,7 +70,7 @@
     @endif
 
     <br>
-    <a href="{{ $live_wire ?'#': route('tasksList') }}" type="button" class="btn btn-dark m-1 createModalClose">{{__('Cancel')}}</a>
+    <a {!! $live_wire ?'': 'href="'.route('tasksList').'"' !!} type="button" class="btn btn-dark m-1 createModalClose">{{__('Cancel')}}</a>
     <button type="submit" class="btn btn-success">{{__('Save')}}</button>
 
 </form>

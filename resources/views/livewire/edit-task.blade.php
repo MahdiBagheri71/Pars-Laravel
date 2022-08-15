@@ -69,7 +69,7 @@
     <br>
 
     <div class="modal-footer">
-        <a href="{{ $live_wire ?'#': route('tasksList') }}" type="button" class="btn btn-dark m-1 editModalClose">{{__('Cancel')}}</a>
+        <a {!! $live_wire ?'': 'href="'.route('tasksList').'"' !!}  type="button" class="btn btn-dark m-1 editModalClose">{{__('Cancel')}}</a>
         <button type="submit" class="btn btn-success m-1">{{__('Save')}}</button>
     </div>
 
