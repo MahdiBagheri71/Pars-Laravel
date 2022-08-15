@@ -33,3 +33,10 @@ document.addEventListener('livewire:load', function () {
         dateFormat: "H:i"
     });
 });
+
+window.livewire.on('modal_delete', () => {
+    $('#deleteModal').modal('show');
+    $('.deleteModalClose').click(function (){
+        $('#deleteModal').modal('hide');
+    })
+});

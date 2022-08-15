@@ -29,9 +29,18 @@ class ShowTasks extends Component
     //message alert
     public $message_type,$message='';
 
+    //list users
     public $users;
+
+    //errors message array
     public $errors_message=[];
 
+    //modal parameter
+    public $modal_task_id,$modal_task;
+
+    /**
+     * mount var
+     */
     public function mount(){
         $this->users = User::all();//get list user for tasks user id & create user filter
     }
@@ -60,11 +69,27 @@ class ShowTasks extends Component
         }
     }
 
+    /**
+     * check validate jalali date
+     * @param $value
+     * @param $fail
+     */
     private function checkValidateJalali( $value, $fail){
         $date = explode('-',$value);
         if (count($date) != 3 && \Morilog\Jalali\CalendarUtils::checkDate($date[0], $date[1], $date[2], true)) {
             $fail(__('validation.date_format_jalali'));
         }
+    }
+
+
+    /**
+     * set var modal
+     * @param $task_id
+     * @param $type
+     */
+    public function showModal($task_id,$type){
+        $this->modal_task_id = $task_id;
+        $this->emit('modal_'.$type);
     }
 
     /**

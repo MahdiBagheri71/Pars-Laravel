@@ -11,6 +11,8 @@
     <script src="{{ asset('js/flatpickr/rangePlugin.js') }}"></script>
     <script src="{{ asset('js/flatpickr/fa.js') }}"></script>
 
+
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/moment.min.js') }}"></script>
 @endsection
 
