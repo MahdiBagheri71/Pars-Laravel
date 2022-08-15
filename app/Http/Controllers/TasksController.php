@@ -34,11 +34,13 @@ class TasksController extends Controller
      * show List Tasks
      * @return View
      */
-    public function tasksList(){
+    public function list(){
         //check permission view task
         if(Auth::user()->canany(['view tasks', 'view all tasks'])){
-            return view('dashboard.tasksList');
+            return view('dashboard.task.list');
         }
+
+        //not permission redirect
         return redirect()->route('dashboard');
     }
 

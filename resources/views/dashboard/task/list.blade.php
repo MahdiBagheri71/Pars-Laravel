@@ -3,6 +3,15 @@
 @section('js_header')
     @livewireStyles
     @livewireScripts
+    <link href="{{ asset('css/flatpickr/flatpickr.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/flatpickr/rtl.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/flatpickr/jdate.min.js') }}"></script>
+    <script>window.Date=window.JDate;</script>
+    <script src="{{ asset('js/flatpickr/flatpickr.min.js') }}"></script>
+    <script src="{{ asset('js/flatpickr/rangePlugin.js') }}"></script>
+    <script src="{{ asset('js/flatpickr/fa.js') }}"></script>
+
+    <script src="{{ asset('js/moment.min.js') }}"></script>
 @endsection
 
 
@@ -16,20 +25,6 @@
                         <a class="nav-link" href="{{ route('tasksList') }}">{{ __('Tasks') }}</a>
                     </div>
                     <div class="card-body">
-
-                        <div>
-
-                            @if (session()->has('message'))
-
-                                <div class="alert alert-{{session('type') == 'error' ? 'danger':'success'}}">
-
-                                    {{ session('message') }}
-
-                                </div>
-
-                            @endif
-
-                        </div>
 {{--                        live wire show taks--}}
                         @livewire('show-tasks')
                     </div>
@@ -37,5 +32,8 @@
             </div>
         </div>
     </div>
+@endsection
 
+@section('js_end')
+    <script src="{{ asset('js/flatpickr/task.js') }}"></script>
 @endsection

@@ -93,5 +93,6 @@
             @yield('content')
         </main>
     </div>
+    @yield('js_end')
 </body>
 </html>

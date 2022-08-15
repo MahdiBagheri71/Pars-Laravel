@@ -1,10 +1,32 @@
 <div>
 
     {{--        create task for admin--}}
-    @if (Auth::user()->is_admin == 1)
+    @if (Auth::user()->canany(['add tasks','add me tasks']))
         <a href="{{ route('taskCreate') }}" type="button" class="btn btn-primary m-1">{{__('Create')}}</a>
     @endif
 
+    {{--                        show alert message--}}
+    <div>
+        @if ($message)
+
+            <div class="alert alert-{{$message_type}}">
+
+                {{ $message }}
+
+            </div>
+
+        @endif
+
+        @if ($errors_message)
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors_message as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+    </div>
     <div class="col-md-12 text-center">
 
 {{--        tabel list taks--}}
@@ -16,31 +38,31 @@
                     <th scope="col">
                         <a href="#" wire:click="orderBy('name')">
                             {{__('Name')}}
-                            {!! $order_by == 'name' ? $order_icon:'' !!}
+                            @includeWhen( $order_by == 'name', 'dashboard.task.order', ['order' => $order])
                         </a>
                     </th>
                     <th scope="col">
                         <a href="#" wire:click="orderBy('note')">
                             {{__('Note')}}
-                            {!! $order_by == 'note' ? $order_icon:'' !!}
+                            @includeWhen( $order_by == 'note', 'dashboard.task.order', ['order' => $order])
                         </a>
                     </th>
                     <th scope="col">
                         <a href="#" wire:click="orderBy('status')">
                             {{__('Status')}}
-                            {!! $order_by == 'status' ? $order_icon:'' !!}
+                            @includeWhen( $order_by == 'status', 'dashboard.task.order', ['order' => $order])
                         </a>
                     </th>
                     <th scope="col">
                         <a href="#" wire:click="orderBy('date')">
                             {{__('Date')}}
-                            {!! $order_by == 'date' ? $order_icon:'' !!}
+                            @includeWhen( $order_by == 'date', 'dashboard.task.order', ['order' => $order])
                         </a>
                     </th>
                     <th scope="col">
                         <a href="#" wire:click="orderBy('time')">
                             {{__('Time')}}
-                            {!! $order_by == 'time' ? $order_icon:'' !!}
+                            @includeWhen( $order_by == 'time', 'dashboard.task.order', ['order' => $order])
                         </a>
                     </th>
                     <th scope="col">{{__('User')}}</th>
@@ -69,15 +91,15 @@
                         </select>
                     </th>
                     <th scope="col">
-                        <input class="form-control" wire:model="search_tasks.date_start" type="date" placeholder="{{__('Date Start')}}"/>
-                        <input class="form-control" wire:model="search_tasks.date_end" type="date" placeholder="{{__('Date End')}}"/>
+                        <input readonly="readonly" class="readonly form-control" wire:model="search_tasks.date_start" id="startDate" placeholder="{{__('Date Start')}}"/>
+                        <input readonly="readonly" class="readonly form-control" wire:model="search_tasks.date_end" id="toDate" placeholder="{{__('Date End')}}"/>
                     </th>
                     <th scope="col">
                         <input class="form-control" wire:model="search_tasks.time_start" type="time" placeholder="{{__('Time Start')}}"/>
                         <input class="form-control" wire:model="search_tasks.time_end" type="time" placeholder="{{__('Time End')}}"/>
                     </th>
                     <th scope="col">
-                        @if (Auth::user()->is_admin == 1)
+                        @if (Auth::user()->hasRole('admin'))
                             <select wire:model="search_tasks.user_id" class="form-select" aria-label="{{__('User')}}" style="text-align: center;">
                                 <option value="">{{__('Select')}}</option>
                                 @foreach ($users as $user)
@@ -87,7 +109,7 @@
                         @endif
                     </th>
                     <th scope="col">
-                        @if (Auth::user()->is_admin == 1)
+                        @if (Auth::user()->hasRole('admin'))
                             <select wire:model="search_tasks.create_by" class="form-select" aria-label="{{__('Create By')}}" style="text-align: center;">
                                 <option value="">{{__('Select')}}</option>
                                 @foreach ($users as $user)
@@ -114,24 +136,24 @@
                         {{$task->date}}
                     </td>
                     <td>{{$task->time}}</td>
-                    <td>{{$task->user_name . ' ' .$task->user_last_name}}</td>
-                    <td>{{$task->creator_name . ' ' .$task->creator_last_name}}</td>
+                    <td>{{$task->user->user_name . ' ' .$task->user->user_last_name}}</td>
+                    <td>{{$task->creator->creator_name . ' ' .$task->creator->creator_last_name}}</td>
                     <td>
 {{--                        edit task --}}
-                        @if (Auth::user()->is_admin == 1 || (Auth::user()->is_admin != 1 && $task->status!= 'delete'))
-                            <a href="{{ route('taskEdit',['task_id' => $task->id]) }}" type="button" class="btn btn-outline-secondary">
+                        @if (Auth::user()->canany('edit me task','edit status tasks','edit all tasks'))
+                            <a href="{{ route('taskEdit',['task_id' => $task->id]) }}" type="button" class="text-secondary">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                                     <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
                                 </svg>
                             </a>
                         @endif
 {{--                        if admin delete for ever taks--}}
-                        @if (Auth::user()->is_admin == 1)
-                            <button wire:click="delete({{$task->id}})" type="button" class="btn btn-outline-danger" >
+                        @if (Auth::user()->can('delete tasks'))
+                            <a wire:click="delete({{$task->id}})" type="button" class="text-danger" >
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
                                     <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"></path>
                                 </svg>
-                            </button>
+                            </a>
                         @endif
                     </td>
                 </tr>

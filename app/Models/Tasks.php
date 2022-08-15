@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Tasks extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
 
      /**
      * The attributes that are mass assignable.
@@ -35,10 +36,18 @@ class Tasks extends Model
     ];
 
     /**
-     * Get the comments for the blog post.
+     * Get the user that owns the tasks.
      */
     public function user()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsTo(User::class,'user_id', 'id');
+    }
+
+    /**
+     * Get the user creator that owns the tasks.
+     */
+    public function creator()
+    {
+        return $this->belongsTo(User::class,'create_by_id', 'id');
     }
 }

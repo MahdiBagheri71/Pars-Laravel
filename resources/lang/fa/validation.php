@@ -46,6 +46,9 @@ return [
     'exists' => 'گزینه انتخاب شده :attribute صحیح نمی باشد',
     'file' => 'گزینه :attribute باید یک فایل باشد',
     'filled' => 'گزینه :attribute نمی تواند خالی باشد',
+
+    'date_format_jalali' => 'گزینه :attribute وارد شده با فرمت جلالی نیست.',
+
     'gt' => [
         'numeric' => 'گزینه :attribute باید بزرگتر از :value باشد',
         'file' => 'گزینه :attribute باید بزرگتر از :value کیلوبایت باشد',
@@ -193,6 +196,10 @@ return [
         'user_id' => 'آی دی کاربر',
         'start' => 'زمان شروع',
         'end' => 'زمان پایان',
-        'note' => 'یادداشت'
+        'note' => 'یادداشت',
+        'date_start' => 'تاریخ شروع',
+        'date_end' => 'تاریخ پایان',
+        'time_start' => 'زمان شروع' ,
+        'time_end' => 'زمان پایان' ,
     ],
 ];

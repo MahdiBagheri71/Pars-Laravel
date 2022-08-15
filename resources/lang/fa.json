@@ -741,5 +741,10 @@
     "The provided credentials are incorrect." : "مقادیر ارسال شده اشتباه می باشد.",
     "List Tasks" : "لیست وظایف",
     "Task" : "وظیفه",
-    "Task Create" : "ایجاد وظیفه"
+    "Task Create" : "ایجاد وظیفه",
+    "Not Allow!!!" : "شما دسترسی لازم را ندارید!!!",
+    "Date Start" : "تاریخ شروع",
+    "Date End" : "تاریخ پایان",
+    "Time Start" : "زمان شروع",
+    "Time End" : "زمان پایان"
 }
