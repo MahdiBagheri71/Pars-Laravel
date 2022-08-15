@@ -23,7 +23,7 @@ class EditTask extends Component
     public function mount()
     {
         //Not allow edit
-        if(!Auth::user()->canany('edit me task','edit all tasks')){
+        if(!Auth::user()->canany(['edit me task','edit all tasks'])){
             return ;
         }
 
@@ -60,7 +60,7 @@ class EditTask extends Component
     public function submit()
     {
         //Not allow edit
-        if(!Auth::user()->canany('edit me task','edit all tasks')){
+        if(!Auth::user()->canany(['edit me task','edit all tasks'])){
             return ;
         }
 

@@ -140,7 +140,7 @@
                     <td>{{$task->creator->creator_name . ' ' .$task->creator->creator_last_name}}</td>
                     <td>
 {{--                        edit task --}}
-                        @if (Auth::user()->canany('edit me task','edit status tasks','edit all tasks'))
+                        @if (Auth::user()->canany(['edit me task','edit status tasks','edit all tasks']))
                             <a  wire:click="showModal({{$task->id}},'edit')" type="button" class="text-secondary">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                                     <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
@@ -192,15 +192,33 @@
                     </div>
                     <div class="modal-body">
                         @if($modal_task)
-                            @if(Auth::user()->is_admin == 1)
+                            @if(Auth::user()->canany(['edit me task','edit all tasks']))
                                 {{--                        live wire edite taks--}}
                                 @livewire('edit-task',['task'=>$modal_task,'users'=>$users,'live_wire'=>true])
-                            @else
+                            @elseif(Auth::user()->can('edit status tasks'))
                                 {{--                        live wire edite status taks--}}
-                                @livewire('edit-status-task',['task'=>$modal_task])
+                                @livewire('edit-status-task',['task'=>$modal_task,'live_wire'=>true])
                             @endif
                         @endif
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Create-->
+        <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">
+                            {{__("Task Create")}}
+                        </h5>
+                    </div>
+{{--                    <div class="modal-body">--}}
+{{--                        @if(Auth::user()->canany(['add tasks','add me tasks'])))--}}
+{{--                            @livewire('create-task',['users'=>$users,'live_wire'=>true])--}}
+{{--                        @endif--}}
+{{--                    </div>--}}
                 </div>
             </div>
         </div>

@@ -22,10 +22,10 @@
                         > {{ __('Task') }}
                     </div>
                     <div class="card-body">
-                        @if(Auth::user()->is_admin == 1)
+                        @if(Auth::user()->canany(['edit me task','edit all tasks']))
                             {{--                        live wire edite taks--}}
                             @livewire('edit-task',['task'=>$task,'users'=>$users])
-                        @else
+                        @elseif(Auth::user()->can('edit status tasks'))
                             {{--                        live wire edite status taks--}}
                             @livewire('edit-status-task',['task'=>$task])
                         @endif

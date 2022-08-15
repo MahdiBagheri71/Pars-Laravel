@@ -39,8 +39,13 @@ class ShowTasks extends Component
     public $modal_task_id,$modal_task=false;
 
     //refresh listeners
-    protected $listeners = ['regeneratedCodes' => '$refresh'];
+    protected $listeners = ['regeneratedCodes' => 'refresh'];
 
+
+    public function refresh(){
+
+        $this->modal_task = false;
+    }
     /**
      * mount var
      */

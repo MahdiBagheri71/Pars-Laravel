@@ -53,7 +53,7 @@ class TasksController extends Controller
         $task = Tasks::where('id',$task_id);
 
         //Not allow edit
-        if(!Auth::user()->canany('edit me task','edit all tasks')){
+        if(!Auth::user()->canany(['edit me task','edit all tasks','edit status tasks'])){
             return redirect()->route('tasksList');
         }
 
