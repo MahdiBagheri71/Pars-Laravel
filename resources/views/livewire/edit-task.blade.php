@@ -29,12 +29,15 @@
     <div class="form-group">
         <label>{{__('Status')}}</label>
         <select wire:model="status" class="form-select" aria-label="{{__('Status')}}" style="text-align: center;">
-            <option value="cancel" style="background : #f0077f;" {{$task->status == 'cancel' ? 'selected':''}}>{{__('cancel')}}</option>
-            <option value="success" style="background : #4cd548;" {{$task->status == 'success' ? 'selected':''}} >{{__('success')}}</option>
-            <option value="retarded" style="background : #eecd18;" {{$task->status == 'retarded' ? 'selected':''}}>{{__('retarded')}}</option>
-            <option value="doing" style="background : #2094fb;" {{$task->status == 'doing' ? 'selected':''}}>{{__('doing')}}</option>
-            <option value="planned" style="background : #04a1bb;" {{$task->status == 'planned' ? 'selected':''}}>{{__('planned')}}</option>
-            <option value="delete" style="background : #bf565b;" {{$task->status == 'delete' ? 'selected':''}}>{{__('delete')}}</option>
+            <option value="cancel" style="background : #f0077f;" @selected({{$task->status == 'cancel' }} )>{{__('cancel')}}</option>
+            <option value="success" style="background : #4cd548;" @selected({{$task->status == 'success'}}) >{{__('success')}}</option>
+            <option value="retarded" style="background : #eecd18;" @selected({{$task->status == 'retarded'}})>{{__('retarded')}}</option>
+            <option value="doing" style="background : #2094fb;" @selected({{$task->status == 'doing'}})>{{__('doing')}}</option>
+            <option value="planned" style="background : #04a1bb;" @selected({{$task->status == 'planned'}})>{{__('planned')}}</option>
+
+            @if(Auth::user()->can('edit all tasks'))
+                <option value="delete" style="background : #bf565b;" @selected({{$task->status == 'delete'}})>{{__('delete')}}</option>
+            @endif
         </select>
         @error('status') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
@@ -51,15 +54,17 @@
         @error('time') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
 
-    <div class="form-group">
-        <label>{{__('User')}}</label>
-        <select wire:model="user_id" class="form-select" aria-label="{{__('User')}}" style="text-align: center;">
-            @foreach ($users as $user)
-                <option value="{{$user->id}}" {{$task->user_id == $user->id ? 'selected':''}}>{{$user->name.' '.$user->last_name}}</option>
-            @endforeach
-        </select>
-        @error('status') <span class="error text-danger">{{ $message }}</span> @enderror
-    </div>
+    @if(Auth::user()->can('edit all tasks'))
+        <div class="form-group">
+            <label>{{__('User')}}</label>
+                <select wire:model="user_id" class="form-select" aria-label="{{__('User')}}" style="text-align: center;">
+                    @foreach ($users as $user)
+                        <option value="{{$user->id}}" @selected({{$task->user_id == $user->id}})>{{$user->name.' '.$user->last_name}}</option>
+                    @endforeach
+                </select>
+                @error('status') <span class="error text-danger">{{ $message }}</span> @enderror
+        </div>
+    @endif
 
     <br>
 

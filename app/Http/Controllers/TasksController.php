@@ -52,15 +52,17 @@ class TasksController extends Controller
         //get task
         $task = Tasks::where('id',$task_id);
 
-//        $per = Auth::user()->hasDirectPermission('edit tasks');
-//        $per = Auth::user()->hasRole('admin');
-//        dd($per);
+        //Not allow edit
+        if(!Auth::user()->canany('edit me task','edit all tasks')){
+            return redirect()->route('tasksList');
+        }
 
-        //not admin for user id task
+        //not allow all task edit
         if(!Auth::user()->hasDirectPermission('view all tasks')) {
             $task = $task->where('user_id', Auth::user()->id);
         }
 
+        //get task in db
         $task = $task->first();
 
         //not exist task
@@ -69,13 +71,13 @@ class TasksController extends Controller
         }
 
         //not admin for not delete status
-        if(Auth::user()->is_admin != 1 && $task->status == 'delete') {
+        if(!Auth::user()->hasDirectPermission('view all tasks') && $task->status == 'delete') {
             return redirect()->route('tasksList');
         }
 
         return view('dashboard.task',[
             'task' => $task,
-            'users' => Auth::user()->is_admin != 1 ? [] : User::all()//get list user for tasks user id & create user filter
+            'users' => User::all()//get list user for tasks user id & create user filter
         ]);
     }
 

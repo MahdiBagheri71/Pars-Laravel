@@ -44,6 +44,7 @@ window.livewire.on('modal_delete', () => {
 window.livewire.on('modal_edit', () => {
     $('#editModal').modal('show');
     $('.editModalClose').click(function (){
+        Livewire.emit('regeneratedCodes');
         $('#editModal').modal('hide');
     })
 });
