@@ -44,13 +44,13 @@
 
     <div class="form-group">
         <label>{{__('Date')}}</label>
-        <input wire:model="date" value="{{$task->date}}" type="date" class="form-control" placeholder="{{__('Date')}}">
+        <input wire:model="date" value="{{$task->date}}" class="form-control text-center dateEdit" placeholder="{{__('Date')}}">
         @error('date') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
 
     <div class="form-group">
         <label>{{__('Time')}}</label>
-        <input wire:model="time" value="{{$task->time}}" type="time" class="form-control" placeholder="{{__('Time')}}">
+        <input wire:model="time" value="{{$task->time}}" class="form-control text-center timeEdit" placeholder="{{__('Time')}}">
         @error('time') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
 

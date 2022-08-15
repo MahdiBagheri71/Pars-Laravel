@@ -37,8 +37,8 @@ class EditTask extends Component
         $this->name = $this->task->name;
         $this->note = $this->task->note;
         $this->status = $this->task->status;
-        $this->date = $this->task->date;
-        $this->time = $this->task->time;
+        $this->date = \Morilog\Jalali\CalendarUtils::strftime('Y-m-d', strtotime($this->task->date)); // convert to jalali
+        $this->time = date('H:i',strtotime($this->task->time));
         $this->user_id = $this->task->user_id;
     }
 
@@ -50,7 +50,7 @@ class EditTask extends Component
         'note' => 'required',
         'status' => 'required|in:cancel,success,retarded,delete,doing,planned',
         'date' => 'required|date_format:Y-m-d',
-        'time' => 'required|date_format:H:i:s',
+        'time' => 'required|date_format:H:i',
         'user_id' => 'required|integer|exists:users,id'
     ];
 
@@ -82,11 +82,14 @@ class EditTask extends Component
             return  ;
         }
 
+        //date jalali
+        $date = \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d',$this->date)->format('Y-m-d');
+
         //set var for edit
         $task->name = $this->name;
         $task->note = $this->note;
         $task->status = $this->status;
-        $task->date = $this->date;
+        $task->date = $date;
         $task->time = $this->time;
         $task->user_id = $this->user_id;
 

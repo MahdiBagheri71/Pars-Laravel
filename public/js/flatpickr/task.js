@@ -63,6 +63,23 @@ window.livewire.on('modal_delete', () => {
 //for edit modal task
 window.livewire.on('modal_edit', () => {
     $('#editModal').modal('show');
+
+    flatpickr(".dateEdit", {
+        enableTime: false,
+        "locale": "fa" ,
+        noCalendar: false,
+        time_24hr: true,
+        dateFormat: "Y-m-d"
+    });
+
+    flatpickr(".timeEdit", {
+        enableTime: true,
+        "locale": "fa" ,
+        noCalendar: true,
+        time_24hr: true,
+        dateFormat: "H:i"
+    });
+
     $('.editModalClose').click(function (){
         Livewire.emit('regeneratedCodes');
         $('#editModal').modal('hide');
