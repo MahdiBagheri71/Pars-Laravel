@@ -48,3 +48,16 @@ window.livewire.on('modal_edit', () => {
         $('#editModal').modal('hide');
     })
 });
+
+window.livewire.on('modal_create', () => {
+    $('#createModal').modal('show');
+    $('.createModalClose').click(function (){
+        Livewire.emit('regeneratedCodes');
+        $('#createModal').modal('hide');
+    })
+});
+
+window.livewire.on('closeModal', () => {
+    Livewire.emit('regeneratedCodes');
+    $('#createModal').modal('hide');
+});

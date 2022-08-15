@@ -1,4 +1,4 @@
-<form wire:submit.prevent="submit" style="text-align: center;">
+<form wire:submit.prevent="create" style="text-align: center;">
 
     <div>
 
@@ -33,7 +33,7 @@
             <option value="success" style="background : #4cd548;" >{{__('success')}}</option>
             <option value="retarded" style="background : #eecd18;">{{__('retarded')}}</option>
             <option value="doing" style="background : #2094fb;">{{__('doing')}}</option>
-            <option value="planned" style="background : #04a1bb;">{{__('planned')}}</option>
+            <option value="planned" style="background : #04a1bb;" selected>{{__('planned')}}</option>
             <option value="delete" style="background : #bf565b;">{{__('delete')}}</option>
         </select>
         @error('status') <span class="error text-danger">{{ $message }}</span> @enderror
@@ -51,18 +51,23 @@
         @error('time') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
 
-    <div class="form-group">
-        <label>{{__('User')}}</label>
-        <select wire:model="user_id" class="form-select" aria-label="{{__('User')}}" style="text-align: center;">
-            @foreach ($users as $user)
-                <option value="{{$user->id}}">{{$user->name.' '.$user->last_name}}</option>
-            @endforeach
-        </select>
-        @error('status') <span class="error text-danger">{{ $message }}</span> @enderror
-    </div>
+    @if(Auth::user()->can(['add tasks']))
+        <div class="form-group">
+            <label>{{__('User')}}</label>
+            <select wire:model="user_id" class="form-select" aria-label="{{__('User')}}" style="text-align: center;">
+                @foreach ($users as $user)
+                    <option value="{{$user->id}}" @selected({{Auth::user()->id == $user->id}})>{{$user->name.' '.$user->last_name}}</option>
+                @endforeach
+            </select>
+            @error('user_id') <span class="error text-danger">{{ $message }}</span> @enderror
+        </div>
+    @else
+        <input wire:model="user_id" value="{{Auth::user()->id}}" type="hidden" class="form-control">
+        @error('user_id') <span class="error text-danger">{{ $message }}</span> @enderror
+    @endif
 
     <br>
-    <a href="{{ route('tasksList') }}" type="button" class="btn btn-dark">{{__('Cancel')}}</a>
+    <a href="{{ $live_wire ?'#': route('tasksList') }}" type="button" class="btn btn-dark m-1 createModalClose">{{__('Cancel')}}</a>
     <button type="submit" class="btn btn-success">{{__('Save')}}</button>
 
 </form>

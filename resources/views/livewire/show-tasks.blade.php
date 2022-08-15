@@ -2,7 +2,7 @@
 
     {{--        create task for admin--}}
     @if (Auth::user()->canany(['add tasks','add me tasks']))
-        <a href="{{ route('taskCreate') }}" type="button" class="btn btn-primary m-1">{{__('Create')}}</a>
+        <a  wire:click="showModal(0,'create')" type="button" class="btn btn-primary m-1">{{__('Create')}}</a>
     @endif
 
     {{--                        show alert message--}}
@@ -214,11 +214,11 @@
                             {{__("Task Create")}}
                         </h5>
                     </div>
-{{--                    <div class="modal-body">--}}
-{{--                        @if(Auth::user()->canany(['add tasks','add me tasks'])))--}}
-{{--                            @livewire('create-task',['users'=>$users,'live_wire'=>true])--}}
-{{--                        @endif--}}
-{{--                    </div>--}}
+                    <div class="modal-body">
+                        @if(Auth::user()->canany(['add tasks','add me tasks']))
+                            @livewire('create-task',['users'=>$users,'live_wire'=>true])
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>

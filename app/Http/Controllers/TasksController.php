@@ -58,7 +58,7 @@ class TasksController extends Controller
         }
 
         //not allow all task edit
-        if(!Auth::user()->hasDirectPermission('view all tasks')) {
+        if(!Auth::user()->can('edit all tasks')) {
             $task = $task->where('user_id', Auth::user()->id);
         }
 
@@ -71,7 +71,7 @@ class TasksController extends Controller
         }
 
         //not admin for not delete status
-        if(!Auth::user()->hasDirectPermission('view all tasks') && $task->status == 'delete') {
+        if(!Auth::user()->can('view all tasks') && $task->status == 'delete') {
             return redirect()->route('tasksList');
         }
 
@@ -87,7 +87,7 @@ class TasksController extends Controller
     public function create(){
 
         //not admin not allow
-        if(Auth::user()->is_admin != 1 ) {
+        if(!Auth::user()->canany(['add tasks','add me tasks'])){
             return redirect()->route('tasksList');
         }
 

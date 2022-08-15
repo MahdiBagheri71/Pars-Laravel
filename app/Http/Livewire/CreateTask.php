@@ -11,18 +11,25 @@ class CreateTask extends Component
     public $users;
 
     public $name,$note,$status,$date,$time,$user_id;
+
+    //is live wire request other file for load modal
+    public $live_wire;
+
     /**
      * mount var
      */
     public function mount()
     {
-        //NOT admin Not allow edit
-        if(Auth::user()->is_admin != 1){
-            return redirect()->route('tasksList');
-        }
+        //Not allow edit
+        $this->user_id = Auth::user()->id;
+        $this->status = 'planned';
+        $this->name = '';
+        $this->note = '';
+        $this->date = '';
+        $this->time = '';
     }
 
-    /**
+        /**
      * set rules for validation
      */
     protected $rules = [
@@ -31,18 +38,20 @@ class CreateTask extends Component
         'status' => 'required|in:cancel,success,retarded,delete,doing,planned',
         'date' => 'required|date_format:Y-m-d',
         'time' => 'required|date_format:H:i',
-        'user_id' => 'required|integer|exists:users,id'
+        'user_id' => 'required|exists:users,id'
     ];
 
     /**
      * create task
      */
-    public function submit()
+    public function create()
     {
 
-        //NOT admin Not allow edit
-        if(Auth::user()->is_admin != 1){
-            return redirect()->route('tasksList');
+        //Not allow edit
+        if(!Auth::user()->canany(['add tasks','add me tasks'])){
+            session()->flash('type', 'error');
+            session()->flash('message',  __('Not Allow!!!'));
+            return ;
         }
 
         //validate
@@ -54,13 +63,24 @@ class CreateTask extends Component
             'status' => $this->status,
             'date' => $this->date,
             'time' => $this->time,
-            'user_id' => $this->user_id,
+            'user_id' => Auth::user()->canany(['add tasks'])?$this->user_id:Auth::user()->id,
             'create_by_id' => Auth::user()->id
         ]);
 
         //message success update
         session()->flash('type', 'success');
         session()->flash('message',  __('Tasks created successfully'));
+
+        if($this->live_wire){
+            $this->user_id = Auth::user()->id;
+            $this->status = 'planned';
+            $this->name = '';
+            $this->note = '';
+            $this->date = '';
+            $this->time = '';
+            $this->emit('closeModal');
+            return ;
+        }
         return redirect()->route('tasksList');
     }
 }
