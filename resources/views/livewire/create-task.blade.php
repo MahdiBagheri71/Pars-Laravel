@@ -35,19 +35,22 @@
             <option value="doing" style="background : #2094fb;">{{__('doing')}}</option>
             <option value="planned" style="background : #04a1bb;" selected>{{__('planned')}}</option>
             <option value="delete" style="background : #bf565b;">{{__('delete')}}</option>
+            @if(Auth::user()->can('add tasks'))
+                <option value="delete" style="background : #bf565b;">{{__('delete')}}</option>
+            @endif
         </select>
         @error('status') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
 
     <div class="form-group">
         <label>{{__('Date')}}</label>
-        <input wire:model="date" type="date" class="form-control" placeholder="{{__('Date')}}">
+        <input readonly="readonly" class="readonly form-control text-center" wire:model="date" id="dateCreate" placeholder="{{__('Date')}}">
         @error('date') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
 
     <div class="form-group">
         <label>{{__('Time')}}</label>
-        <input wire:model="time" type="time" class="form-control" placeholder="{{__('Time')}}">
+        <input readonly="readonly" class="readonly form-control text-center" wire:model="time"  id="timeCreate"  class="form-control" placeholder="{{__('Time')}}">
         @error('time') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
 

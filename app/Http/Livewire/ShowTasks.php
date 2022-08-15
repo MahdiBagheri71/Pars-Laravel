@@ -41,11 +41,15 @@ class ShowTasks extends Component
     //refresh listeners
     protected $listeners = ['regeneratedCodes' => 'refresh'];
 
-
-    public function refresh(){
-
+    /**
+     * refresh after create & edit
+     */
+    public function refresh()
+    {
         $this->modal_task = false;
+        $this->resetPage();
     }
+
     /**
      * mount var
      */
@@ -88,7 +92,6 @@ class ShowTasks extends Component
             $fail(__('validation.date_format_jalali'));
         }
     }
-
 
     /**
      * set var modal
