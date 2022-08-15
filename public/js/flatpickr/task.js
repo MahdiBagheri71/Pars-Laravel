@@ -40,3 +40,10 @@ window.livewire.on('modal_delete', () => {
         $('#deleteModal').modal('hide');
     })
 });
+
+window.livewire.on('modal_edit', () => {
+    $('#editModal').modal('show');
+    $('.editModalClose').click(function (){
+        $('#editModal').modal('hide');
+    })
+});

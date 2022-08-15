@@ -36,7 +36,7 @@ class ShowTasks extends Component
     public $errors_message=[];
 
     //modal parameter
-    public $modal_task_id,$modal_task;
+    public $modal_task_id,$modal_task=false;
 
     /**
      * mount var
@@ -89,6 +89,13 @@ class ShowTasks extends Component
      */
     public function showModal($task_id,$type){
         $this->modal_task_id = $task_id;
+        if($type == 'edit'){
+            $task = Tasks::where('id',$task_id);
+            $task = $task->first();
+            $this->modal_task = $task;
+        }else{
+            $this->modal_task = false;
+        }
         $this->emit('modal_'.$type);
     }
 

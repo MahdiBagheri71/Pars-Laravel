@@ -12,6 +12,9 @@ class EditTask extends Component
 
     public $users;
 
+    //is live wire request other file for load modal
+    public $live_wire=false;
+
     public $task_id,$name,$note,$status,$date,$time,$user_id;
 
     /**
@@ -19,9 +22,14 @@ class EditTask extends Component
      */
     public function mount()
     {
-        //NOT admin Not allow edit
-        if(Auth::user()->is_admin != 1){
-            return redirect()->route('tasksList');
+        //Not allow edit
+        if(!Auth::user()->canany('edit me task','edit all tasks')){
+            return ;
+        }
+
+        //Not task for me only permission "edit me task"
+         if(!Auth::user()->can('edit all tasks') && $this->task->user_id != Auth::user()->id){
+            return ;
         }
 
         //set var
@@ -51,10 +59,14 @@ class EditTask extends Component
      */
     public function submit()
     {
+        //Not allow edit
+        if(!Auth::user()->canany('edit me task','edit all tasks')){
+            return ;
+        }
 
-        //NOT admin Not allow edit
-        if(Auth::user()->is_admin != 1){
-            return redirect()->route('tasksList');
+        //Not task for me only permission "edit me task"
+        if(!Auth::user()->can('edit all tasks') && $this->task->user_id != Auth::user()->id){
+            return ;
         }
 
         //validate

@@ -160,6 +160,7 @@
             @endforeach
             </tbody>
         </table>
+
         <!-- Modal Delete-->
         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -175,6 +176,30 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary deleteModalClose" >{{__('No')}}</button>
                         <button type="button" class="btn btn-danger deleteModalClose" wire:click="delete({{$modal_task_id}})">{{__('Yes')}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Edit-->
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">
+                            {{__("Edit")}}
+                        </h5>
+                    </div>
+                    <div class="modal-body">
+                        @if($modal_task)
+                            @if(Auth::user()->is_admin == 1)
+                                {{--                        live wire edite taks--}}
+                                @livewire('edit-task',['task'=>$modal_task,'users'=>$users,'live_wire'=>true])
+                            @else
+                                {{--                        live wire edite status taks--}}
+                                @livewire('edit-status-task',['task'=>$modal_task])
+                            @endif
+                        @endif
                     </div>
                 </div>
             </div>
