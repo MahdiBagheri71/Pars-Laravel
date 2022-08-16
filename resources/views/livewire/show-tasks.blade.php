@@ -2,8 +2,9 @@
 
     {{--        create task for admin--}}
     @if (Auth::user()->canany(['add tasks','add me tasks']))
-        <a  wire:click="showModal(0,'create')" type="button" class="btn btn-primary m-1">{{__('Create')}}</a>
+        <a wire:click="showModal(0,'create')" type="button" class="btn btn-primary m-1">{{__('Create')}}</a>
     @endif
+    <a wire:click="refresh" type="button" class="btn btn-dark m-1">{{__('Refresh')}}</a>
 
     {{--                        show alert message--}}
     <div>
@@ -118,6 +119,7 @@
                             </select>
                         @endif
                     </th>
+
                     <th scope="col"></th>
                 </tr>
 
@@ -139,19 +141,30 @@
                     <td>{{$task->user->user_name . ' ' .$task->user->user_last_name}}</td>
                     <td>{{$task->creator->creator_name . ' ' .$task->creator->creator_last_name}}</td>
                     <td>
-{{--                        edit task --}}
-                        @if (Auth::user()->canany(['edit me task','edit status tasks','edit all tasks']))
-                            <a  wire:click="showModal({{$task->id}},'edit')" type="button" class="text-secondary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-                                </svg>
-                            </a>
+                        @if(!$deleted)
+                            {{--                        edit task --}}
+                            @if (Auth::user()->canany(['edit me task','edit status tasks','edit all tasks']))
+                                <a  wire:click="showModal({{$task->id}},'edit')" type="button" class="text-secondary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                    </svg>
+                                </a>
+                            @endif
+    {{--                        if admin delete for ever taks--}}
+                            @if (Auth::user()->can('delete tasks'))
+                                <a wire:click="showModal({{$task->id}},'delete')" type="button" class="text-danger" >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"></path>
+                                    </svg>
+                                </a>
+                            @endif
                         @endif
-{{--                        if admin delete for ever taks--}}
-                        @if (Auth::user()->can('delete tasks'))
-                            <a wire:click="showModal({{$task->id}},'delete')" type="button" class="text-danger" >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-                                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"></path>
+
+                        @if(Auth::user()->hasRole('admin') && $deleted)
+                            <a wire:click="showModal({{$task->id}},'restore')" type="button" class="text-info" >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+                                    <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
                                 </svg>
                             </a>
                         @endif
@@ -218,6 +231,26 @@
                         @if(Auth::user()->canany(['add tasks','add me tasks']))
                             @livewire('create-task',['users'=>$users,'live_wire'=>true])
                         @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Restore-->
+        <div class="modal fade" id="restoreModal" tabindex="-1" role="dialog" aria-labelledby="restoreModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">
+                            {{__("Restore")}}
+                        </h5>
+                    </div>
+                    <div class="modal-body">
+                        {{__('Are you sure you want to restore this resource?')}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary restoreModalClose" >{{__('No')}}</button>
+                        <button type="button" class="btn btn-success restoreModalClose" wire:click="restore({{$modal_task_id}})">{{__('Yes')}}</button>
                     </div>
                 </div>
             </div>

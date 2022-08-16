@@ -463,7 +463,7 @@
     "resource": "منبع",
     "Resources": "منابع",
     "resources": "منابع",
-    "Restore": "Restore",
+    "Restore": "بازیابی",
     "Restore Resource": "Restore Resource",
     "Restore Selected": "Restore Selected",
     "results": "نتایج",
@@ -746,5 +746,8 @@
     "Date Start" : "تاریخ شروع",
     "Date End" : "تاریخ پایان",
     "Time Start" : "زمان شروع",
-    "Time End" : "زمان پایان"
+    "Time End" : "زمان پایان",
+    "List Tasks Delete" : "لیست وظایف حذف شده",
+    "Refresh" : "تازه کردن",
+    "Tasks restore successfully" : "وظیفه شما با موفقیت بازیابی گردید"
 }

@@ -72,6 +72,12 @@
                                         {{ __('List Tasks') }}
                                     </a>
 
+                                    @if(Auth::user()->hasRole('admin'))
+                                        <a class="dropdown-item" href="{{ route('tasksListDelete') }}">
+                                            {{ __('List Tasks Delete') }}
+                                        </a>
+                                    @endif
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

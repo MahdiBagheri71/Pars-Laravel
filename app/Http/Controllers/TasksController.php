@@ -37,7 +37,25 @@ class TasksController extends Controller
     public function list(){
         //check permission view task
         if(Auth::user()->canany(['view tasks', 'view all tasks'])){
-            return view('dashboard.task.list');
+            return view('dashboard.task.list',[
+                'delete' => false
+            ]);
+        }
+
+        //not permission redirect
+        return redirect()->route('dashboard');
+    }
+
+    /**
+     * show List Tasks Delete
+     * @return View
+     */
+    public function listDelete(){
+        //check permission view delete task
+        if(Auth::user()->hasRole('admin')){
+            return view('dashboard.task.list',[
+                'delete' => true
+            ]);
         }
 
         //not permission redirect

@@ -41,6 +41,9 @@ class ShowTasks extends Component
     //refresh listeners
     protected $listeners = ['regeneratedCodes' => 'refresh'];
 
+    //show list deleted
+    public $deleted;
+
     /**
      * refresh after create & edit
      */
@@ -74,6 +77,21 @@ class ShowTasks extends Component
             Tasks::where('id', $task_id)->delete();
             $this->message_type = 'success';
             $this->message =  __('Tasks deleted successfully');
+        }else{
+            $this->message_type = 'danger';
+            $this->message =  __('Not Allow!!!');
+        }
+    }
+
+    /**
+     * @param $task_id
+     * restore task
+     */
+    public function restore($task_id){
+        if(Auth::user()->hasRole('admin')){
+            Tasks::withTrashed()->find($task_id)->restore();
+            $this->message_type = 'success';
+            $this->message =  __('Tasks restore successfully');
         }else{
             $this->message_type = 'danger';
             $this->message =  __('Not Allow!!!');
@@ -145,6 +163,10 @@ class ShowTasks extends Component
 
         //select tasks join user
         $tasks = Tasks::with(['user:id,name as user_name,last_name as user_last_name','creator:id,name as creator_name,last_name as creator_last_name']);
+
+        if($this->deleted){
+            $tasks = $tasks->onlyTrashed();
+        }
 
         //validator fail
         if ($validator->fails())

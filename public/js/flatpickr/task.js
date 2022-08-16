@@ -100,3 +100,11 @@ window.livewire.on('closeModal', () => {
     Livewire.emit('regeneratedCodes');
     $('#createModal').modal('hide');
 });
+
+//for restore modal task
+window.livewire.on('modal_restore', () => {
+    $('#restoreModal').modal('show');
+    $('.restoreModalClose').click(function (){
+        $('#restoreModal').modal('hide');
+    })
+});
