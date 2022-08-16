@@ -27,22 +27,8 @@ Route::get('/task/{task_id}', [App\Http\Controllers\TasksController::class, 'edi
 Route::get('/taskCreate', [App\Http\Controllers\TasksController::class, 'create'])->name('taskCreate');//change by Mahdi
 Route::get('/tasksFullCalendar', [App\Http\Controllers\TasksController::class, 'tasksFullCalendar'])->name('tasksFullCalendar');//change by Mahdi
 
+Route::get('/usersList', [App\Http\Controllers\UserController::class, 'list'])->name('usersList');//change by Mahdi
 
-Route::get('/tasksFullCalendar/tasks', function(\Illuminate\Http\Request $request) {
-    $name = $request->get('name');
-
-    $events = [];
-    foreach (range(0,6) as $i) {
-        $events[] = [
-            'id' => uniqid(),
-            'title' => \Str::random(4) . $name ,
-            'start' => now()->addDay(random_int(-10, 10))->toDateString(),
-        ];
-    }
-
-    return $events;
-
-});
 // Route::get('/fullcalendar', function () {//by Mahdi
 //     return view('fullcalendar');
 // });

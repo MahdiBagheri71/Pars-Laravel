@@ -749,5 +749,6 @@
     "Time End" : "زمان پایان",
     "List Tasks Delete" : "لیست وظایف حذف شده",
     "Refresh" : "تازه کردن",
-    "Tasks restore successfully" : "وظیفه شما با موفقیت بازیابی گردید"
+    "Tasks restore successfully" : "وظیفه شما با موفقیت بازیابی گردید",
+    "List Users" : "لیست کاربران"
 }
