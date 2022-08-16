@@ -128,7 +128,8 @@
 {{--            show data task--}}
             @foreach ($tasks as $row=>$task)
                 <tr>
-                    <th scope="row">{{$row+1}}</th>
+{{--                    Show row by start & pagination--}}
+                    <th scope="row">{{$row+($tasks->firstItem())}}</th>
                     <td>{{$task->name}}</td>
                     <td style="white-space: pre-wrap; white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;">{!! $task->note !!}</td>
                     <td>{{__($task->status)}}</td>
