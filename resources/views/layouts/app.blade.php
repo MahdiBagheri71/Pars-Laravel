@@ -68,9 +68,17 @@
                                         {{ __('Calendar Tasks') }}
                                     </a>
 
-                                    <a class="dropdown-item" href="{{ route('tasksList') }}">
-                                        {{ __('List Tasks') }}
-                                    </a>
+                                    @if(Auth::user()->canany(['view tasks', 'view all tasks']))
+                                        <a class="dropdown-item" href="{{ route('tasksList') }}">
+                                            {{ __('List Tasks') }}
+                                        </a>
+                                    @endif
+
+                                    @if(Auth::user()->canany(['view tasks', 'view all tasks']))
+                                        <a class="dropdown-item" href="{{ route('tasksFullCalendar') }}">
+                                            {{ __('Calendar Tasks') }}
+                                        </a>
+                                    @endif
 
                                     @if(Auth::user()->hasRole('admin'))
                                         <a class="dropdown-item" href="{{ route('tasksListDelete') }}">

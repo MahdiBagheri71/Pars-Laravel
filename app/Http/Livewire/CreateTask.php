@@ -16,6 +16,8 @@ class CreateTask extends Component
     //is live wire request other file for load modal
     public $live_wire;
 
+    public $date_time;
+
     /**
      * mount var
      */
@@ -26,8 +28,8 @@ class CreateTask extends Component
         $this->status = 'planned';
         $this->name = '';
         $this->note = '';
-        $this->date = '';
-        $this->time = '';
+        $this->date = \Morilog\Jalali\CalendarUtils::strftime('Y-m-d', strtotime($this->date_time?$this->date_time:time()));
+        $this->time = $this->date_time?date('H:i',strtotime($this->date_time)):date('H:i');
     }
 
     /**
@@ -108,8 +110,8 @@ class CreateTask extends Component
             $this->status = 'planned';
             $this->name = '';
             $this->note = '';
-            $this->date = '';
-            $this->time = '';
+            $this->date = \Morilog\Jalali\CalendarUtils::strftime('Y-m-d', strtotime($this->date_time?$this->date_time:time()));
+            $this->time = $this->date_time?date('H:i',strtotime($this->date_time)):date('H:i');
             $this->emit('closeModal');
             return ;
         }

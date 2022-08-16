@@ -196,7 +196,7 @@
         </div>
 
         <!-- Modal Edit-->
-        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -207,10 +207,10 @@
                     <div class="modal-body">
                         @if($modal_task)
                             @if(Auth::user()->canany(['edit me task','edit all tasks']))
-                                {{--                        live wire edite taks--}}
+                                {{--                        live wire edit taks--}}
                                 @livewire('edit-task',['task'=>$modal_task,'users'=>$users,'live_wire'=>true])
                             @elseif(Auth::user()->can('edit status tasks'))
-                                {{--                        live wire edite status taks--}}
+                                {{--                        live wire edit status taks--}}
                                 @livewire('edit-status-task',['task'=>$modal_task,'live_wire'=>true])
                             @endif
                         @endif
@@ -220,7 +220,7 @@
         </div>
 
         <!-- Modal Create-->
-        <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">

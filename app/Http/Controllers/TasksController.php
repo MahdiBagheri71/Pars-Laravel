@@ -113,4 +113,20 @@ class TasksController extends Controller
             'users' => User::all()//get list user for tasks user id & create user filter
         ]);
     }
+
+    /**
+     * show fullcalendar view tasks
+     * @return view
+     */
+    public function tasksFullCalendar(){
+        //check permission view task
+        if(Auth::user()->canany(['view tasks', 'view all tasks'])){
+            return view('dashboard.task.calendar',[
+                'delete' => false
+            ]);
+        }
+
+        //not permission redirect
+        return redirect()->route('dashboard');
+    }
 }

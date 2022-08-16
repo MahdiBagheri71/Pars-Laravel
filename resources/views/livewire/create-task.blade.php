@@ -43,13 +43,13 @@
     </div>
 
     <div class="form-group">
-        <label>{{__('Date')}}</label>
+        <label>{{__('Date')}}<span id="dateCreateSpan"></span></label>
         <input class="form-control text-center" wire:model="date" id="dateCreate" placeholder="{{__('Date')}}">
         @error('date') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
 
     <div class="form-group">
-        <label>{{__('Time')}}</label>
+        <label>{{__('Time')}}<span id="timeCreateSpan"></span></label>
         <input class="form-control text-center" wire:model="time"  id="timeCreate"  class="form-control" placeholder="{{__('Time')}}">
         @error('time') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
