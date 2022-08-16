@@ -66,7 +66,7 @@
                 locale: 'fa',
 
                 header: {
-                    left: 'prev,next today myCustomButton',
+                    left: 'next,prev today myCustomButton',
                     center: 'title',
                     right: 'month,agendaWeek,agendaDay'
                 },
@@ -117,7 +117,7 @@
                 $('#calendar').fullCalendar('addEventSource', function (start, end, timezone, callback) {
                     var load_task = @this.loadTasks(start,end);
                     Promise.all([load_task]).then((tasks) => {
-                        console.log(tasks[0]);
+                        // console.log(tasks[0]);
                         callback(tasks[0]);
                     });
 
