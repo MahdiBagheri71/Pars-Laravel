@@ -22,10 +22,11 @@ class UserSeeder extends Seeder
 
         $role = Role::create(['name' => 'client']);
         $role2 = Role::create(['name' => 'admin']);
+        $role3 = Role::create(['name' => 'writer']);
         Permission::create(['name' => 'edit status tasks'])->assignRole($role)->assignRole($role2);
-        Permission::create(['name' => 'add me tasks'])->assignRole($role)->assignRole($role2);
-        Permission::create(['name' => 'view tasks'])->assignRole($role)->assignRole($role2);
-        Permission::create(['name' => 'edit me task'])->assignRole($role)->assignRole($role2);
+        Permission::create(['name' => 'add me tasks'])->assignRole($role3)->assignRole($role)->assignRole($role2);
+        Permission::create(['name' => 'view tasks'])->assignRole($role)->assignRole($role3)->assignRole($role2);
+        Permission::create(['name' => 'edit me task'])->assignRole($role3)->assignRole($role2);
         Permission::create(['name' => 'view all tasks'])->assignRole($role2);
         Permission::create(['name' => 'edit all tasks'])->assignRole($role2);
         Permission::create(['name' => 'delete tasks'])->assignRole($role2);
@@ -78,6 +79,6 @@ class UserSeeder extends Seeder
         $user->assignRole(['client']);
 
         $user = User::where('id',3)->first();
-        $user->assignRole(['client']);
+        $user->assignRole(['writer']);
     }
 }

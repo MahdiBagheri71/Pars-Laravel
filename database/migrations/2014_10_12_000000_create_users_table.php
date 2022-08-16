@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->boolean('is_admin');//By mahdi for check admin User
             $table->string('api_token', 80)->unique()->nullable();//By mahdi api_token
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
 
