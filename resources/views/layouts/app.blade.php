@@ -38,7 +38,7 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav">
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
@@ -58,15 +58,15 @@
                                     {{ Auth::user()->name }} ({{Auth::user()->hasRole('admin') ? __('Admin') :  __('Employee') }})
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <div class="text-center dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 
                                     <a class="dropdown-item" href="{{ route('dashboard') }}">
                                         {{ __('Dashboard') }}
                                     </a>
 
-                                    <a class="dropdown-item" href="{{ route('tasksCalendar') }}">
-                                        {{ __('Calendar Tasks') }}
-                                    </a>
+{{--                                    <a class="dropdown-item" href="{{ route('tasksCalendar') }}">--}}
+{{--                                        {{ __('Calendar Tasks') }}--}}
+{{--                                    </a>--}}
 
                                     @if(Auth::user()->canany(['view tasks', 'view all tasks']))
                                         <a class="dropdown-item" href="{{ route('tasksList') }}">

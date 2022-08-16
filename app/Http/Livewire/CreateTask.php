@@ -42,7 +42,7 @@ class CreateTask extends Component
             'note' => 'required',
             'status' => 'required|in:cancel,success,retarded,delete,doing,planned',
             'date' => [
-                'required:Y-m-d',
+//                'required:Y-m-d',
                 function ($attribute, $value, $fail) {
                     $this->checkValidateJalali( $value, $fail);
                 },
@@ -59,6 +59,10 @@ class CreateTask extends Component
      */
     private function checkValidateJalali( $value, $fail){
         $date = explode('-',$value);
+        if (count($date) != 3) {
+            $fail(__('validation.date_format_jalali'));
+            return;
+        }
         if (count($date) != 3 && \Morilog\Jalali\CalendarUtils::checkDate($date[0], $date[1], $date[2], true)) {
             $fail(__('validation.date_format_jalali'));
         }

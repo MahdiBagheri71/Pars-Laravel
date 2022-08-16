@@ -27,7 +27,7 @@ class ShowTasks extends Component
     public $order = 'asc';//desc
 
     //message alert
-    public $message_type,$message='';
+    public $message_type;
 
     //list users
     public $users;
@@ -76,10 +76,10 @@ class ShowTasks extends Component
         if(Auth::user()->can('delete tasks')){
             Tasks::where('id', $task_id)->delete();
             $this->message_type = 'success';
-            $this->message =  __('Tasks deleted successfully');
+            session()->flash('message', __('Tasks deleted successfully'));
         }else{
             $this->message_type = 'danger';
-            $this->message =  __('Not Allow!!!');
+            session()->flash('message', __('Not Allow!!!'));
         }
     }
 
@@ -91,10 +91,10 @@ class ShowTasks extends Component
         if(Auth::user()->hasRole('admin')){
             Tasks::withTrashed()->find($task_id)->restore();
             $this->message_type = 'success';
-            $this->message =  __('Tasks restore successfully');
+            session()->flash('message', __('Tasks restore successfully'));
         }else{
             $this->message_type = 'danger';
-            $this->message =  __('Not Allow!!!');
+            session()->flash('message', __('Not Allow!!!'));
         }
     }
 
@@ -105,6 +105,12 @@ class ShowTasks extends Component
      */
     private function checkValidateJalali( $value, $fail){
         $date = explode('-',$value);
+
+        if (count($date) != 3) {
+            $fail(__('validation.date_format_jalali'));
+            return;
+        }
+
         if (count($date) != 3 && \Morilog\Jalali\CalendarUtils::checkDate($date[0], $date[1], $date[2], true)) {
             $fail(__('validation.date_format_jalali'));
         }
@@ -141,14 +147,14 @@ class ShowTasks extends Component
                 'note' => '',
                 'status' => 'in:cancel,success,retarded,delete,doing,planned',
                 'date_start' => [
-                    'date_format:Y-m-d',
+//                    'date_format:Y-m-d',
                     'before_or_equal:date_end',
                     function ($attribute, $value, $fail) {
                         $this->checkValidateJalali( $value, $fail);
                     },
                 ],
                 'date_end' => [
-                    'date_format:Y-m-d',
+//                    'date_format:Y-m-d',
                     'before_or_equal:date_end',
                     function ($attribute, $value, $fail) {
                         $this->checkValidateJalali( $value, $fail);

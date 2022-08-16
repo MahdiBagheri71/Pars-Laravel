@@ -22,15 +22,8 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <a class="nav-link" href="{{ route('tasksList') }}">{{$delete ?  __('List Tasks Delete') : __('List Tasks') }}</a>
-                    </div>
-                    <div class="card-body">
-{{--                        live wire show taks--}}
-                        @livewire('show-tasks',['deleted' => $delete])
-                    </div>
-                </div>
+                {{--live wire show taks--}}
+                @livewire('show-tasks',['deleted' => $delete])
             </div>
         </div>
     </div>

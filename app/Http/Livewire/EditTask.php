@@ -43,16 +43,41 @@ class EditTask extends Component
     }
 
     /**
+     * check validate jalali date
+     * @param $value
+     * @param $fail
+     */
+    private function checkValidateJalali( $value, $fail){
+        $date = explode('-',$value);
+        if (count($date) != 3) {
+            $fail(__('validation.date_format_jalali'));
+            return;
+        }
+        if (count($date) != 3 && \Morilog\Jalali\CalendarUtils::checkDate($date[0], $date[1], $date[2], true)) {
+            $fail(__('validation.date_format_jalali'));
+        }
+    }
+
+    /**
      * set rules for validation
      */
-    protected $rules = [
-        'name' => 'required|max:255|min:3',
-        'note' => 'required',
-        'status' => 'required|in:cancel,success,retarded,delete,doing,planned',
-        'date' => 'required|date_format:Y-m-d',
-        'time' => 'required|date_format:H:i',
-        'user_id' => 'required|integer|exists:users,id'
-    ];
+    public function rules()
+    {
+        return [
+            'name' => 'required|max:255|min:3',
+            'note' => 'required',
+            'status' => 'required|in:cancel,success,retarded,delete,doing,planned',
+            'date' => [
+                'required',
+//                'date_format:Y-m-d',
+                function ($attribute, $value, $fail) {
+                    $this->checkValidateJalali($value, $fail);
+                }
+            ],
+            'time' => 'required|date_format:H:i',
+            'user_id' => 'required|integer|exists:users,id'
+        ];
+    }
 
     /**
      * update task
