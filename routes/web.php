@@ -28,6 +28,7 @@ Route::get('/taskCreate', [App\Http\Controllers\TasksController::class, 'create'
 Route::get('/tasksFullCalendar', [App\Http\Controllers\TasksController::class, 'tasksFullCalendar'])->name('tasksFullCalendar');//change by Mahdi
 
 Route::get('/usersList', [App\Http\Controllers\UserController::class, 'list'])->name('usersList');//change by Mahdi
+Route::get('/usersListDelete', [App\Http\Controllers\UserController::class, 'listDelete'])->name('usersListDelete');//change by Mahdi
 
 // Route::get('/fullcalendar', function () {//by Mahdi
 //     return view('fullcalendar');

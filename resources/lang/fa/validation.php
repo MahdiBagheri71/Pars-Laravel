@@ -48,6 +48,7 @@ return [
     'filled' => 'گزینه :attribute نمی تواند خالی باشد',
 
     'date_format_jalali' => 'گزینه :attribute وارد شده با فرمت جلالی نیست.',
+    'roles' => 'نقش :role در لیست نقش ها موجود نمی باشد',
 
     'gt' => [
         'numeric' => 'گزینه :attribute باید بزرگتر از :value باشد',

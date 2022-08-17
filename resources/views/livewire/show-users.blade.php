@@ -5,14 +5,12 @@
         <a wire:click="refresh" type="button"  title="{{__("Refresh")}}" class="text-dark float-start m-1">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-counterclockwise"><path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"></path> <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"></path></svg>
         </a>
-        {{--create user for admin--}}
-        @if (Auth::user()->hasRole('admin'))
-            <a wire:click="showModal(0,'create')" type="button" title="{{__("Create")}}" class="text-primary float-start m-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                </svg>
-            </a>
-        @endif
+        {{--create user--}}
+        <a wire:click="showModal(0,'create')" type="button" title="{{__("Create")}}" class="text-primary float-start m-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+            </svg>
+        </a>
     </div>
     <div class="card-body">
 
@@ -38,12 +36,13 @@
                 </div>
             @endif
         </div>
+
         <div class="col-md-12 text-center table-responsive">
 
             {{--tabel list users--}}
             <table class="table table-bordered table-striped">
                 <thead>
-                {{--                for show header &sorting--}}
+                {{-- for show header &sorting--}}
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">
@@ -76,6 +75,7 @@
                             @includeWhen( $order_by == 'api_token', 'dashboard.user.order', ['order' => $order])
                         </a>
                     </th>
+                    <th scope="col">{{__('Role')}}</th>
                     <th scope="col">{{__('Action')}}</th>
                 </tr>
 
@@ -103,6 +103,7 @@
                                placeholder="{{__('API Token')}}"/>
                     </th>
                     <th scope="col"></th>
+                    <th scope="col"></th>
                 </tr>
 
                 </thead>
@@ -117,6 +118,7 @@
                         <td>{{$user->email}}</td>
                         <td>{{$user->username}}</td>
                         <td>{{$user->api_token}}</td>
+                        <td>{!! $user->getRoleNames()->join("<br>") !!}</td>
                         <td>
                             @if(!$deleted)
                                 {{--edit user --}}
@@ -205,7 +207,7 @@
                             </h5>
                         </div>
                         <div class="modal-body">
-
+                            @livewire('create-user',['live_wire'=>true])
                         </div>
                     </div>
                 </div>
@@ -233,7 +235,7 @@
                 </div>
             </div>
 
-            {{--        paginate--}}
+            {{--paginate--}}
             <div class="col-md-12">
                 {{ $users->links() }}
             </div>

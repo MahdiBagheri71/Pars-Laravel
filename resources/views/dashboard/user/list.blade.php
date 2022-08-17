@@ -3,6 +3,7 @@
 @section('js_header')
     @livewireStyles
     @livewireScripts
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
 @endsection
 
 @section('content')
@@ -15,4 +16,8 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('js_end')
+    <script src="{{ asset('js/user.js') }}"></script>
 @endsection

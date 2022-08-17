@@ -750,5 +750,10 @@
     "List Tasks Delete" : "لیست وظایف حذف شده",
     "Refresh" : "تازه کردن",
     "Tasks restore successfully" : "وظیفه شما با موفقیت بازیابی گردید",
-    "List Users" : "لیست کاربران"
+    "List Users" : "لیست کاربران",
+    "Users deleted successfully" : "کاربر مربوطه با موفقیت حذف گردید",
+    "List Users Delete" : "لیست کاربران حذف شده",
+    "Users restore successfully" : "کاربر با موفقیت بازیابی گردید",
+    "User Create" : "ایجاد کاربر",
+    "Users created successfully" : "کاربر با موفقیت ایجاد گردید"
 }

@@ -32,4 +32,20 @@ class UserController extends Controller
         //not permission redirect
         return redirect()->route('dashboard');
     }
+
+    /**
+     * show List Users delete
+     * @return View
+     */
+    public function listDelete(){
+        //check permission view task
+        if(Auth::user()->hasRole('admin')){
+            return view('dashboard.user.list',[
+                'delete' => true
+            ]);
+        }
+
+        //not permission redirect
+        return redirect()->route('dashboard');
+    }
 }

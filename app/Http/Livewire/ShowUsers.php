@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -61,6 +60,9 @@ class ShowUsers extends Component
      * delete user
      */
     public function delete($user_id){
+        User::where('id',$user_id)->delete();
+        $this->message_type = 'success';
+        session()->flash('message', __('Users deleted successfully'));
     }
 
     /**
@@ -68,6 +70,9 @@ class ShowUsers extends Component
      * restore user
      */
     public function restore($user_id){
+        User::withTrashed()->find($user_id)->restore();
+        $this->message_type = 'success';
+        session()->flash('message', __('Users restore successfully'));
     }
 
     /**
@@ -104,6 +109,7 @@ class ShowUsers extends Component
         //select users join user
         $users = User::orderBy($this->order_by, $this->order);
 
+        //for show deleted record
         if($this->deleted){
             $users = $users->onlyTrashed();
         }
