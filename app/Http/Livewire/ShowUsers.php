@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Spatie\Permission\Models\Role;
 
 class ShowUsers extends Component
 {
@@ -37,6 +38,15 @@ class ShowUsers extends Component
     //show list deleted
     public $deleted;
 
+    //list roles for select
+    public $roles;
+
+    /**
+     * mount
+     */
+    public function mount(){
+        $this->roles = Role::all()->pluck('name');
+    }
 
     /**
      * refresh after create & edit
@@ -100,6 +110,18 @@ class ShowUsers extends Component
                 'email' => 'min:1',
                 'username' => 'min:1',
                 'api_token' => 'min:1',
+                'role' => [
+                    function ($attribute, $value, $fail) {
+                        foreach ($value as $role){
+                            if(!$this->roles->contains($role)){
+                                $fail(__('validation.roles',[
+                                    'attribute' => $attribute,
+                                    'role' => $role
+                                ]));
+                            }
+                        }
+                    },
+                ]
             ]
         );
 
@@ -108,7 +130,7 @@ class ShowUsers extends Component
 
         //for show deleted record
         if($this->deleted){
-            $users = $users->onlyTrashed();
+            $users->onlyTrashed();
         }
 
         //validator fail
@@ -151,10 +173,18 @@ class ShowUsers extends Component
             $users->where('users.api_token', 'like', '%'.$this->search_users['api_token'].'%');
         }
 
+        //filter role
+        if(isset($this->search_users['role']) && !$validator->errors()->has('role')){
+            $this->resetPage();
+            $users->whereHas(
+                'roles', function($q){
+                    $q->whereIn('roles.name',  $this->search_users['role']);
+                }
+            );
+        }
 
         //order by and paginate
         $users=$users->paginate(10);
-
 
         return view('livewire.show-users',[
             'users' => $users

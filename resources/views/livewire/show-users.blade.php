@@ -102,7 +102,13 @@
                         <input class="form-control" wire:model="search_users.api_token" type="text"
                                placeholder="{{__('API Token')}}"/>
                     </th>
-                    <th scope="col"></th>
+                    <th scope="col">
+                        <select multiple wire:model="search_users.role" class="form-select" aria-label="{{__('Role')}}" style="text-align: center;">
+                            @foreach ($roles as $role)
+                                <option value="{{$role}}">{{$role}}</option>
+                            @endforeach
+                        </select>
+                    </th>
                     <th scope="col"></th>
                 </tr>
 
