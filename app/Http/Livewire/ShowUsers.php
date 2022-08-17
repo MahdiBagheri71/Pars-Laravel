@@ -91,6 +91,8 @@ class ShowUsers extends Component
      * @param $type
      */
     public function showModal($user_id,$type){
+        session()->flash('type', false);
+        session()->flash('message',  false);
         $this->modal_user_id = $user_id;
         $this->modal_task = false;
         if($type == 'edit'){
@@ -153,37 +155,31 @@ class ShowUsers extends Component
 
         //filter name
         if(isset($this->search_users['name']) && !$validator->errors()->has('name')){
-            $this->resetPage();
             $users->where('users.name', 'like', '%'.$this->search_users['name'].'%');
         }
 
         //filter last_name
         if(isset($this->search_users['last_name']) && !$validator->errors()->has('last_name')){
-            $this->resetPage();
             $users->where('users.last_name', 'like', '%'.$this->search_users['last_name'].'%');
         }
 
         //filter email
         if(isset($this->search_users['email']) && !$validator->errors()->has('email')){
-            $this->resetPage();
             $users->where('users.email', 'like', '%'.$this->search_users['email'].'%');
         }
 
         //filter username
         if(isset($this->search_users['username']) && !$validator->errors()->has('username')){
-            $this->resetPage();
             $users->where('users.username', 'like', '%'.$this->search_users['username'].'%');
         }
 
         //filter api_token
         if(isset($this->search_users['api_token']) && !$validator->errors()->has('api_token')){
-            $this->resetPage();
             $users->where('users.api_token', 'like', '%'.$this->search_users['api_token'].'%');
         }
 
         //filter role
         if(isset($this->search_users['role']) && !$validator->errors()->has('role') && !empty($this->search_users['role'])){
-            $this->resetPage();
             $users->whereHas(
                 'roles', function($q){
                     $q->whereIn('roles.name',  $this->search_users['role']);

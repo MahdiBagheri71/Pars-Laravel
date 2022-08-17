@@ -4,8 +4,8 @@
 
         @if (session()->has('message'))
 
-            <div class="alert alert-{{session('type') == 'error' ? 'danger':'success'}}">
-
+            <div class="message-create alert alert-{{session('type') == 'error' ? 'danger':'success'}}">
+                <button type="button" class="btn-close message-create-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 {{ session('message') }}
 
             </div>
@@ -16,19 +16,19 @@
 
     <div class="form-group">
         <label>{{__('Name')}}</label>
-        <input wire:model="name" type="text" class="form-control" placeholder="{{__('Name')}}">
+        <input wire:model.lazy="name" type="text" class="form-control" placeholder="{{__('Name')}}">
         @error('name') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
 
     <div class="form-group">
         <label>{{__('Note')}}</label>
-        <textarea wire:model="note" class="form-control"></textarea>
+        <textarea wire:model.lazy="note" class="form-control"></textarea>
         @error('note') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
 
     <div class="form-group">
         <label>{{__('Status')}}</label>
-        <select wire:model="status" class="form-select" aria-label="{{__('Status')}}" style="text-align: center;">
+        <select wire:model.lazy="status" class="form-select" aria-label="{{__('Status')}}" style="text-align: center;">
             <option value="cancel" style="background : #f0077f;" >{{__('cancel')}}</option>
             <option value="success" style="background : #4cd548;" >{{__('success')}}</option>
             <option value="retarded" style="background : #eecd18;">{{__('retarded')}}</option>
@@ -44,20 +44,20 @@
 
     <div class="form-group">
         <label>{{__('Date')}}</label>
-        <input class="form-control text-center" wire:model="date" id="dateCreate" placeholder="{{__('Date')}}">
+        <input class="form-control text-center" wire:model.lazy="date" id="dateCreate" placeholder="{{__('Date')}}">
         @error('date') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
 
     <div class="form-group">
         <label>{{__('Time')}}</label>
-        <input class="form-control text-center" wire:model="time"  id="timeCreate"  class="form-control" placeholder="{{__('Time')}}">
+        <input class="form-control text-center" wire:model.lazy="time"  id="timeCreate"  class="form-control" placeholder="{{__('Time')}}">
         @error('time') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
 
     @if(Auth::user()->can(['add tasks']))
         <div class="form-group">
             <label>{{__('User')}}</label>
-            <select wire:model="user_id" class="form-select" aria-label="{{__('User')}}" style="text-align: center;">
+            <select wire:model.lazy="user_id" class="form-select" aria-label="{{__('User')}}" style="text-align: center;">
                 @foreach ($users as $user)
                     <option value="{{$user->id}}" @selected({{Auth::user()->id == $user->id}})>{{$user->name.' '.$user->last_name}}</option>
                 @endforeach
@@ -65,7 +65,7 @@
             @error('user_id') <span class="error text-danger">{{ $message }}</span> @enderror
         </div>
     @else
-        <input wire:model="user_id" value="{{Auth::user()->id}}" type="hidden" class="form-control">
+        <input wire:model.lazy="user_id" value="{{Auth::user()->id}}" type="hidden" class="form-control">
         @error('user_id') <span class="error text-danger">{{ $message }}</span> @enderror
     @endif
 

@@ -15,7 +15,16 @@ class EditTask extends Component
     //is live wire request other file for load modal
     public $live_wire=false;
 
-    public $task_id,$name,$note,$status,$date,$time,$user_id;
+    public $task_data = [
+        'name' => '',
+        'status' => '',
+        'note' => '',
+        'date' => '',
+        'time' => '',
+        'user_id' => ''
+    ];
+
+    public $task_id;
 
     /**
      * mount var
@@ -34,12 +43,14 @@ class EditTask extends Component
 
         //set var
         $this->task_id = $this->task->id;
-        $this->name = $this->task->name;
-        $this->note = $this->task->note;
-        $this->status = $this->task->status;
-        $this->date = \Morilog\Jalali\CalendarUtils::strftime('Y-m-d', strtotime($this->task->date)); // convert to jalali
-        $this->time = date('H:i',strtotime($this->task->time));
-        $this->user_id = $this->task->user_id;
+        $this->task_data = [
+            'status' => $this->task->status,
+            'name' => $this->task->name,
+            'note' => $this->task->note,
+            'date' => \Morilog\Jalali\CalendarUtils::strftime('Y-m-d', strtotime($this->task->date)), // convert to jalali
+            'time' => date('H:i',strtotime($this->task->time)),
+            'user_id' => $this->task->user_id,
+        ];
     }
 
     /**
@@ -64,26 +75,27 @@ class EditTask extends Component
     public function rules()
     {
         return [
-            'name' => 'required|max:255|min:3',
-            'note' => 'required',
-            'status' => 'required|in:cancel,success,retarded,delete,doing,planned',
-            'date' => [
+            'task_data.name' => 'required|max:255|min:3',
+            'task_data.note' => 'required',
+            'task_data.status' => 'required|in:cancel,success,retarded,delete,doing,planned',
+            'task_data.date' => [
                 'required',
 //                'date_format:Y-m-d',
                 function ($attribute, $value, $fail) {
                     $this->checkValidateJalali($value, $fail);
                 }
             ],
-            'time' => 'required|date_format:H:i',
-            'user_id' => 'required|integer|exists:users,id'
+            'task_data.time' => 'required|date_format:H:i',
+            'task_data.user_id' => 'required|integer|exists:users,id'
         ];
     }
 
     /**
      * update task
      */
-    public function submit()
+    public function submit($task_data)
     {
+        $this->task_data = $task_data;
         //Not allow edit
         if(!Auth::user()->canany(['edit me task','edit all tasks'])){
             return ;
@@ -96,6 +108,7 @@ class EditTask extends Component
 
         //validate
         $this->validate();
+//        dd($this->task_data);
 
         //find task for edit
         $task = Tasks::find($this->task_id );
@@ -108,15 +121,15 @@ class EditTask extends Component
         }
 
         //date jalali
-        $date = \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d',$this->date)->format('Y-m-d');
+        $date = \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d',$this->task_data['date'])->format('Y-m-d');
 
         //set var for edit
-        $task->name = $this->name;
-        $task->note = $this->note;
-        $task->status = $this->status;
+        $task->name = $this->task_data['name'];
+        $task->note = $this->task_data['note'];
+        $task->status = $this->task_data['status'];
         $task->date = $date;
-        $task->time = $this->time;
-        $task->user_id = $this->user_id;
+        $task->time = $this->task_data['time'];
+        $task->user_id = $this->task_data['user_id'];
 
         //update task
         $task->save();

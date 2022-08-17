@@ -1,7 +1,12 @@
 <div class="card">
+    <div id="spinner_task" class="spinner-border text-warning" role="status" style="position: fixed;left: 48%;z-index: 999999999;top: 48%;">
+        <span class="visually-hidden">Loading...</span>
+    </div>
     <div class="card-header">
         <a class="nav-link float-end m-1"
-           href="{{ route('tasksList') }}">{{$deleted ?  __('List Tasks Delete') : __('List Tasks') }}</a>
+           href="{{ route('tasksList') }}">
+            {{$deleted ?  __('List Tasks Delete') : __('List Tasks') }}
+        </a>
         <a wire:click="refresh" type="button"  title="{{__("Refresh")}}" class="text-dark float-start m-1">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-counterclockwise"><path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"></path> <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"></path></svg>
         </a>
