@@ -99,6 +99,14 @@ class ShowUsers extends Component
         $this->emit('modal_'.$type);
     }
 
+    /**
+     * for load select 2
+     */
+    public function dehydrate()
+    {
+        $this->emit('loadingSelect2');
+    }
+
     public function render()
     {
         //validate
@@ -174,7 +182,7 @@ class ShowUsers extends Component
         }
 
         //filter role
-        if(isset($this->search_users['role']) && !$validator->errors()->has('role')){
+        if(isset($this->search_users['role']) && !$validator->errors()->has('role') && !empty($this->search_users['role'])){
             $this->resetPage();
             $users->whereHas(
                 'roles', function($q){

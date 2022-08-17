@@ -103,7 +103,7 @@
                                placeholder="{{__('API Token')}}"/>
                     </th>
                     <th scope="col">
-                        <select multiple wire:model="search_users.role" class="form-select" aria-label="{{__('Role')}}" style="text-align: center;">
+                        <select id="search_users_role" multiple wire:model="search_users.role" class="form-select" aria-label="{{__('Role')}}" style="text-align: center;">
                             @foreach ($roles as $role)
                                 <option value="{{$role}}">{{$role}}</option>
                             @endforeach
@@ -249,3 +249,24 @@
         </div>
     </div>
 </div>
+<script>
+
+    //after load
+    document.addEventListener("DOMContentLoaded", function(){
+        loadSelect2();
+    });
+    function loadSelect2(){
+        $('#search_users_role').select2();
+        console.log("Loading select 2")
+        // $('#search_users_role').select2();
+        $('#search_users_role').on('change', function (e) {
+            var data = $('#search_users_role').select2("val");
+            console.log(data);
+            @this.set('search_users.role' , data);
+        });
+
+    }
+    window.livewire.on('loadingSelect2', () => {
+        loadSelect2();
+    });
+</script>
