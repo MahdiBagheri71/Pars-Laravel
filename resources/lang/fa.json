@@ -755,5 +755,6 @@
     "List Users Delete" : "لیست کاربران حذف شده",
     "Users restore successfully" : "کاربر با موفقیت بازیابی گردید",
     "User Create" : "ایجاد کاربر",
-    "Users created successfully" : "کاربر با موفقیت ایجاد گردید"
+    "Users created successfully" : "کاربر با موفقیت ایجاد گردید",
+    "Users updated successfully" : "کاربر با موفقیت بروزرسانی گردید"
 }

@@ -188,8 +188,8 @@
                             </h5>
                         </div>
                         <div class="modal-body">
-                            @if($modal_user)
-
+                            @if($modal_task)
+                                @livewire('edit-user',['live_wire'=>true,'user_id' => $modal_user_id])
                             @endif
                         </div>
                     </div>

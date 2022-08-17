@@ -14,17 +14,23 @@ class CreateUser extends Component
     //is live wire request other file for load modal
     public $live_wire;
 
+    //user data
     public $user_data=[
         'name' => '',
         'last_name' => '',
         'email' => '',
         'username' => '',
         'password' => '',
-        'is_admin' => 0
+        'is_admin' => 0 ,
+        'role' => []
     ];
 
+    //list roles for select
     public $roles;
 
+    /**
+     * mount
+     */
     public function mount(){
         $this->roles = Role::all()->pluck('name');
     }
@@ -45,7 +51,10 @@ class CreateUser extends Component
                 function ($attribute, $value, $fail) {
                     foreach ($value as $role){
                         if(!$this->roles->contains($role)){
-                            $fail(str_replace(':role',$role,__('validation.roles')));
+                            $fail(__('validation.roles',[
+                                'attribute' => $attribute,
+                                'role' => $role
+                            ]));
                         }
                     }
                 },

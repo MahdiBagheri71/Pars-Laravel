@@ -29,7 +29,7 @@ class ShowUsers extends Component
     public $errors_message=[];
 
     //modal parameter
-    public $modal_user_id,$modal_user=false;
+    public $modal_user_id,$modal_task=false;
 
     //refresh listeners
     protected $listeners = ['regeneratedCodes' => 'refresh'];
@@ -43,7 +43,7 @@ class ShowUsers extends Component
      */
     public function refresh()
     {
-        $this->modal_user = false;
+        $this->modal_task = false;
     }
 
     /**
@@ -82,12 +82,9 @@ class ShowUsers extends Component
      */
     public function showModal($user_id,$type){
         $this->modal_user_id = $user_id;
+        $this->modal_task = false;
         if($type == 'edit'){
-            $user = User::where('id',$user_id);
-            $user = $user->first();
-            $this->modal_user = $user;
-        }else{
-            $this->modal_user = false;
+            $this->modal_task = true;
         }
         $this->emit('modal_'.$type);
     }
