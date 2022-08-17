@@ -48,4 +48,14 @@ class UserController extends Controller
         //not permission redirect
         return redirect()->route('dashboard');
     }
+
+    /**
+     * Edit Users profile
+     * @return View
+     */
+    public function profile(){
+        return view('dashboard.user.profile',[
+            'user_id' => Auth::user()->id
+        ]);
+    }
 }

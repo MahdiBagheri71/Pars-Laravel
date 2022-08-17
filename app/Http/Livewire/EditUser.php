@@ -28,6 +28,8 @@ class EditUser extends Component
 
     public $user_id;
 
+    public $profile;
+
     //list roles for select
     public $roles;
 
@@ -39,6 +41,11 @@ class EditUser extends Component
         //Not allow edit
         if (!Auth::user()->hasRole('admin')) {
             return;
+        }
+
+        //edit profile
+        if($this->profile){
+            $this->user_id = Auth::user()->id;
         }
 
         //get user
@@ -128,10 +135,13 @@ class EditUser extends Component
         //validate
         $data = $this->validate();
 
+        //edit profile
+        if($this->profile){
+            $this->user_id = Auth::user()->id;
+        }
+
         //get user
         $user = User::where('id', $this->user_id)->first();
-
-
 
         if($user){
             //update user
@@ -148,7 +158,7 @@ class EditUser extends Component
 
             $user->save();
 
-            if(isset($data['user_data']['role']) && is_array($data['user_data']['role'])){
+            if(isset($data['user_data']['role']) && is_array($data['user_data']['role']) && !$this->profile){
                 $user->syncRoles($data['user_data']['role']);
             }
             //message success update

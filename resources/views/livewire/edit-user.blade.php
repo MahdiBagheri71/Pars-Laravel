@@ -49,20 +49,22 @@
         <input wire:model="user_data.password_confirmation" value="{{$user_data['password_confirmation']}}" type="password" class="form-control" placeholder="{{__('Confirm Password')}}">
     </div>
 
-    <div class="form-group">
-        <label>{{__('Role')}}</label>
-        <select multiple wire:model="user_data.role" class="form-select" aria-label="{{__('Role')}}" style="text-align: center;">
-            @foreach ($roles as $role)
-                <option value="{{$role}}" @selected({{in_array($role,$user_data['role'])}})>{{$role}}</option>
-            @endforeach
-        </select>
-        @error('user_data.role') <span class="error text-danger">{{ $message }}</span> @enderror
-    </div>
+    @if(!$profile)
+        <div class="form-group">
+            <label>{{__('Role')}}</label>
+            <select multiple wire:model="user_data.role" class="form-select" aria-label="{{__('Role')}}" style="text-align: center;">
+                @foreach ($roles as $role)
+                    <option value="{{$role}}" @selected({{in_array($role,$user_data['role'])}})>{{$role}}</option>
+                @endforeach
+            </select>
+            @error('user_data.role') <span class="error text-danger">{{ $message }}</span> @enderror
+        </div>
+    @endif
 
     <br>
 
     <div class="modal-footer">
-        <a {!! $live_wire ?'': 'href="'.route('tasksList').'"' !!}  type="button" class="btn btn-dark m-1 editModalClose">{{__('Cancel')}}</a>
+        <a {!! $live_wire ?'': 'href="'.route('dashboard').'"' !!}  type="button" class="btn btn-dark m-1 editModalClose">{{__('Cancel')}}</a>
         <button type="submit" class="btn btn-success m-1">{{__('Save')}}</button>
     </div>
 
