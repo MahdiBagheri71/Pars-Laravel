@@ -58,7 +58,7 @@ class ShowTasks extends Component
     public function dehydrate()
     {
         $this->emit("hide_spinner_task");
-        $this->setPage(1);
+//        $this->setPage(1);
     }
 
     /**
@@ -150,6 +150,10 @@ class ShowTasks extends Component
     public function showModal($task_id,$type){
         $this->modal_task_id = $task_id;
         if($type == 'edit'){
+            $task = Tasks::where('id',$task_id);
+            $task = $task->first();
+            $this->modal_task = $task;
+        }elseif($type == 'edit_status'){
             $task = Tasks::where('id',$task_id);
             $task = $task->first();
             $this->modal_task = $task;

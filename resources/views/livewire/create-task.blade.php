@@ -29,14 +29,13 @@
     <div class="form-group">
         <label>{{__('Status')}}</label>
         <select name="status" class="form-select" aria-label="{{__('Status')}}" style="text-align: center;">
-            <option value="cancel" style="background : #f0077f;" >{{__('cancel')}}</option>
-            <option value="success" style="background : #4cd548;" >{{__('success')}}</option>
-            <option value="retarded" style="background : #eecd18;">{{__('retarded')}}</option>
-            <option value="doing" style="background : #2094fb;">{{__('doing')}}</option>
-            <option value="planned" style="background : #04a1bb;" selected>{{__('planned')}}</option>
-            <option value="delete" style="background : #bf565b;">{{__('delete')}}</option>
+            <option value="cancel" class="text-cancel">{{__('cancel')}}</option>
+            <option value="success" class="text-success">{{__('success')}}</option>
+            <option value="retarded" class="text-retarded">{{__('retarded')}}</option>
+            <option value="doing" class="text-doing">{{__('doing')}}</option>
+            <option value="planned" class="text-planned" selected>{{__('planned')}}</option>
             @if(Auth::user()->can('add tasks'))
-                <option value="delete" style="background : #bf565b;">{{__('delete')}}</option>
+                <option value="delete" class="text-delete">{{__('delete')}}</option>
             @endif
         </select>
         @error('task_data.status') <span class="error text-danger">{{ $message }}</span> @enderror

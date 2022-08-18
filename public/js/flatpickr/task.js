@@ -44,6 +44,17 @@ window.livewire.on('modal_delete', () => {
     })
 });
 
+//for edit status modal task
+window.livewire.on('modal_edit_status', () => {
+    $('#editStatusModal').modal('show');
+    $('.editStatusModalClose').click(function (){
+        $('#editStatusModal').modal('hide');
+    });
+    $('#editStatusModal').on('hidden.bs.modal', function () {
+        Livewire.emit('regeneratedCodes');
+    });
+});
+
 //for edit modal task
 window.livewire.on('modal_edit', () => {
     $('#editModal').modal('show');

@@ -21,7 +21,7 @@ class EditStatusTask extends Component
     public function mount()
     {
         //Not task for me only permission "edit me task"
-        if(!Auth::user()->can('edit status tasks') && $this->task->user_id != Auth::user()->id){
+        if(!Auth::user()->can('edit status tasks')){
             return ;
         }
 
@@ -37,29 +37,18 @@ class EditStatusTask extends Component
         'status' => 'required|in:cancel,success,retarded,doing,planned',
     ];
 
-    /**
-     * update task status
-     */
-    public function submit()
-    {
 
+
+    public function updated($propertyName)
+    {
         //Not task for me only permission "edit me task"
-        if(!Auth::user()->can('edit status tasks') && $this->task->user_id != Auth::user()->id){
+        if(!Auth::user()->can('edit status tasks')){
             return ;
         }
-
-        //status == delete
-        if($this->task->status == 'delete'){
-            session()->flash('type', 'error');
-            session()->flash('message',  __('Tasks not found'));
-            return  ;
-        }
-
-        //validate
-        $this->validate();
+        $this->validateOnly($propertyName);
 
         //find task for edit
-        $task = Tasks::find($this->task_id );
+        $task = Tasks::find($this->task_id);
 
         //not find !!!
         if(!$task) {
@@ -80,5 +69,6 @@ class EditStatusTask extends Component
         //message success update
         session()->flash('type', 'success');
         session()->flash('message',  __('Task status updated successfully'));
+
     }
 }

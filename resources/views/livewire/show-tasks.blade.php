@@ -12,7 +12,7 @@
                         </a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        {{$deleted ?  __('List Tasks Delete') : __('List Tasks') }}
+                        {{$deleted ?  __('List Tasks Delete') : __('List Tasks') }}({{$tasks->total()}})
                     </li>
                 </ol>
             </nav>
@@ -86,7 +86,7 @@
                             @includeWhen( $order_by == 'note', 'dashboard.task.order', ['order' => $order])
                         </a>
                     </th>
-                    <th scope="col">
+                    <th scope="col" style="min-width: 100px;">
                         <a href="#" wire:click="orderBy('status')">
                             {{__('Status')}}
                             @includeWhen( $order_by == 'status', 'dashboard.task.order', ['order' => $order])
@@ -124,12 +124,12 @@
                         <select wire:model="search_tasks.status" class="form-select custom-select"
                                 aria-label="{{__('Status')}}" style="text-align: center;">
                             <option value="" style="background : #fff;">{{__('Select')}}</option>
-                            <option value="cancel" style="background : #f0077f;">{{__('cancel')}}</option>
-                            <option value="success" style="background : #4cd548;">{{__('success')}}</option>
-                            <option value="retarded" style="background : #eecd18;">{{__('retarded')}}</option>
-                            <option value="doing" style="background : #2094fb;">{{__('doing')}}</option>
-                            <option value="planned" style="background : #04a1bb;">{{__('planned')}}</option>
-                            <option value="delete" style="background : #bf565b;">{{__('delete')}}</option>
+                            <option value="cancel" class="text-cancel">{{__('cancel')}}</option>
+                            <option value="success" class="text-success">{{__('success')}}</option>
+                            <option value="retarded" class="text-retarded">{{__('retarded')}}</option>
+                            <option value="doing" class="text-doing">{{__('doing')}}</option>
+                            <option value="planned" class="text-planned">{{__('planned')}}</option>
+                            <option value="delete" class="text-delete">{{__('delete')}}</option>
                         </select>
                     </th>
                     <th scope="col">
@@ -179,19 +179,17 @@
                         <th scope="row">{{$row+($tasks->firstItem())}}</th>
                         <td>{{$task->name}}</td>
                         <td style="white-space: pre-wrap; white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;">{!! $task->note !!}</td>
-                        <td>{{__($task->status)}}</td>
-                        <td>
-                            {{\Morilog\Jalali\CalendarUtils::strftime('Y-m-d', strtotime($task->date))}}
-                            {{--                        <br>--}}
-                            {{--                        {{$task->date}}--}}
+                        <td class="text-{{$task->status}}" {!! (Auth::user()->can('edit status tasks') && !$deleted) ? ' type="button" wire:click="showModal('.$task->id.',\'edit_status\')"':''  !!}>
+                            {{__($task->status)}}
                         </td>
+                        <td>{!! \Morilog\Jalali\CalendarUtils::strftime('l d F Y', strtotime($task->date))  !!}</td>
                         <td>{{$task->time}}</td>
                         <td>{{$task->user->user_name . ' ' .$task->user->user_last_name}}</td>
                         <td>{{$task->creator->creator_name . ' ' .$task->creator->creator_last_name}}</td>
                         <td>
                             @if(!$deleted)
-                                {{--                        edit task --}}
-                                @if (Auth::user()->canany(['edit me task','edit status tasks','edit all tasks']))
+                                {{--edit task --}}
+                                @if (Auth::user()->canany(['edit me task','edit all tasks']))
                                     <a title="{{__("Edit")}}" wire:click="showModal({{$task->id}},'edit')" type="button"
                                        class="text-secondary">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -236,7 +234,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">
+                            <h5 class="modal-title">
                                 {{__("Delete")}}
                             </h5>
                         </div>
@@ -258,7 +256,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">
+                            <h5 class="modal-title">
                                 {{__("Edit")}}
                             </h5>
                         </div>
@@ -267,8 +265,27 @@
                                 @if(Auth::user()->canany(['edit me task','edit all tasks']))
                                     {{--                        live wire edit taks--}}
                                     @livewire('edit-task',['task'=>$modal_task,'users'=>$users,'live_wire'=>true])
-                                @elseif(Auth::user()->can('edit status tasks'))
-                                    {{--                        live wire edit status taks--}}
+                                @endif
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Edit Status-->
+            <div class="modal fade" id="editStatusModal" tabindex="-1" role="dialog" aria-labelledby="editStatusModalCenterTitle"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">
+                                {{__("Edit")}}
+                            </h5>
+                        </div>
+                        <div class="modal-body">
+                            @if($modal_task)
+                                @if(Auth::user()->can('edit status tasks'))
+                                    {{--live wire edit status taks--}}
                                     @livewire('edit-status-task',['task'=>$modal_task,'live_wire'=>true])
                                 @endif
                             @endif
@@ -283,7 +300,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">
+                            <h5 class="modal-title">
                                 {{__("Task Create")}}
                             </h5>
                         </div>
@@ -302,7 +319,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">
+                            <h5 class="modal-title">
                                 {{__("Restore")}}
                             </h5>
                         </div>

@@ -29,14 +29,14 @@
     <div class="form-group">
         <label>{{__('Status')}}</label>
         <select name="status" class="form-select" aria-label="{{__('Status')}}" style="text-align: center;">
-            <option value="cancel" style="background : #f0077f;" @selected({{$task_data['status'] == 'cancel' }} )>{{__('cancel')}}</option>
-            <option value="success" style="background : #4cd548;" @selected({{$task_data['status'] == 'success'}}) >{{__('success')}}</option>
-            <option value="retarded" style="background : #eecd18;" @selected({{$task_data['status'] == 'retarded'}})>{{__('retarded')}}</option>
-            <option value="doing" style="background : #2094fb;" @selected({{$task_data['status'] == 'doing'}})>{{__('doing')}}</option>
-            <option value="planned" style="background : #04a1bb;" @selected({{$task_data['status'] == 'planned'}})>{{__('planned')}}</option>
+            <option value="cancel" class="text-cancel" {{$task->status == 'cancel' ? 'selected':''}}>{{__('cancel')}}</option>
+            <option value="success" class="text-success" {{$task->status == 'success' ? 'selected':''}} >{{__('success')}}</option>
+            <option value="retarded" class="text-retarded" {{$task->status == 'retarded' ? 'selected':''}}>{{__('retarded')}}</option>
+            <option value="doing" class="text-doing" {{$task->status == 'doing' ? 'selected':''}}>{{__('doing')}}</option>
+            <option value="planned" class="text-planned" {{$task->status == 'planned' ? 'selected':''}}>{{__('planned')}}</option>
 
             @if(Auth::user()->can('edit all tasks'))
-                <option value="delete" style="background : #bf565b;" @selected({{$task_data['status'] == 'delete'}})>{{__('delete')}}</option>
+                <option value="delete" class="text-delete" {{$task->status == 'delete' ? 'selected':''}}>{{__('delete')}}</option>
             @endif
         </select>
         @error('task_data.status') <span class="error text-danger">{{ $message }}</span> @enderror
@@ -59,7 +59,7 @@
             <label>{{__('User')}}</label>
                 <select name="user_id" class="form-select" aria-label="{{__('User')}}" style="text-align: center;">
                     @foreach ($users as $user)
-                        <option value="{{$user->id}}" @selected({{$task_data['user_id'] == $user->id}})>{{$user->name.' '.$user->last_name}}</option>
+                        <option value="{{$user->id}}" {{$task_data['user_id'] == $user->id ? 'selected':''}}>{{$user->name.' '.$user->last_name}}</option>
                     @endforeach
                 </select>
                 @error('task_data.status') <span class="error text-danger">{{ $message }}</span> @enderror

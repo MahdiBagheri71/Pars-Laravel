@@ -11,7 +11,6 @@
     <script src="{{ asset('js/flatpickr/rangePlugin.js') }}"></script>
     <script src="{{ asset('js/flatpickr/fa.js') }}"></script>
 
-
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/moment.min.js') }}"></script>
     <style>
@@ -24,6 +23,28 @@
             color: var(--bs-breadcrumb-divider-color);
             content: var(--bs-breadcrumb-divider, "/");
         }
+
+        .text-cancel {
+            --bs-text-opacity: 1;
+            color: #f0077f !important;
+        }
+        .text-retarded {
+            --bs-text-opacity: 1;
+            color: #eecd18 !important;
+        }
+        .text-doing {
+            --bs-text-opacity: 1;
+            color: #2094fb !important;
+        }
+        .text-planned {
+            --bs-text-opacity: 1;
+            color: #04bba6 !important;
+        }
+        .text-delete {
+            --bs-text-opacity: 1;
+            color: #bf565b !important;
+        }
+
     </style>
 @endsection
 
