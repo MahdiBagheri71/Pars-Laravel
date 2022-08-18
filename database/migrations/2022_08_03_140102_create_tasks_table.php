@@ -20,7 +20,8 @@ class CreateTasksTable extends Migration
             $table->string('name', 255);
             $table->text('note');
 //            $table->string('status',50);// ['cancel', 'success'  , 'retarded' , 'delete', 'doing','planned']
-            $table->enum('status', ['cancel', 'success'  , 'retarded' , 'delete', 'doing','planned']);// ['cancel', 'success'  , 'retarded' , 'delete', 'doing','planned']
+//            $table->enum('status', ['cancel', 'success'  , 'retarded' , 'delete', 'doing','planned']);// ['cancel', 'success'  , 'retarded' , 'delete', 'doing','planned']
+            $table->enum('status', array_keys(config('enums.task_status')));// ['cancel', 'success'  , 'retarded' , 'delete', 'doing','planned']
             $table->date('date');
             $table->time('time', 0);
             $table->unsignedBigInteger('user_id');

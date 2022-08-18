@@ -37,6 +37,23 @@ class CalendarTask extends Component
     }
 
     /**
+     * for show spinner
+     */
+    public function boot()
+    {
+        $this->emit("show_spinner_task");
+    }
+
+    /**
+     * for hide spinner
+     */
+    public function dehydrate()
+    {
+        $this->emit("hide_spinner_task");
+//        $this->setPage(1);
+    }
+
+    /**
      * load task for calendar
      * @param $start
      * @param $end

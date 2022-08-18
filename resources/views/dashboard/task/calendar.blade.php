@@ -21,6 +21,39 @@
     <script src="{{ asset('js/flatpickr/fa.js') }}"></script>
 
     @livewireScripts
+    <style>
+        .flatpickr-wrapper{
+            display: block !important;
+        }
+        .breadcrumb-item + .breadcrumb-item::before {
+            float: right;
+            padding-left: var(--bs-breadcrumb-item-padding-x);
+            color: var(--bs-breadcrumb-divider-color);
+            content: var(--bs-breadcrumb-divider, "/");
+        }
+
+        .text-cancel {
+            --bs-text-opacity: 1;
+            color: #f0077f !important;
+        }
+        .text-retarded {
+            --bs-text-opacity: 1;
+            color: #eecd18 !important;
+        }
+        .text-doing {
+            --bs-text-opacity: 1;
+            color: #2094fb !important;
+        }
+        .text-planned {
+            --bs-text-opacity: 1;
+            color: #04bba6 !important;
+        }
+        .text-delete {
+            --bs-text-opacity: 1;
+            color: #bf565b !important;
+        }
+
+    </style>
     @stack('scripts')
 @endsection
 
@@ -28,12 +61,8 @@
 @section('content')
 
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-12">
-                {{-- live wire show taks calendar--}}
-                @livewire('calendar-task')
-            </div>
-        </div>
+        {{-- live wire show taks calendar--}}
+        @livewire('calendar-task')
     </div>
     @stack('scripts')
 @endsection
