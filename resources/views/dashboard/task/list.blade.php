@@ -14,6 +14,17 @@
 
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/moment.min.js') }}"></script>
+    <style>
+        .flatpickr-wrapper{
+            display: block !important;
+        }
+        .breadcrumb-item + .breadcrumb-item::before {
+            float: right;
+            padding-left: var(--bs-breadcrumb-item-padding-x);
+            color: var(--bs-breadcrumb-divider-color);
+            content: var(--bs-breadcrumb-divider, "/");
+        }
+    </style>
 @endsection
 
 

@@ -3,7 +3,7 @@
         @php(isset($this->numberOfPaginatorsRendered[$paginator->getPageName()]) ? $this->numberOfPaginatorsRendered[$paginator->getPageName()]++ : $this->numberOfPaginatorsRendered[$paginator->getPageName()] = 1)
 
         <nav>
-            <ul class="pagination justify-content-center">
+            <ul class="pagination justify-content-center m-0">
                 {{-- Previous Page Link --}}
                 @if ($paginator->onFirstPage())
                     <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
@@ -46,16 +46,15 @@
                 @endif
             </ul>
         </nav>
-        <div>
-            <p class="text-sm text-gray-700 leading-5">
-                <span>{!! __('Showing') !!}</span>
-                <span class="font-medium">{{ $paginator->firstItem() }}</span>
-                <span>{!! __('to') !!}</span>
-                <span class="font-medium">{{ $paginator->lastItem() }}</span>
-                <span>{!! __('of') !!}</span>
-                <span class="font-medium">{{ $paginator->total() }}</span>
-                <span>{!! __('results') !!}</span>
-            </p>
-        </div>
     @endif
+
+    <p class="text-sm text-gray-700 leading-5 text-center m-1">
+        <span>{!! __('Showing') !!}</span>
+        <span class="font-medium">{{ $paginator->firstItem() }}</span>
+        <span>{!! __('to') !!}</span>
+        <span class="font-medium">{{ $paginator->lastItem() }}</span>
+        <span>{!! __('of') !!}</span>
+        <span class="font-medium">{{ $paginator->total() }}</span>
+        <span>{!! __('results') !!}</span>
+    </p>
 </div>

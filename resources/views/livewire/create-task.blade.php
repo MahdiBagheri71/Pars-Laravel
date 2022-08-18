@@ -16,13 +16,13 @@
 
     <div class="form-group">
         <label>{{__('Name')}}</label>
-        <input name="name" type="text" value="{{$task_data['name']}}" class="form-control resetCloaseCreate" placeholder="{{__('Name')}}">
+        <input name="name" type="text" value="{{$task_data['name']}}" class="form-control resetCloseCreate" placeholder="{{__('Name')}}">
         @error('task_data.name') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
 
     <div class="form-group">
         <label>{{__('Note')}}</label>
-        <textarea name="note" class="form-control resetCloaseCreate">{{$task_data['note']}}</textarea>
+        <textarea name="note" class="form-control resetCloseCreate">{{$task_data['note']}}</textarea>
         @error('task_data.note') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
 

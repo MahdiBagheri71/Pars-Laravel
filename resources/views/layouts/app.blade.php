@@ -16,6 +16,16 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+    <style>
+        @font-face {
+            font-family: 'PEYDA';
+            src: url('{{ asset('font/PEYDA-BOLD.ttf') }}');
+            src: local('BYekan'),  url('{{ asset('font/PEYDA-BOLD.ttf') }}') format('truetype');
+        }
+        *{
+            font-family: 'PEYDA';
+        }
+    </style>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('js_header')
@@ -81,11 +91,11 @@
                                         </a>
                                     @endif
 
-                                    @if(Auth::user()->hasRole('admin'))
-                                        <a class="dropdown-item" href="{{ route('tasksListDelete') }}">
-                                            {{ __('List Tasks Delete') }}
-                                        </a>
-                                    @endif
+{{--                                    @if(Auth::user()->hasRole('admin'))--}}
+{{--                                        <a class="dropdown-item" href="{{ route('tasksListDelete') }}">--}}
+{{--                                            {{ __('List Tasks Delete') }}--}}
+{{--                                        </a>--}}
+{{--                                    @endif--}}
 
                                     @if(Auth::user()->hasRole('admin'))
                                         <a class="dropdown-item" href="{{ route('usersList') }}">

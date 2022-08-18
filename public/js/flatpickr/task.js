@@ -18,14 +18,6 @@ document.addEventListener('livewire:load', function () {
         dateFormat: "Y-m-d"
     });
 
-    flatpickr("#dateCreate", {
-        enableTime: false,
-        "locale": "fa" ,
-        noCalendar: false,
-        time_24hr: true,
-        dateFormat: "Y-m-d"
-    });
-
     //flatpickr time select
     flatpickr("#startTime", {
         enableTime: true,
@@ -36,14 +28,6 @@ document.addEventListener('livewire:load', function () {
     });
 
     flatpickr("#endTime", {
-        enableTime: true,
-        "locale": "fa" ,
-        noCalendar: true,
-        time_24hr: true,
-        dateFormat: "H:i"
-    });
-
-    flatpickr("#timeCreate", {
         enableTime: true,
         "locale": "fa" ,
         noCalendar: true,
@@ -72,7 +56,8 @@ window.livewire.on('modal_edit', () => {
         "locale": "fa" ,
         noCalendar: false,
         time_24hr: true,
-        dateFormat: "Y-m-d"
+        dateFormat: "Y-m-d",
+        static: true
     });
 
     flatpickr(".timeEdit", {
@@ -80,7 +65,8 @@ window.livewire.on('modal_edit', () => {
         "locale": "fa" ,
         noCalendar: true,
         time_24hr: true,
-        dateFormat: "H:i"
+        dateFormat: "H:i",
+        static: true
     });
 
     $('.editModalClose').click(function (){
@@ -91,6 +77,25 @@ window.livewire.on('modal_edit', () => {
 //for create modal task
 window.livewire.on('modal_create', () => {
     $('#createModal').modal('show');
+
+    flatpickr("#dateCreate", {
+        enableTime: false,
+        "locale": "fa" ,
+        noCalendar: false,
+        time_24hr: true,
+        dateFormat: "Y-m-d",
+        static: true
+    });
+
+    flatpickr("#timeCreate", {
+        enableTime: true,
+        "locale": "fa" ,
+        noCalendar: true,
+        time_24hr: true,
+        dateFormat: "H:i",
+        static: true
+    });
+
     $('#createModal').on('hidden.bs.modal', function () {
         Livewire.emit('regeneratedCodes');
     });
@@ -106,7 +111,7 @@ window.livewire.on('closeModal', () => {
         $('.message-create-close').click();
         $('#createModal').modal('hide');
     },500);
-    $('.resetCloaseCreate').val('');
+    $('.resetCloseCreate').val('');
 });
 
 //for restore modal task

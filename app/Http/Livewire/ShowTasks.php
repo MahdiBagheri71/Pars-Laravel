@@ -102,6 +102,14 @@ class ShowTasks extends Component
     }
 
     /**
+     *
+     * @param $deleted
+     */
+    public function setDeleted($deleted){
+        $this->deleted = $deleted;
+    }
+
+    /**
      * @param $task_id
      * restore task
      */
