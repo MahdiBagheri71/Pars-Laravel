@@ -106,6 +106,7 @@ window.livewire.on('closeModal', () => {
         $('.message-create-close').click();
         $('#createModal').modal('hide');
     },500);
+    $('.resetCloaseCreate').val('');
 });
 
 //for restore modal task

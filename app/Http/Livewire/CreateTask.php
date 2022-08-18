@@ -11,7 +11,15 @@ class CreateTask extends Component
 {
     public $users;
 
-    public $name,$note,$status,$date,$time,$user_id;
+
+    public $task_data = [
+        'name' => '',
+        'status' => '',
+        'note' => '',
+        'date' => '',
+        'time' => '',
+        'user_id' => ''
+    ];
 
     //is live wire request other file for load modal
     public $live_wire;
@@ -23,13 +31,14 @@ class CreateTask extends Component
      */
     public function mount()
     {
-        //Not allow edit
-        $this->user_id = Auth::user()->id;
-        $this->status = 'planned';
-        $this->name = '';
-        $this->note = '';
-        $this->date = \Morilog\Jalali\CalendarUtils::strftime('Y-m-d', strtotime($this->date_time?$this->date_time:time()));
-        $this->time = $this->date_time?date('H:i',strtotime($this->date_time)):date('H:i');
+        $this->task_data = [
+            'status' => 'planned',
+            'name' => '',
+            'note' => '',
+            'date' => \Morilog\Jalali\CalendarUtils::strftime('Y-m-d', strtotime($this->date_time?$this->date_time:time())), // convert to jalali
+            'time' => $this->date_time?date('H:i',strtotime($this->date_time)):date('H:i'),
+            'user_id' => Auth::user()->id
+        ];
     }
 
     /**
@@ -38,17 +47,17 @@ class CreateTask extends Component
     public function rules()
     {
         return [
-            'name' => 'required|max:255|min:3',
-            'note' => 'required',
-            'status' => 'required|in:cancel,success,retarded,delete,doing,planned',
-            'date' => [
+            'task_data.name' => 'required|max:255|min:3',
+            'task_data.note' => 'required',
+            'task_data.status' => 'required|in:cancel,success,retarded,delete,doing,planned',
+            'task_data.date' => [
 //                'required:Y-m-d',
                 function ($attribute, $value, $fail) {
                     $this->checkValidateJalali( $value, $fail);
                 },
             ],
-            'time' => 'required|date_format:H:i',
-            'user_id' => 'required|exists:users,id'
+            'task_data.time' => 'required|date_format:H:i',
+            'task_data.user_id' => 'required|exists:users,id'
         ];
     }
 
@@ -71,9 +80,10 @@ class CreateTask extends Component
     /**
      * create task
      */
-    public function create()
+    public function create($task_data)
     {
 
+        $this->task_data = $task_data;
         //Not allow edit
         if(!Auth::user()->canany(['add tasks','add me tasks'])){
             session()->flash('type', 'error');
@@ -85,16 +95,16 @@ class CreateTask extends Component
         $this->validate();
 
         //date jalali
-        $date = \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d',$this->date)->format('Y-m-d');
+        $date = \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d',$this->task_data['date'])->format('Y-m-d');
 
         //create task
         $task = Tasks::create([
-            'name' => $this->name,
-            'note' => $this->note,
-            'status' => $this->status,
+            'name' => $this->task_data['name'],
+            'note' => $this->task_data['note'],
+            'status' => $this->task_data['status'],
             'date' => $date,
-            'time' => $this->time,
-            'user_id' => Auth::user()->canany(['add tasks'])?$this->user_id:Auth::user()->id,
+            'time' => $this->task_data['time'],
+            'user_id' => Auth::user()->canany(['add tasks'])?$this->task_data['user_id']:Auth::user()->id,
             'create_by_id' => Auth::user()->id
         ]);
 
@@ -110,12 +120,14 @@ class CreateTask extends Component
 
         //live wire request
         if($this->live_wire){
-            $this->user_id = Auth::user()->id;
-            $this->status = 'planned';
-            $this->name = '';
-            $this->note = '';
-            $this->date = \Morilog\Jalali\CalendarUtils::strftime('Y-m-d', strtotime($this->date_time?$this->date_time:time()));
-            $this->time = $this->date_time?date('H:i',strtotime($this->date_time)):date('H:i');
+            $this->task_data = [
+                'status' => 'planned',
+                'name' => '',
+                'note' => '',
+                'date' => \Morilog\Jalali\CalendarUtils::strftime('Y-m-d', strtotime($this->date_time?$this->date_time:time())), // convert to jalali
+                'time' => $this->date_time?date('H:i',strtotime($this->date_time)):date('H:i'),
+                'user_id' => Auth::user()->id
+            ];
             $this->emit('closeModal');
             return ;
         }

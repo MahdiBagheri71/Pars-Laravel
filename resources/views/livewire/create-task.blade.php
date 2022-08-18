@@ -1,4 +1,4 @@
-<form wire:submit.prevent="create" style="text-align: center;">
+<form wire:submit.prevent="create(Object.fromEntries(new FormData($event.target)))" class="text-center">
 
     <div>
 
@@ -16,19 +16,19 @@
 
     <div class="form-group">
         <label>{{__('Name')}}</label>
-        <input wire:model.lazy="name" type="text" class="form-control" placeholder="{{__('Name')}}">
-        @error('name') <span class="error text-danger">{{ $message }}</span> @enderror
+        <input name="name" type="text" value="{{$task_data['name']}}" class="form-control resetCloaseCreate" placeholder="{{__('Name')}}">
+        @error('task_data.name') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
 
     <div class="form-group">
         <label>{{__('Note')}}</label>
-        <textarea wire:model.lazy="note" class="form-control"></textarea>
-        @error('note') <span class="error text-danger">{{ $message }}</span> @enderror
+        <textarea name="note" class="form-control resetCloaseCreate">{{$task_data['note']}}</textarea>
+        @error('task_data.note') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
 
     <div class="form-group">
         <label>{{__('Status')}}</label>
-        <select wire:model.lazy="status" class="form-select" aria-label="{{__('Status')}}" style="text-align: center;">
+        <select name="status" class="form-select" aria-label="{{__('Status')}}" style="text-align: center;">
             <option value="cancel" style="background : #f0077f;" >{{__('cancel')}}</option>
             <option value="success" style="background : #4cd548;" >{{__('success')}}</option>
             <option value="retarded" style="background : #eecd18;">{{__('retarded')}}</option>
@@ -39,34 +39,34 @@
                 <option value="delete" style="background : #bf565b;">{{__('delete')}}</option>
             @endif
         </select>
-        @error('status') <span class="error text-danger">{{ $message }}</span> @enderror
+        @error('task_data.status') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
 
     <div class="form-group">
         <label>{{__('Date')}}</label>
-        <input class="form-control text-center" wire:model.lazy="date" id="dateCreate" placeholder="{{__('Date')}}">
-        @error('date') <span class="error text-danger">{{ $message }}</span> @enderror
+        <input class="form-control text-center" value="{{$task_data['date']}}" name="date" id="dateCreate" placeholder="{{__('Date')}}">
+        @error('task_data.date') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
 
     <div class="form-group">
         <label>{{__('Time')}}</label>
-        <input class="form-control text-center" wire:model.lazy="time"  id="timeCreate"  class="form-control" placeholder="{{__('Time')}}">
-        @error('time') <span class="error text-danger">{{ $message }}</span> @enderror
+        <input class="form-control text-center" value="{{$task_data['time']}}" name="time"  id="timeCreate"  class="form-control" placeholder="{{__('Time')}}">
+        @error('task_data.time') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
 
     @if(Auth::user()->can(['add tasks']))
         <div class="form-group">
             <label>{{__('User')}}</label>
-            <select wire:model.lazy="user_id" class="form-select" aria-label="{{__('User')}}" style="text-align: center;">
+            <select name="user_id" class="form-select" aria-label="{{__('User')}}" style="text-align: center;">
                 @foreach ($users as $user)
                     <option value="{{$user->id}}" @selected({{Auth::user()->id == $user->id}})>{{$user->name.' '.$user->last_name}}</option>
                 @endforeach
             </select>
-            @error('user_id') <span class="error text-danger">{{ $message }}</span> @enderror
+            @error('task_data.user_id') <span class="error text-danger">{{ $message }}</span> @enderror
         </div>
     @else
-        <input wire:model.lazy="user_id" value="{{Auth::user()->id}}" type="hidden" class="form-control">
-        @error('user_id') <span class="error text-danger">{{ $message }}</span> @enderror
+        <input name="user_id" value="{{Auth::user()->id}}" type="hidden" class="form-control">
+        @error('task_data.user_id') <span class="error text-danger">{{ $message }}</span> @enderror
     @endif
 
     <br>
