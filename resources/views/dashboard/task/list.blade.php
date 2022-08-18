@@ -24,26 +24,13 @@
             content: var(--bs-breadcrumb-divider, "/");
         }
 
-        .text-cancel {
+        @foreach(config('enums.task_status') as $key=>$status)
+
+        .text-{{$key}} {
             --bs-text-opacity: 1;
-            color: #f0077f !important;
+            color: {{$status['color']}} !important;
         }
-        .text-retarded {
-            --bs-text-opacity: 1;
-            color: #eecd18 !important;
-        }
-        .text-doing {
-            --bs-text-opacity: 1;
-            color: #2094fb !important;
-        }
-        .text-planned {
-            --bs-text-opacity: 1;
-            color: #04bba6 !important;
-        }
-        .text-delete {
-            --bs-text-opacity: 1;
-            color: #bf565b !important;
-        }
+        @endforeach
 
     </style>
 @endsection

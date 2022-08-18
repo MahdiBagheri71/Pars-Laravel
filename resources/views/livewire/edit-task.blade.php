@@ -28,16 +28,10 @@
 
     <div class="form-group">
         <label>{{__('Status')}}</label>
-        <select name="status" class="form-select" aria-label="{{__('Status')}}" style="text-align: center;">
-            <option value="cancel" class="text-cancel" {{$task->status == 'cancel' ? 'selected':''}}>{{__('cancel')}}</option>
-            <option value="success" class="text-success" {{$task->status == 'success' ? 'selected':''}} >{{__('success')}}</option>
-            <option value="retarded" class="text-retarded" {{$task->status == 'retarded' ? 'selected':''}}>{{__('retarded')}}</option>
-            <option value="doing" class="text-doing" {{$task->status == 'doing' ? 'selected':''}}>{{__('doing')}}</option>
-            <option value="planned" class="text-planned" {{$task->status == 'planned' ? 'selected':''}}>{{__('planned')}}</option>
-
-            @if(Auth::user()->can('edit all tasks'))
-                <option value="delete" class="text-delete" {{$task->status == 'delete' ? 'selected':''}}>{{__('delete')}}</option>
-            @endif
+        <select name="status" class="form-select text-center" aria-label="{{__('Status')}}" style="text-align: center;">
+            @foreach(config('enums.task_status') as $key=>$task_status)
+                <option value="{{$key}}" class="text-{{$key}}" {{$key== $task->status ? 'selected':''}}>{{__($task_status['label'])}}</option>
+            @endforeach
         </select>
         @error('task_data.status') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>

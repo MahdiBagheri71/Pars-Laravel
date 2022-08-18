@@ -66,16 +66,6 @@ class CalendarTask extends Component
             return ;
         }
 
-        //color status
-        $color = [
-            "cancel" => '#f0077f',
-            "success" => '#4cd548',
-            "retarded" => "#eecd18",
-            "delete" => "#bf565b",
-            "doing" => "#2094fb",
-            "planned" => "#04a1bb"
-        ];
-
         //get tasks by date ( start & end )
         $tasks = Tasks::where('date','>=',date('Y-m-d',strtotime($start)))
             ->where('date','<=', date('Y-m-d',strtotime($end)))
@@ -101,7 +91,7 @@ class CalendarTask extends Component
                 'description' => $task->note,
                 'start' => $task->date.' '.$task->time,
                 'end' => $task->date.' '.$task->time,
-                'color' => isset($color[$task->status])?$color[$task->status]:'#7b8a8c'
+                'color' => isset(config('enums.task_status')[$task->status])?config('enums.task_status')[$task->status]['color']:'#7b8a8c'
             ];
         }
 

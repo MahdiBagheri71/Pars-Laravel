@@ -124,12 +124,9 @@
                         <select wire:model="search_tasks.status" class="form-select custom-select"
                                 aria-label="{{__('Status')}}" style="text-align: center;">
                             <option value="" style="background : #fff;">{{__('Select')}}</option>
-                            <option value="cancel" class="text-cancel">{{__('cancel')}}</option>
-                            <option value="success" class="text-success">{{__('success')}}</option>
-                            <option value="retarded" class="text-retarded">{{__('retarded')}}</option>
-                            <option value="doing" class="text-doing">{{__('doing')}}</option>
-                            <option value="planned" class="text-planned">{{__('planned')}}</option>
-                            <option value="delete" class="text-delete">{{__('delete')}}</option>
+                            @foreach(config('enums.task_status') as $key=>$task_status)
+                                <option value="{{$key}}" class="text-{{$key}}">{{__($task_status['label'])}}</option>
+                            @endforeach
                         </select>
                     </th>
                     <th scope="col">
@@ -180,7 +177,7 @@
                         <td>{{$task->name}}</td>
                         <td style="white-space: pre-wrap; white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;">{!! $task->note !!}</td>
                         <td class="text-{{$task->status}}" {!! (Auth::user()->can('edit status tasks') && !$deleted) ? ' type="button" wire:click="showModal('.$task->id.',\'edit_status\')"':''  !!}>
-                            {{__($task->status)}}
+                            {{__(isset(config('enums.task_status')[$task->status])?config('enums.task_status')[$task->status]['label']:$task->status)}}
                         </td>
                         <td>{!! \Morilog\Jalali\CalendarUtils::strftime('l d F Y', strtotime($task->date))  !!}</td>
                         <td>{{$task->time}}</td>

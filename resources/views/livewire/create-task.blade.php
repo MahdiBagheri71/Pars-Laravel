@@ -28,15 +28,10 @@
 
     <div class="form-group">
         <label>{{__('Status')}}</label>
-        <select name="status" class="form-select" aria-label="{{__('Status')}}" style="text-align: center;">
-            <option value="cancel" class="text-cancel">{{__('cancel')}}</option>
-            <option value="success" class="text-success">{{__('success')}}</option>
-            <option value="retarded" class="text-retarded">{{__('retarded')}}</option>
-            <option value="doing" class="text-doing">{{__('doing')}}</option>
-            <option value="planned" class="text-planned" selected>{{__('planned')}}</option>
-            @if(Auth::user()->can('add tasks'))
-                <option value="delete" class="text-delete">{{__('delete')}}</option>
-            @endif
+        <select name="status" class="form-select text-center" aria-label="{{__('Status')}}">
+            @foreach(config('enums.task_status') as $key=>$status)
+                <option value="{{$key}}" class="text-{{$key}}" {{$key== 'planned' ? 'selected':''}}>{{__($status['label'])}}</option>
+            @endforeach
         </select>
         @error('task_data.status') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>

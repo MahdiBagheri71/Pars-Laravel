@@ -16,18 +16,12 @@
 
     <div class="form-group">
         <label>{{__('Status')}} : </label>
-        @if($task->status != 'delete')
-            <select wire:model="status" class="form-select" aria-label="{{__('Status')}}" style="text-align: center;">
-                <option value="cancel" class="text-cancel"  {{$task->status == 'cancel' ? 'selected':''}}>{{__('cancel')}}</option>
-                <option value="success" class="text-success" {{$task->status == 'success' ? 'selected':''}} >{{__('success')}}</option>
-                <option value="retarded" class="text-retarded" {{$task->status == 'retarded' ? 'selected':''}}>{{__('retarded')}}</option>
-                <option value="doing" class="text-doing" {{$task->status == 'doing' ? 'selected':''}}>{{__('doing')}}</option>
-                <option value="planned" class="text-planned"  {{$task->status == 'planned' ? 'selected':''}}>{{__('planned')}}</option>
-            </select>
-            @error('status') <span class="error text-danger">{{ $message }}</span> @enderror
-        @else
-            <div>{{__($task->status)}}</div>
-        @endif
+        <select wire:model="status" class="form-select text-center" aria-label="{{__('Status')}}">
+            @foreach(config('enums.task_status') as $key=>$task_status)
+                <option value="{{$key}}" class="text-{{$key}}" {{$key== $task->status ? 'selected':''}}>{{__($task_status['label'])}}</option>
+            @endforeach
+        </select>
+        @error('status') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
 
     <br>

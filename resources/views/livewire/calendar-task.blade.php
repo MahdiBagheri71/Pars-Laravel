@@ -228,6 +228,7 @@
                 });
             });
 
+
         });
 
         //for hide spinner task
@@ -240,6 +241,15 @@
         //for hide spinner task
         window.livewire.on('show_spinner_task', () => {
             $('#show_spinner_task').show();
+        });
+
+        //for close Modal create task save event
+        window.livewire.on('closeModal', () => {
+            setTimeout(function (){
+                $('.message-create-close').click();
+                $('#createModal').modal('hide');
+            },500);
+            $('.resetCloseCreate').val('');
         });
     </script>
 @endpush

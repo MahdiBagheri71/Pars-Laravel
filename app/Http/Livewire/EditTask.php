@@ -77,7 +77,15 @@ class EditTask extends Component
         return [
             'task_data.name' => 'required|max:255|min:3',
             'task_data.note' => 'required',
-            'task_data.status' => 'required|in:cancel,success,retarded,delete,doing,planned',
+            'task_data.status' => [
+                'required',
+//                'in:cancel,success,retarded,delete,doing,planned',
+                function ($attribute, $value, $fail) {
+                    if(!key_exists($value,config('enums.task_status'))){
+                        $fail(__('validation.in'));
+                    }
+                },
+            ],
             'task_data.date' => [
                 'required',
 //                'date_format:Y-m-d',

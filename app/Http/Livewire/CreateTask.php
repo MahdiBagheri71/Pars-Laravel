@@ -4,7 +4,6 @@ namespace App\Http\Livewire;
 
 use App\Models\Tasks;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 
 class CreateTask extends Component
@@ -49,7 +48,15 @@ class CreateTask extends Component
         return [
             'task_data.name' => 'required|max:255|min:3',
             'task_data.note' => 'required',
-            'task_data.status' => 'required|in:cancel,success,retarded,delete,doing,planned',
+            'task_data.status' => [
+                'required',
+//                'in:cancel,success,retarded,delete,doing,planned',
+                function ($attribute, $value, $fail) {
+                    if(!key_exists($value,config('enums.task_status'))){
+                        $fail(__('validation.in'));
+                    }
+                },
+            ],
             'task_data.date' => [
 //                'required:Y-m-d',
                 function ($attribute, $value, $fail) {

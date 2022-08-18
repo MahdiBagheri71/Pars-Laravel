@@ -37,8 +37,28 @@ class EditStatusTask extends Component
         'status' => 'required|in:cancel,success,retarded,doing,planned',
     ];
 
+    /**
+     * set rules for validation
+     */
+    public function rules()
+    {
+        return [
+            'status' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if(!key_exists($value,config('enums.task_status'))){
+                        $fail(__('validation.in'));
+                    }
+                },
+            ]
+        ];
+    }
 
-
+    /**
+     * updated
+     * @param $propertyName
+     * @throws view
+     */
     public function updated($propertyName)
     {
         //Not task for me only permission "edit me task"
