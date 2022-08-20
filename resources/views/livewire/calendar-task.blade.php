@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
-    <div class="col-md-2 col-sm d-none d-sm-none d-md-block">
+    <div class="col-md-3 col-sm d-none d-sm-none d-md-block">
         <div class="card">
-            <div class="card-header text-center">
+            <div class="card-header text-center p-2">
                 {{__('Filter Status')}}
             </div>
             <div class="card-body text-center">
@@ -14,7 +14,7 @@
         </div>
         @if(Auth::user()->can('view all tasks'))
             <div class="card" style="margin-top: 15px;">
-                <div class="card-header text-center">
+                <div class="card-header text-center p-2">
                     {{__('Filter Users')}}
                 </div>
                 <div class="card-body text-center">
@@ -27,7 +27,7 @@
             </div>
         @endif
     </div>
-    <div class="col-md-10 col-sm-12">
+    <div class="col-md-9 col-sm-12">
         <div class="card">
             <div id="spinner_task" class="spinner-border text-warning" role="status" style="position: fixed;left: 48%;z-index: 999999999;top: 48%;">
                 <span class="visually-hidden">Loading...</span>
