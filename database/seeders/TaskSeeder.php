@@ -14,6 +14,38 @@ class TaskSeeder extends Seeder
      */
     public function run()
     {
+
+        //By Mahdi Insert user
+        DB::table('tasks_status')->insert(
+            array(
+                array(
+                    'value' => 'planned',
+                    'label' => 'Planned',
+                    'color' => '#6707f6'
+                ),
+                array(
+                    'value' => 'doing',
+                    'label' => 'Doing',
+                    'color' => '#2094fb'
+                ),
+                array(
+                    'value' => 'success',
+                    'label' => 'Success',
+                    'color' => '#198754'
+                ),
+                array(
+                    'value' => 'retarded',
+                    'label' => 'Retarded',
+                    'color' => '#eecd18'
+                ),
+                array(
+                    'value' => 'cancel',
+                    'label' => 'Cancel',
+                    'color' => '#f0077f'
+                ),
+            )
+        );
+
         DB::unprepared("INSERT INTO `tasks` (`id`, `name`, `note`, `status`, `date`, `time`, `user_id`, `create_by_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (1, 'صرف ناهار', 'صرف ناهار با دوستان', 'success', '2022-08-04', '12:05:30', 2, 1, NULL, '2022-08-04 05:35:21', '2022-08-15 08:40:15'),
 (2, 'صرف ناهار', 'صرف ناهار با دوستان', 'planned', '2022-07-24', '14:00:00', 1, 1, NULL, '2022-08-04 05:39:45', '2022-08-15 10:54:24'),

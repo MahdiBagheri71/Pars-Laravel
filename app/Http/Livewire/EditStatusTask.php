@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Tasks;
+use App\Models\TaskStatus;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -14,6 +15,9 @@ class EditStatusTask extends Component
 
     //is live wire request other file for load modal
     public $live_wire=false;
+
+    //tasks status list
+    public $tasks_status;
 
     /**
      * mount var
@@ -28,6 +32,7 @@ class EditStatusTask extends Component
         //set var
         $this->task_id = $this->task->id;
         $this->status = $this->task->status;
+        $this->tasks_status = TaskStatus::byValue();//get status task by value
     }
 
     /**
@@ -46,7 +51,7 @@ class EditStatusTask extends Component
             'status' => [
                 'required',
                 function ($attribute, $value, $fail) {
-                    if(!key_exists($value,config('enums.task_status'))){
+                    if(!key_exists($value,$this->tasks_status)){
                         $fail(__('validation.in'));
                     }
                 },

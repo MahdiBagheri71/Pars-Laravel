@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Tasks;
+use App\Models\TaskStatus;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -19,11 +20,15 @@ class CalendarTask extends Component
     //refresh listeners
     protected $listeners = ['regeneratedCodes' => 'refreshCalendar'];
 
+    //tasks status list
+    public $tasks_status;
+
     /**
      * mount var
      */
     public function mount(){
         $this->users = User::all();//get list user for tasks user id & create user filter
+        $this->tasks_status = TaskStatus::byValue();//get status task by value
     }
 
     /**
@@ -91,7 +96,7 @@ class CalendarTask extends Component
                 'description' => $task->note,
                 'start' => $task->date.' '.$task->time,
                 'end' => $task->date.' '.$task->time,
-                'color' => isset(config('enums.task_status')[$task->status])?config('enums.task_status')[$task->status]['color']:'#7b8a8c'
+                'color' => isset($this->tasks_status[$task->status])?$this->tasks_status[$task->status]['color']:'#7b8a8c'
             ];
         }
 
@@ -120,6 +125,7 @@ class CalendarTask extends Component
      */
     public function render()
     {
+
         return view('livewire.calendar-task');
     }
 }

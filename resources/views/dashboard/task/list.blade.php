@@ -24,7 +24,7 @@
             content: var(--bs-breadcrumb-divider, "/");
         }
 
-        @foreach(config('enums.task_status') as $key=>$status)
+        @foreach($tasks_status as $key=>$status)
 
         .text-{{$key}} {
             --bs-text-opacity: 1;

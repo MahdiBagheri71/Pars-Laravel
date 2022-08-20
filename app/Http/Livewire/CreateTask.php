@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Tasks;
+use App\Models\TaskStatus;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -25,6 +26,9 @@ class CreateTask extends Component
 
     public $date_time;
 
+    //tasks status list
+    public $tasks_status;
+
     /**
      * mount var
      */
@@ -38,6 +42,7 @@ class CreateTask extends Component
             'time' => $this->date_time?date('H:i',strtotime($this->date_time)):date('H:i'),
             'user_id' => Auth::user()->id
         ];
+        $this->tasks_status = TaskStatus::byValue();//get status task by value
     }
 
     /**
@@ -52,7 +57,7 @@ class CreateTask extends Component
                 'required',
 //                'in:cancel,success,retarded,delete,doing,planned',
                 function ($attribute, $value, $fail) {
-                    if(!key_exists($value,config('enums.task_status'))){
+                    if(!key_exists($value,$this->tasks_status)){
                         $fail(__('validation.in'));
                     }
                 },

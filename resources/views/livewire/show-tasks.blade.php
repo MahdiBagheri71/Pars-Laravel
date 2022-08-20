@@ -124,7 +124,7 @@
                         <select wire:model="search_tasks.status" class="form-select custom-select"
                                 aria-label="{{__('Status')}}" style="text-align: center;">
                             <option value="" style="background : #fff;">{{__('Select')}}</option>
-                            @foreach(config('enums.task_status') as $key=>$task_status)
+                            @foreach($tasks_status as $key=>$task_status)
                                 <option value="{{$key}}" class="text-{{$key}}">{{__($task_status['label'])}}</option>
                             @endforeach
                         </select>
@@ -177,7 +177,7 @@
                         <td>{{$task->name}}</td>
                         <td style="white-space: pre-wrap; white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;">{!! $task->note !!}</td>
                         <td class="text-{{$task->status}}" {!! (Auth::user()->can('edit status tasks') && !$deleted) ? ' type="button" wire:click="showModal('.$task->id.',\'edit_status\')"':''  !!}>
-                            {{__(isset(config('enums.task_status')[$task->status])?config('enums.task_status')[$task->status]['label']:$task->status)}}
+                            {{__(isset($tasks_status[$task->status])?$tasks_status[$task->status]['label']:$task->status)}}
                         </td>
                         <td>{!! \Morilog\Jalali\CalendarUtils::strftime('l d F Y', strtotime($task->date))  !!}</td>
                         <td>{{$task->time}}</td>

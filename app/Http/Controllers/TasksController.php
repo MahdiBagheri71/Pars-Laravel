@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tasks;
+use App\Models\TaskStatus;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,8 +38,10 @@ class TasksController extends Controller
     public function list(){
         //check permission view task
         if(Auth::user()->canany(['view tasks', 'view all tasks'])){
+            $tasks_status = TaskStatus::byValue();
             return view('dashboard.task.list',[
-                'delete' => false
+                'delete' => false,
+                'tasks_status' => $tasks_status
             ]);
         }
 
@@ -121,8 +124,10 @@ class TasksController extends Controller
     public function tasksFullCalendar(){
         //check permission view task
         if(Auth::user()->canany(['view tasks', 'view all tasks'])){
+            $tasks_status = TaskStatus::byValue();
             return view('dashboard.task.calendar',[
-                'delete' => false
+                'delete' => false,
+                'tasks_status' => $tasks_status
             ]);
         }
 

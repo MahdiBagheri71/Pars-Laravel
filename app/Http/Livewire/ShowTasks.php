@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\TaskStatus;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -43,6 +44,9 @@ class ShowTasks extends Component
 
     //show list deleted
     public $deleted;
+    
+    //tasks status list
+    public $tasks_status;
 
     /**
      * for show spinner
@@ -75,6 +79,7 @@ class ShowTasks extends Component
      */
     public function mount(){
         $this->users = User::all();//get list user for tasks user id & create user filter
+        $this->tasks_status = TaskStatus::byValue();//get status task by value
     }
 
     /**

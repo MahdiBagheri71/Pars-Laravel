@@ -29,7 +29,7 @@
     <div class="form-group">
         <label>{{__('Status')}}</label>
         <select name="status" class="form-select text-center" aria-label="{{__('Status')}}">
-            @foreach(config('enums.task_status') as $key=>$status)
+            @foreach($tasks_status as $key=>$status)
                 <option value="{{$key}}" class="text-{{$key}}" {{$key== 'planned' ? 'selected':''}}>{{__($status['label'])}}</option>
             @endforeach
         </select>
