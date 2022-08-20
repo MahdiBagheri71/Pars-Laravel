@@ -1,12 +1,12 @@
 <div class="row justify-content-center">
-    <div class="col-md-2">
+    <div class="col-md-2 col-sm d-none d-sm-none d-md-block">
         <div class="card">
             <div class="card-header text-center">
                 {{__('Filter Status')}}
             </div>
             <div class="card-body text-center">
                 @foreach($tasks_status as $key=>$status)
-                    <div wire:click="toggleStatus('{{$key}}')" class="text-{{$key}} btn {{in_array($key,$tasks_status_filter)?'active':''}} col-md-12" style="margin-bottom: 10px;">
+                    <div wire:click="toggleStatus('{{$key}}')" class="text-{{$key}} btn {{in_array($key,$tasks_status_filter)?'active':''}} col-md-12  col-12" style="margin-bottom: 10px;">
                         {{__($status['label'])}}
                     </div>
                 @endforeach
@@ -19,7 +19,7 @@
                 </div>
                 <div class="card-body text-center">
                     @foreach($users as $user)
-                        <div wire:click="toggleUsers('{{$user->id}}')" class="text-secondary fs-6 btn {{in_array($user->id,$tasks_user_id_filter)?'active':''}} col-md-12" style="margin-bottom: 10px;">
+                        <div wire:click="toggleUsers('{{$user->id}}')" class="col-12 text-secondary fs-6 btn {{in_array($user->id,$tasks_user_id_filter)?'active':''}} col-md-12" style="margin-bottom: 10px;">
                             {{$user['name'].' '.$user['last_name']}}
                         </div>
                     @endforeach
@@ -27,7 +27,7 @@
             </div>
         @endif
     </div>
-    <div class="col-md-10">
+    <div class="col-md-10 col-sm-12">
         <div class="card">
             <div id="spinner_task" class="spinner-border text-warning" role="status" style="position: fixed;left: 48%;z-index: 999999999;top: 48%;">
                 <span class="visually-hidden">Loading...</span>

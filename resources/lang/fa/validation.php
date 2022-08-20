@@ -202,5 +202,14 @@ return [
         'date_end' => 'تاریخ پایان',
         'time_start' => 'زمان شروع' ,
         'time_end' => 'زمان پایان' ,
+        //By mahdi for tasks
+        'task_data' => [
+            'name' => 'نام',
+            'status' => 'وضعیت',
+            'user_id' => 'آی دی کاربر',
+            'note' => 'یادداشت',
+            'date' => 'تاریخ',
+            'time' => 'زمان' ,
+        ]
     ],
 ];

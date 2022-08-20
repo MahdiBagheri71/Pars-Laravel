@@ -69,11 +69,17 @@
         <div class="col-md-12 text-center table-responsive">
 
             {{--        tabel list taks--}}
-            <table class="table table-bordered table-striped">
+            <table class="table-responsive table table-bordered table-striped table-hover">
                 <thead>
                 {{--                for show header &sorting--}}
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">
+{{--                        <a href="#" wire:click="orderBy('id')">--}}
+{{--                            #--}}
+{{--                            @includeWhen( $order_by == 'id', 'dashboard.task.order', ['order' => $order])--}}
+{{--                        </a>--}}
+                        #
+                    </th>
                     <th scope="col">
                         <a href="#" wire:click="orderBy('name')">
                             {{__('Name')}}
@@ -123,7 +129,7 @@
                     <th scope="col">
                         <select wire:model="search_tasks.status" class="form-select custom-select"
                                 aria-label="{{__('Status')}}" style="text-align: center;">
-                            <option value="" style="background : #fff;">{{__('Select')}}</option>
+                            <option value="" style="background : #fff;">{{__('All')}}</option>
                             @foreach($tasks_status as $key=>$task_status)
                                 <option value="{{$key}}" class="text-{{$key}}">{{__($task_status['label'])}}</option>
                             @endforeach
@@ -145,7 +151,7 @@
                         @if (Auth::user()->hasRole('admin'))
                             <select wire:model="search_tasks.user_id" class="custom-select form-select"
                                     aria-label="{{__('User')}}" style="text-align: center;">
-                                <option value="">{{__('Select')}}</option>
+                                <option value="">{{__('All')}}</option>
                                 @foreach ($users as $user)
                                     <option value="{{$user->id}}}">{{$user->name.' '.$user->last_name}}</option>
                                 @endforeach
@@ -156,7 +162,7 @@
                         @if (Auth::user()->hasRole('admin'))
                             <select wire:model="search_tasks.create_by" class="custom-select form-select"
                                     aria-label="{{__('Create By')}}" style="text-align: center;">
-                                <option value="">{{__('Select')}}</option>
+                                <option value="">{{__('All')}}</option>
                                 @foreach ($users as $user)
                                     <option value="{{$user->id}}}">{{$user->name.' '.$user->last_name}}</option>
                                 @endforeach
@@ -302,8 +308,10 @@
                             </h5>
                         </div>
                         <div class="modal-body">
-                            @if(Auth::user()->canany(['add tasks','add me tasks']))
-                                @livewire('create-task',['users'=>$users,'live_wire'=>true])
+                            @if($modal_task_create)
+                                @if(Auth::user()->canany(['add tasks','add me tasks']))
+                                    @livewire('create-task',['users'=>$users,'live_wire'=>true])
+                                @endif
                             @endif
                         </div>
                     </div>

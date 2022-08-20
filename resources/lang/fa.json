@@ -756,5 +756,8 @@
     "Users created successfully" : "کاربر با موفقیت ایجاد گردید",
     "Users updated successfully" : "کاربر با موفقیت بروزرسانی گردید",
     "Filter Status" : "فیلتر وضعیت",
-    "Filter Users" : "فیلتر کاربر"
+    "Filter Users" : "فیلتر کاربر",
+    "All" : "همه",
+    "Total" : "مجموع",
+    "Your number of tasks" : "تعداد وظایف شما"
 }

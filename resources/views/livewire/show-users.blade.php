@@ -54,7 +54,7 @@
         <div class="col-md-12 text-center table-responsive">
 
             {{--tabel list users--}}
-            <table class="table table-bordered table-striped">
+            <table class="table table-responsive table-bordered table-striped">
                 <thead>
                 {{-- for show header &sorting--}}
                 <tr>

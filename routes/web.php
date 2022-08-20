@@ -13,12 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
 Auth::routes();
 
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');//change to dashboard by Mahdi
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');//change to dashboard by Mahdi
 Route::get('/tasksCalendar', [App\Http\Controllers\TasksController::class, 'tasksCalendar'])->name('tasksCalendar');//change by Mahdi
 Route::get('/tasksList', [App\Http\Controllers\TasksController::class, 'list'])->name('tasksList');//change by Mahdi

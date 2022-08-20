@@ -37,7 +37,7 @@ class ShowTasks extends Component
     public $errors_message=[];
 
     //modal parameter
-    public $modal_task_id,$modal_task=false;
+    public $modal_task_id,$modal_task=false,$modal_task_create=false;
 
     //refresh listeners
     protected $listeners = ['regeneratedCodes' => 'refresh'];
@@ -71,6 +71,7 @@ class ShowTasks extends Component
     public function refresh()
     {
         $this->modal_task = false;
+        $this->modal_task_create = false;
 
     }
 
@@ -154,6 +155,8 @@ class ShowTasks extends Component
      */
     public function showModal($task_id,$type){
         $this->modal_task_id = $task_id;
+        $this->modal_task = false;
+        $this->modal_task_create = false;
         if($type == 'edit'){
             $task = Tasks::where('id',$task_id);
             $task = $task->first();
@@ -162,8 +165,8 @@ class ShowTasks extends Component
             $task = Tasks::where('id',$task_id);
             $task = $task->first();
             $this->modal_task = $task;
-        }else{
-            $this->modal_task = false;
+        }elseif($type == 'create'){
+            $this->modal_task_create = true;
         }
         $this->emit('modal_'.$type);
     }
@@ -273,7 +276,7 @@ class ShowTasks extends Component
         }
 
         //order by and paginate
-        $tasks=$tasks->paginate(10);
+        $tasks=$tasks->orderBy($this->order_by, $this->order)->paginate(10);
 
         return view('livewire.show-tasks', [
             'tasks' => $tasks//tasks
