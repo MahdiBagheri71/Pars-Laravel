@@ -1,10 +1,11 @@
-<form wire:submit.prevent="create" style="text-align: center;">
+<form wire:submit.prevent="create(Object.fromEntries(new FormData($event.target)))" style="text-align: center;">
 
     <div>
 
         @if (session()->has('message'))
 
             <div class="alert alert-{{session('type') == 'error' ? 'danger':'success'}}">
+                <button type="button" class="btn-close message-create-close" data-bs-dismiss="alert" aria-label="Close"></button>
 
                 {{ session('message') }}
 
@@ -16,42 +17,42 @@
 
     <div class="form-group">
         <label>{{__('Name')}}</label>
-        <input wire:model="user_data.name" type="text" class="form-control" placeholder="{{__('Name')}}">
+        <input name="name" type="text" value="{{$user_data['name']}}" class="form-control resetCloseCreate" placeholder="{{__('Name')}}">
         @error('user_data.name') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
 
     <div class="form-group">
         <label>{{__('Last Name')}}</label>
-        <input wire:model="user_data.last_name" type="text" class="form-control" placeholder="{{__('Last Name')}}">
+        <input name="last_name" type="text" value="{{$user_data['last_name']}}" class="form-control resetCloseCreate" placeholder="{{__('Last Name')}}">
         @error('user_data.last_name') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
 
     <div class="form-group">
         <label>{{__('Email Address')}}</label>
-        <input wire:model="user_data.email" type="email" class="form-control" placeholder="{{__('Email Address')}}">
+        <input name="email" type="email" value="{{$user_data['email']}}" class="form-control resetCloseCreate" placeholder="{{__('Email Address')}}">
         @error('user_data.email') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
 
     <div class="form-group">
         <label>{{__('Username')}}</label>
-        <input wire:model="user_data.username" type="text" class="form-control" placeholder="{{__('Username')}}">
+        <input name="username" type="text" value="{{$user_data['username']}}" class="form-control resetCloseCreate" placeholder="{{__('Username')}}">
         @error('user_data.username') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
 
     <div class="form-group">
         <label>{{__('Password')}}</label>
-        <input wire:model="user_data.password" type="password" class="form-control" placeholder="{{__('Password')}}">
+        <input name="password" type="password" class="form-control resetCloseCreate" placeholder="{{__('Password')}}">
         @error('user_data.password') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
 
     <div class="form-group">
         <label>{{__('Confirm Password')}}</label>
-        <input wire:model="user_data.password_confirmation" type="password" class="form-control" placeholder="{{__('Confirm Password')}}">
+        <input name="password_confirmation" type="password" class="form-control resetCloseCreate" placeholder="{{__('Confirm Password')}}">
     </div>
 
     <div class="form-group">
         <label>{{__('Role')}}</label>
-        <select multiple wire:model="user_data.role" class="form-select" aria-label="{{__('Role')}}" style="text-align: center;">
+        <select multiple wire:model="role_select" class="form-select" aria-label="{{__('Role')}}" style="text-align: center;">
             @foreach ($roles as $role)
                 <option value="{{$role}}">{{$role}}</option>
             @endforeach

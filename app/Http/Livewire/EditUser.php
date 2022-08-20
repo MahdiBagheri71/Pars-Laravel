@@ -5,7 +5,6 @@ namespace App\Http\Livewire;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
@@ -22,9 +21,10 @@ class EditUser extends Component
         'username' => '',
         'password' => '',
         'password_confirmation' => '',
-        'is_admin' => 0,
-        'role' => []
+        'is_admin' => 0
     ];
+
+    public $user_role;
 
     public $user_id;
 
@@ -61,9 +61,10 @@ class EditUser extends Component
                     'username' => $user->username,
                     'is_admin' => $user->is_admin,
                     'password' => '',
-                    'password_confirmation' => '',
-                    'role' => $user->getRoleNames()->toArray()
+                    'password_confirmation' => ''
                 ];
+
+                $this->user_role = $user->getRoleNames()->toArray();
             }
         }
 
@@ -104,7 +105,7 @@ class EditUser extends Component
                 },
             ],
             'user_data.is_admin' => ['boolean'],
-            'user_data.role' => [
+            'user_role' => [
                 function ($attribute, $value, $fail) {
                     foreach ($value as $role){
                         if(!$this->roles->contains($role)){
@@ -122,8 +123,9 @@ class EditUser extends Component
     /**
      * update user
      */
-    public function update()
+    public function update($user_data)
     {
+        $this->user_data = $user_data;
 
         //Not allow edit
         if(!Auth::user()->hasRole('admin')){
@@ -147,7 +149,7 @@ class EditUser extends Component
             //update user
             $user->name =$data['user_data']['name'];
             $user->email =$data['user_data']['email'];
-            $user->is_admin =$data['user_data']['is_admin'];
+//            $user->is_admin =$data['user_data']['is_admin'];
             $user->last_name =$data['user_data']['last_name'];
             $user->username =$data['user_data']['username'];
 
@@ -158,8 +160,8 @@ class EditUser extends Component
 
             $user->save();
 
-            if(isset($data['user_data']['role']) && is_array($data['user_data']['role']) && !$this->profile){
-                $user->syncRoles($data['user_data']['role']);
+            if(isset($data['user_role']) && is_array($data['user_role']) && !$this->profile){
+                $user->syncRoles($data['user_role']);
             }
             //message success update
             session()->flash('type', 'success');

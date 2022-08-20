@@ -103,11 +103,11 @@
                                         </a>
                                     @endif
 
-                                    @if(Auth::user()->hasRole('admin'))
-                                        <a class="dropdown-item" href="{{ route('usersListDelete') }}">
-                                            {{ __('List Users Delete') }}
-                                        </a>
-                                    @endif
+{{--                                    @if(Auth::user()->hasRole('admin'))--}}
+{{--                                        <a class="dropdown-item" href="{{ route('usersListDelete') }}">--}}
+{{--                                            {{ __('List Users Delete') }}--}}
+{{--                                        </a>--}}
+{{--                                    @endif--}}
 
                                     <a class="dropdown-item" href="{{ route('profile') }}">
                                         {{ __('Profile') }}

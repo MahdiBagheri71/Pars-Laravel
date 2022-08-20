@@ -42,10 +42,26 @@ class ShowUsers extends Component
     public $roles;
 
     /**
+     * for show spinner
+     */
+    public function boot()
+    {
+        $this->emit("show_spinner_task");
+    }
+
+    /**
      * mount
      */
     public function mount(){
         $this->roles = Role::all()->pluck('name');
+    }
+
+    /**
+     *
+     * @param $deleted
+     */
+    public function setDeleted($deleted){
+        $this->deleted = $deleted;
     }
 
     /**
@@ -106,6 +122,7 @@ class ShowUsers extends Component
      */
     public function dehydrate()
     {
+        $this->emit("hide_spinner_task");
         $this->emit('loadingSelect2');
     }
 

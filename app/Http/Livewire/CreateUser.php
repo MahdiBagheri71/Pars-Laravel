@@ -21,9 +21,12 @@ class CreateUser extends Component
         'email' => '',
         'username' => '',
         'password' => '',
+        'password_confirmation' => '',
         'is_admin' => 0 ,
         'role' => []
     ];
+
+    public $role_select=[];
 
     //list roles for select
     public $roles;
@@ -47,7 +50,7 @@ class CreateUser extends Component
             'user_data.username' => ['required', 'string', 'max:255', 'unique:users,username'],
             'user_data.password' => ['required', 'string', 'min:8', 'confirmed'],
             'user_data.is_admin' => ['boolean'],
-            'user_data.role' => [
+            'role_select' => [
                 function ($attribute, $value, $fail) {
                     foreach ($value as $role){
                         if(!$this->roles->contains($role)){
@@ -65,8 +68,9 @@ class CreateUser extends Component
     /**
      * create user
      */
-    public function create()
+    public function create($user_data)
     {
+        $this->user_data = $user_data;
 
         //Not allow edit
         if(!Auth::user()->hasRole('admin')){
@@ -83,7 +87,7 @@ class CreateUser extends Component
         $user = User::create([
             'name' => $data['user_data']['name'],
             'email' => $data['user_data']['email'],
-            'is_admin' => $data['user_data']['is_admin'],
+            'is_admin' => 0,
             'last_name' => $data['user_data']['last_name'],
             'username' => $data['user_data']['username'],
             'api_token' =>  Str::random(25),
@@ -92,8 +96,8 @@ class CreateUser extends Component
 
         //check user create
         if($user){
-            if(isset($data['user_data']['role']) && is_array($data['user_data']['role'])){
-                $user->assignRole($data['user_data']['role']);
+            if(isset($data['role_select']) && is_array($data['role_select'])){
+                $user->assignRole($data['role_select']);
             }
             //message success update
             session()->flash('type', 'success');
