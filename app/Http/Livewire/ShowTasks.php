@@ -112,7 +112,9 @@ class ShowTasks extends Component
      * @param $deleted
      */
     public function setDeleted($deleted){
-        $this->deleted = $deleted;
+        if(Auth::user()->hasRole('admin')){
+            $this->deleted = $deleted;
+        }
     }
 
     /**
@@ -209,7 +211,7 @@ class ShowTasks extends Component
         $tasks = Tasks::with(['user:id,name as user_name,last_name as user_last_name','creator:id,name as creator_name,last_name as creator_last_name']);
 
 
-        if($this->deleted){
+        if($this->deleted && Auth::user()->hasRole('admin')){
             $tasks = $tasks->onlyTrashed();
         }
 

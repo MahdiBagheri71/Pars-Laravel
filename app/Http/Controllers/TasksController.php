@@ -134,4 +134,24 @@ class TasksController extends Controller
         //not permission redirect
         return redirect()->route('dashboard');
     }
+
+
+
+    /**
+     * show List Tasks
+     * @return View
+     */
+    public function status(){
+        //check permission view task
+        if(Auth::user()->canany(['view tasks', 'view all tasks'])){
+            $tasks_status = TaskStatus::byValue();
+            return view('dashboard.task.list',[
+                'delete' => false,
+                'tasks_status' => $tasks_status
+            ]);
+        }
+
+        //not permission redirect
+        return redirect()->route('dashboard');
+    }
 }

@@ -28,6 +28,9 @@ Route::get('/task/{task_id}', [App\Http\Controllers\TasksController::class, 'edi
 Route::get('/taskCreate', [App\Http\Controllers\TasksController::class, 'create'])->name('taskCreate');//change by Mahdi
 Route::get('/tasksFullCalendar', [App\Http\Controllers\TasksController::class, 'tasksFullCalendar'])->name('tasksFullCalendar');//change by Mahdi
 
+Route::get('/tasksStatus', [App\Http\Controllers\TasksController::class, 'status'])->name('tasksStatus');//change by Mahdi
+
+
 Route::get('/usersList', [App\Http\Controllers\UserController::class, 'list'])->name('usersList');//change by Mahdi
 Route::get('/usersListDelete', [App\Http\Controllers\UserController::class, 'listDelete'])->name('usersListDelete');//change by Mahdi
 Route::get('/profile', [App\Http\Controllers\UserController::class, 'profile'])->name('profile');//change by Mahdi

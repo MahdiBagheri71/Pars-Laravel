@@ -36,9 +36,11 @@
             <li class="nav-item">
                 <a wire:click="setDeleted(0)" class="nav-link {{$deleted ?  '' : 'active' }}" aria-current="true" href="#"> {{  __('List Tasks') }}</a>
             </li>
-            <li class="nav-item">
-                <a wire:click="setDeleted(1)" class="nav-link {{$deleted ?  'active' : '' }}" href="#">{{ __('List Tasks Delete')}}</a>
-            </li>
+            @if(Auth::user()->hasRole('admin'))
+                <li class="nav-item">
+                    <a wire:click="setDeleted(1)" class="nav-link {{$deleted ?  'active' : '' }}" href="#">{{ __('List Tasks Delete')}}</a>
+                </li>
+            @endif
         </ul>
     </div>
 
@@ -112,7 +114,9 @@
                     </th>
                     <th scope="col">{{__('User')}}</th>
                     <th scope="col">{{__('Create By')}}</th>
-                    <th scope="col">{{__('Action')}}</th>
+                    @if(Auth::user()->canany(['edit me task','edit all tasks','delete tasks']) || Auth::user()->hasRole('admin') && $deleted)
+                        <th scope="col">{{__('Action')}}</th>
+                    @endif
                 </tr>
 
                 {{--for fiter tasks--}}
@@ -169,8 +173,9 @@
                             </select>
                         @endif
                     </th>
-
-                    <th scope="col"></th>
+                    @if(Auth::user()->canany(['edit me task','edit all tasks','delete tasks']) || Auth::user()->hasRole('admin') && $deleted)
+                        <th scope="col"></th>
+                    @endif
                 </tr>
 
                 </thead>
@@ -189,7 +194,8 @@
                         <td>{{$task->time}}</td>
                         <td>{{$task->user->user_name . ' ' .$task->user->user_last_name}}</td>
                         <td>{{$task->creator->creator_name . ' ' .$task->creator->creator_last_name}}</td>
-                        <td>
+                        @if(Auth::user()->canany(['edit me task','edit all tasks','delete tasks']) || Auth::user()->hasRole('admin') && $deleted)
+                            <td>
                             @if(!$deleted)
                                 {{--edit task --}}
                                 @if (Auth::user()->canany(['edit me task','edit all tasks']))
@@ -226,6 +232,7 @@
                                 </a>
                             @endif
                         </td>
+                        @endif
                     </tr>
                 @endforeach
                 </tbody>

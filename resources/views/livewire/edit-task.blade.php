@@ -56,8 +56,11 @@
                         <option value="{{$user->id}}" {{$task_data['user_id'] == $user->id ? 'selected':''}}>{{$user->name.' '.$user->last_name}}</option>
                     @endforeach
                 </select>
-                @error('task_data.status') <span class="error text-danger">{{ $message }}</span> @enderror
+                @error('task_data.user_id') <span class="error text-danger">{{ $message }}</span> @enderror
         </div>
+    @else
+        <input name="user_id" type="hidden" value="{{Auth::user()->id}}">
+        @error('task_data.user_id') <span class="error text-danger">{{ $message }}</span> @enderror
     @endif
 
     <br>
