@@ -67,4 +67,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Tasks::class,'create_by_id', 'id');
     }
+
+    /**
+     * key id
+     * @return mixed
+     */
+    protected function byID(){
+        return User::all()->keyBy('id')->all();
+    }
 }

@@ -44,7 +44,7 @@ class ShowTasks extends Component
 
     //show list deleted
     public $deleted;
-    
+
     //tasks status list
     public $tasks_status;
 

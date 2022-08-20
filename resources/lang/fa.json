@@ -755,5 +755,6 @@
     "User Create" : "ایجاد کاربر",
     "Users created successfully" : "کاربر با موفقیت ایجاد گردید",
     "Users updated successfully" : "کاربر با موفقیت بروزرسانی گردید",
-    "Filter Status" : "فیلتر وضعیت"
+    "Filter Status" : "فیلتر وضعیت",
+    "Filter Users" : "فیلتر کاربر"
 }

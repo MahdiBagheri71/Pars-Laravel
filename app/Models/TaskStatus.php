@@ -33,6 +33,10 @@ class TaskStatus extends Model
         'updated_at'
     ];
 
+    /**
+     * key value
+     * @return mixed
+     */
     protected function byValue(){
         return TaskStatus::select('value','label','color')->get()->keyBy('value')->all();
     }

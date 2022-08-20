@@ -23,12 +23,46 @@ class CalendarTask extends Component
     //tasks status list
     public $tasks_status;
 
+    //tasks status list for filter
+    public $tasks_status_filter;
+
+    //tasks users list for filter
+    public $tasks_user_id_filter;
+
     /**
      * mount var
      */
     public function mount(){
         $this->users = User::all();//get list user for tasks user id & create user filter
         $this->tasks_status = TaskStatus::byValue();//get status task by value
+        $this->tasks_status_filter = array_keys($this->tasks_status);//set status filter
+        $this->tasks_user_id_filter = array_keys(User::byID());//set status filter
+    }
+
+    /**
+     * toggle status filter
+     * @param $status
+     */
+    public function toggleStatus($status){
+        if(($key = array_search($status, $this->tasks_status_filter)) !== false){
+            unset($this->tasks_status_filter[$key]);
+        }else{
+            $this->tasks_status_filter[] = $status;
+        }
+        $this->emit('refreshCalendar');
+    }
+
+    /**
+     * toggle users filter
+     * @param $status
+     */
+    public function toggleUsers($user_id){
+        if(($key = array_search($user_id, $this->tasks_user_id_filter)) !== false){
+            unset($this->tasks_user_id_filter[$key]);
+        }else{
+            $this->tasks_user_id_filter[] = $user_id;
+        }
+        $this->emit('refreshCalendar');
     }
 
     /**
@@ -79,9 +113,14 @@ class CalendarTask extends Component
 
         //not allow show all tasks
         if(!Auth::user()->can('view all tasks')){
-
             $tasks = $tasks->where('user_id',Auth::user()->id);
+        }else{
+            //filter user_id
+            $tasks = $tasks->whereIn('user_id',$this->tasks_user_id_filter);
         }
+
+        //filter status
+        $tasks = $tasks->whereIn('status',$this->tasks_status_filter);
 
         //get tasks
         $tasks = $tasks->get();
@@ -125,7 +164,6 @@ class CalendarTask extends Component
      */
     public function render()
     {
-
         return view('livewire.calendar-task');
     }
 }

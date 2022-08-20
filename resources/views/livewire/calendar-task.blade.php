@@ -1,14 +1,31 @@
-
-
 <div class="row justify-content-center">
     <div class="col-md-2">
         <div class="card">
             <div class="card-header text-center">
                 {{__('Filter Status')}}
             </div>
-            <div class="card-body">
+            <div class="card-body text-center">
+                @foreach($tasks_status as $key=>$status)
+                    <div wire:click="toggleStatus('{{$key}}')" class="text-{{$key}} btn {{in_array($key,$tasks_status_filter)?'active':''}} col-md-12" style="margin-bottom: 10px;">
+                        {{__($status['label'])}}
+                    </div>
+                @endforeach
             </div>
         </div>
+        @if(Auth::user()->can('view all tasks'))
+            <div class="card" style="margin-top: 15px;">
+                <div class="card-header text-center">
+                    {{__('Filter Users')}}
+                </div>
+                <div class="card-body text-center">
+                    @foreach($users as $user)
+                        <div wire:click="toggleUsers('{{$user->id}}')" class="text-secondary fs-6 btn {{in_array($user->id,$tasks_user_id_filter)?'active':''}} col-md-12" style="margin-bottom: 10px;">
+                            {{$user['name'].' '.$user['last_name']}}
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endif
     </div>
     <div class="col-md-10">
         <div class="card">
