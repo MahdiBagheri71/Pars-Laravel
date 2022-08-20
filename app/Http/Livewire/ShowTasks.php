@@ -185,7 +185,14 @@ class ShowTasks extends Component
             [
                 'name' => 'max:255|min:1',
                 'note' => '',
-                'status' => 'in:cancel,success,retarded,delete,doing,planned',
+                'status' => [
+//                  'in:cancel,success,retarded,delete,doing,planned',
+                    function ($attribute, $value, $fail) {
+                        if(!key_exists($value,$this->tasks_status)){
+                            $fail(__('validation.in'));
+                        }
+                    },
+                ],
                 'date_start' => [
 //                    'date_format:Y-m-d',
                     'before_or_equal:date_end',

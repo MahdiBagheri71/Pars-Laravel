@@ -759,5 +759,13 @@
     "Filter Users" : "فیلتر کاربر",
     "All" : "همه",
     "Total" : "مجموع",
-    "Your number of tasks" : "تعداد وظایف شما"
+    "Your number of tasks" : "تعداد وظایف شما",
+    "List Status Task" : "لیست وضعیت وظایف",
+    "List Status Task Delete" : "لیست وضعیت وظایف حذف شده",
+    "Status deleted successfully" : "وضعیت با موفقیت حذف گردید",
+    "Status restore successfully" : "وضعیت با موفقیت بازیابی گردید",
+    "Label" : "برچسب",
+    "Color" : "رنگ",
+    "Translate" : "ترجمه",
+    "Status Task Create" : "ایجاد وضعیت وظیفه"
 }

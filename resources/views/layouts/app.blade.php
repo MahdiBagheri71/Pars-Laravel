@@ -91,6 +91,11 @@
                                         </a>
                                     @endif
 
+                                    @if(Auth::user()->hasRole('admin'))
+                                        <a class="dropdown-item" href="{{ route('tasksStatus') }}">
+                                            {{ __('List Status Task') }}
+                                        </a>
+                                    @endif
 {{--                                    @if(Auth::user()->hasRole('admin'))--}}
 {{--                                        <a class="dropdown-item" href="{{ route('tasksListDelete') }}">--}}
 {{--                                            {{ __('List Tasks Delete') }}--}}

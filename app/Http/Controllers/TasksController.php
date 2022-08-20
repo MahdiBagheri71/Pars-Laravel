@@ -143,9 +143,9 @@ class TasksController extends Controller
      */
     public function status(){
         //check permission view task
-        if(Auth::user()->canany(['view tasks', 'view all tasks'])){
+        if(Auth::user()->hasRole('admin')){
             $tasks_status = TaskStatus::byValue();
-            return view('dashboard.task.list',[
+            return view('dashboard.task.status',[
                 'delete' => false,
                 'tasks_status' => $tasks_status
             ]);
