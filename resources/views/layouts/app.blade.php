@@ -63,13 +63,27 @@
                                 </li>
                             @endif
                         @else
+
+                            <li class="nav-item dropdown">
+                                <a id="task_list_show_socket_a" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+                                        <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+                                        {{__('Tasks')}}
+                                    </svg>
+                                    <span id="number_task_list" class="position-absolute top-50 start-100 translate-middle badge rounded-pill bg-secondary rounded-circle"></span>
+                                </a>
+
+                                <div id="task_list_show_socket" class="text-center dropdown-menu" aria-labelledby="navbarDropdown">
+
+                                </div>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
 {{--                                    ({{Auth::user()->hasRole('admin') ? __('Admin') :  __('Employee') }})--}}
                                 </a>
 
-                                <div class="text-center dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <div class="text-center dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" role="menu">
 
                                     <a class="dropdown-item" href="{{ route('dashboard') }}">
                                         {{ __('Dashboard') }}
@@ -140,5 +154,15 @@
         </main>
     </div>
     @yield('js_end')
+
+    @if(Auth::check())
+        <!-- Scripts -->
+        <script>
+            var SITEURL = "{{ url('/') }}";
+            var user_id = {{Auth::id()}};
+        </script>
+        <script src="{{ asset('js/jquery.min.js') }}"></script>
+        <script src="{{ asset('js/WebSocket.js') }}" defer></script>
+    @endif
 </body>
 </html>
