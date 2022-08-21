@@ -25,6 +25,13 @@
         *{
             font-family: 'PEYDA';
         }
+        a.notification-user-row{
+            padding: 10px;
+        }
+        li.notification-user-row{
+            background: #f7f7f7;
+            margin: 2px;
+        }
     </style>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -73,7 +80,7 @@
                                     <span id="number_task_list" class="position-absolute top-50 start-100 translate-middle badge rounded-pill bg-secondary rounded-circle"></span>
                                 </a>
 
-                                <div id="task_list_show_socket" class="text-center dropdown-menu" aria-labelledby="navbarDropdown">
+                                <div id="task_list_show_socket" class="text-center dropdown-menu  dropdown-menu-start" aria-labelledby="navbarDropdown">
 
                                 </div>
                             </li>

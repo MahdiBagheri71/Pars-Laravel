@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\NotificationUser;
 use App\Models\Tasks;
 use App\Models\TaskStatus;
 use Illuminate\Support\Facades\Auth;
@@ -122,6 +123,17 @@ class CreateTask extends Component
 
         //check task create
         if($task){
+            //for notification
+            NotificationUser::insert([
+                [
+                    'notification' => __('وظیفه توسط کاربر :user ایجاد گردید.',[
+                        'user' => Auth::user()->name.' '.Auth::user()->last_name
+                    ]),
+                    'link' => '/task/'.$task->id,
+                    'show' => 0,
+                    'user_id' => $task->user_id
+                ]
+            ]);
             //message success update
             session()->flash('type', 'success');
             session()->flash('message',  __('Tasks created successfully'));

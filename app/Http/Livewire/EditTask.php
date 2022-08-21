@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\NotificationUser;
 use App\Models\Tasks;
 use App\Models\TaskStatus;
 use Livewire\Component;
@@ -143,6 +144,18 @@ class EditTask extends Component
         $task->date = $date;
         $task->time = $this->task_data['time'];
         $task->user_id = $this->task_data['user_id'];
+
+        //for notification
+        NotificationUser::insert([
+            [
+                'notification' => __('وظیفه توسط کاربر :user تغییر یافت.',[
+                    'user' => Auth::user()->name.' '.Auth::user()->last_name
+                ]),
+                'link' => '/task/'.$task->id,
+                'show' => 0,
+                'user_id' => $task->user_id
+            ]
+        ]);
 
         //update task
         $task->save();

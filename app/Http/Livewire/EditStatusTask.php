@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\NotificationUser;
 use App\Models\Tasks;
 use App\Models\TaskStatus;
 use Illuminate\Support\Facades\Auth;
@@ -81,6 +82,19 @@ class EditStatusTask extends Component
             session()->flash('message',  __('Tasks not found'));
             return  ;
         }
+
+        //for notification
+        NotificationUser::insert([
+            [
+                'notification' => __('وضعیت از مقدار :status1 به :status2 تغییر یافت.',[
+                    'status1' => __($this->tasks_status[$task->status]['label']),
+                    'status2' => __($this->tasks_status[$this->status]['label'])
+                ]),
+                'link' => '/task/'.$task->id,
+                'show' => 0,
+                'user_id' => $task->user_id
+            ]
+        ]);
 
         //set var for edit
         $task->status = $this->status;

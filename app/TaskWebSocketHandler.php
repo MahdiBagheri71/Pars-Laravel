@@ -1,8 +1,7 @@
 <?php
 namespace App;
 
-use App\Models\Tasks;
-use Illuminate\Support\Facades\Auth;
+use App\Models\NotificationUser;
 use Ratchet\ConnectionInterface;
 use Ratchet\RFC6455\Messaging\MessageInterface;
 use Ratchet\WebSocket\MessageComponentInterface;
@@ -39,10 +38,11 @@ class TaskWebSocketHandler implements MessageComponentInterface
         // TODO: Implement onMessage() method.
         $arr_msg = explode('_',$msg);
         if(count($arr_msg)==2 && trim($arr_msg[0]) == 'tasks'){
-            $tasks = Tasks::where('user_id',(int)$arr_msg[1])->where('updated_at','>',date('Y-m-d H:i:s',strtotime('-5 minutes')))->get();
+            $tasks = NotificationUser::where('user_id',(int)$arr_msg[1])->where('show',0)->get();
             $connection->send(json_encode($tasks));
-        }else{
-            $connection->send($msg);
+        }elseif(count($arr_msg)==3 && trim($arr_msg[0]) == 'notification'){
+            NotificationUser::where('user_id',(int)$arr_msg[1])->where('show',0)->where('id', (int)$arr_msg[2])
+                ->update(['show' => 1]);
         }
     }
 }
