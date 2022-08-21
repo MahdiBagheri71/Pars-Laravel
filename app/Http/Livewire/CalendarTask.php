@@ -105,6 +105,9 @@ class CalendarTask extends Component
             return ;
         }
 
+        $this->modal_task_id = false;
+        $this->modal_task = false;
+
         //get tasks by date ( start & end )
         $tasks = Tasks::where('date','>=',date('Y-m-d',strtotime($start)))
             ->where('date','<=', date('Y-m-d',strtotime($end)))

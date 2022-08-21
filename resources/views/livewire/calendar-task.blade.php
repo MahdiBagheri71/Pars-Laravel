@@ -108,7 +108,20 @@
 @push('scripts')
     <script>
 
+
         document.addEventListener('livewire:load', function () {
+
+            function regeneratedCodes(){
+                $('#calendar').fullCalendar('addEventSource', function (start, end, timezone, callback) {
+                    var load_task = @this.loadTasks(start,end);
+                    Promise.all([load_task]).then((tasks) => {
+                        $('#calendar').fullCalendar( 'removeEvents');
+                        callback(tasks[0]);
+                        $('#calendar').fullCalendar( 'rerenderEvents' );
+                    });
+                });
+                $('.popover').hide();
+            }
 
             var option = {
 
@@ -167,19 +180,12 @@
             });
 
             @this.on(`refreshCalendar`, () => {
-                $('#calendar').fullCalendar('addEventSource', function (start, end, timezone, callback) {
-                    var load_task = @this.loadTasks(start,end);
-                    Promise.all([load_task]).then((tasks) => {
-                        $('#calendar').fullCalendar( 'removeEvents');
-                        callback(tasks[0]);
-                        $('#calendar').fullCalendar( 'rerenderEvents' );
-                    });
-                });
-                $('.popover').hide();
+                regeneratedCodes();
             });
 
             //for create modal task
             @this.on('modal_create', () => {
+                $('.popover').hide();
                 $('#createModal').modal('show');
 
                 //flatpickr date select jalali
@@ -204,17 +210,17 @@
 
                 //close modal create
                 $('.createModalClose').click(function (){
-                    Livewire.emit('regeneratedCodes');
                     $('#createModal').modal('hide');
                 });
 
                 $('#createModal').on('hidden.bs.modal', function () {
-                    Livewire.emit('regeneratedCodes');
+                    regeneratedCodes();
                 });
             });
 
             //for edit modal task
             @this.on('modal_edit', () => {
+                $('.popover').hide();
                 $('#editModal').modal('show');
 
                 flatpickr(".dateEdit", {
@@ -236,12 +242,11 @@
                 });
 
                 $('.editModalClose').click(function (){
-                    Livewire.emit('regeneratedCodes');
                     $('#editModal').modal('hide');
                 })
 
                 $('#editModal').on('hidden.bs.modal', function () {
-                    Livewire.emit('regeneratedCodes');
+                    regeneratedCodes();
                 });
             });
 
@@ -250,6 +255,7 @@
 
         //for hide spinner task
         window.livewire.on('hide_spinner_task', () => {
+            $('.popover').hide();
             setTimeout(function (){
                 $('#spinner_task').hide();
             },200);
@@ -257,11 +263,13 @@
 
         //for hide spinner task
         window.livewire.on('show_spinner_task', () => {
+            $('.popover').hide();
             $('#show_spinner_task').show();
         });
 
         //for close Modal create task save event
         window.livewire.on('closeModal', () => {
+            $('.popover').hide();
             setTimeout(function (){
                 $('.message-create-close').click();
                 $('#createModal').modal('hide');

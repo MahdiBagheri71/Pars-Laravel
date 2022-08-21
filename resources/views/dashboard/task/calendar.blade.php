@@ -53,7 +53,3 @@
     </div>
     @stack('scripts')
 @endsection
-
-@section('js_end')
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.3.1/main.min.js'></script>
-@endsection
