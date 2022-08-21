@@ -20,7 +20,11 @@
 
                     <div class="col-6 float-start">
                         <div class="card m-1">
-                            <div class="card-header text-center">{{__('Your number of tasks')}}({{$total}})</div>
+                            <div class="card-header text-center">{{__('Your number of tasks')}}
+                                (
+                                <span class="total_task">{{$total}}</span>
+                                )
+                            </div>
 
                             <div class="card-body">
                                 <div id="container1"></div>
@@ -29,7 +33,7 @@
                     </div>
                     <div class="col-6 float-end">
                         <div class="card m-1">
-                            <div class="card-header text-center">{{__('Your number of tasks')}}({{$total}})</div>
+                            <div class="card-header text-center">{{__('Your number of tasks')}}(<span class="total_task">{{$total}}</span>)</div>
 
                             <div class="card-body">
                                 <div id="container2"></div>
@@ -42,8 +46,10 @@
     </div>
 </div>
 <script>
+    var SITEURL = "{{ url('/') }}";
+    var user_id = {{Auth::id()}};
     document.addEventListener('DOMContentLoaded', function () {
-        Highcharts.chart('container1', {
+        var container1 = Highcharts.chart('container1', {
             chart: {
                 type: 'column',
                 options3d: {
@@ -114,7 +120,7 @@
             ],
         });
 
-        Highcharts.chart('container2', {
+        var container2 = Highcharts.chart('container2', {
             chart: {
                 type: 'pie',
                 options3d: {
@@ -145,7 +151,7 @@
                 shared: true,
                 useHTML: true,
                 formatter: function() {
-                    return '<span style="text-align: center;font-weight:bold; color:'+ this.point.color +'">'+this.key + ': ' + this.y + '</span>';
+                    return '<span style="text-align: center;font-weight:bold; color:'+ (this.point?this.point.color:'') +'">'+this.key + ': ' + this.y + '</span>';
                 }
             },
             series: [
@@ -158,6 +164,33 @@
                 }
             ],
         });
+
+        var wsUri =  "ws://127.0.0.1:8081/dashboard-websocket";
+        websocket_d = new WebSocket(wsUri);
+        websocket_d.onopen = function (ev) { // connection is open
+            websocket_d.onmessage = function (ev) {
+                var data_json = ev.data;
+                if(isJson(data_json)){
+                    var data = JSON.parse(data_json);
+                    container1.series[0].setData(data['tasks']);
+                    // container1.viewData();
+                    container2.series[0].setData(data['tasks']);
+                    // container2.viewData();
+                    $('.total_task').text(data['total'])
+                }
+            };
+            setInterval(function (){
+                websocket_d.send('tasks_'+user_id);
+            },3000)
+        }
     });
+    function isJson(str) {
+        try {
+            JSON.parse(str);
+        } catch (e) {
+            return false;
+        }
+        return true;
+    }
 </script>
 @endsection

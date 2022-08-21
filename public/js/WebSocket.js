@@ -3,8 +3,6 @@ $('#task_list_show_socket').removeClass('dropdown-menu');
 $('#task_list_show_socket_a').removeClass('dropdown-toggle');
 websocket = new WebSocket(wsUri);
 websocket.onopen = function (ev) { // connection is open
-    console.log("open  --- > ")
-    console.log(ev)
     websocket.onmessage = function (ev) {
         var data_json = ev.data;
         $('#task_list_show_socket_a').removeClass('dropdown-toggle');
