@@ -15,77 +15,146 @@ class TaskSeeder extends Seeder
     public function run()
     {
 
-        //By Mahdi Insert user
-        DB::table('tasks_status')->insert(
+        $status_task = array(
             array(
-                array(
-                    'value' => 'planned',
-                    'label' => 'Planned',
-                    'color' => '#6707f6'
-                ),
-                array(
-                    'value' => 'doing',
-                    'label' => 'Doing',
-                    'color' => '#2094fb'
-                ),
-                array(
-                    'value' => 'success',
-                    'label' => 'Success',
-                    'color' => '#198754'
-                ),
-                array(
-                    'value' => 'retarded',
-                    'label' => 'Retarded',
-                    'color' => '#eecd18'
-                ),
-                array(
-                    'value' => 'cancel',
-                    'label' => 'Cancel',
-                    'color' => '#f0077f'
-                ),
-            )
+                'value' => 'planned',
+                'label' => 'Planned',
+                'color' => '#6707f6'
+            ),
+            array(
+                'value' => 'doing',
+                'label' => 'Doing',
+                'color' => '#2094fb'
+            ),
+            array(
+                'value' => 'success',
+                'label' => 'Success',
+                'color' => '#198754'
+            ),
+            array(
+                'value' => 'retarded',
+                'label' => 'Retarded',
+                'color' => '#eecd18'
+            ),
+            array(
+                'value' => 'cancel',
+                'label' => 'Cancel',
+                'color' => '#f0077f'
+            ),
         );
 
-        DB::unprepared("INSERT INTO `tasks` (`id`, `name`, `note`, `status`, `date`, `time`, `user_id`, `create_by_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'صرف ناهار', 'صرف ناهار با دوستان', 'success', '2022-08-04', '12:05:30', 2, 1, NULL, '2022-08-04 05:35:21', '2022-08-15 08:40:15'),
-(2, 'صرف ناهار', 'صرف ناهار با دوستان', 'planned', '2022-07-24', '14:00:00', 1, 1, NULL, '2022-08-04 05:39:45', '2022-08-15 10:54:24'),
-(3, 'صرف ناهار', 'صرف ناهار با دوستان', 'success', '2022-08-04', '12:20:30', 3, 1, NULL, '2022-08-04 05:39:51', '2022-08-16 10:57:27'),
-(6, 'صرف ناهار', 'صرف ناهار با دوستان', 'planned', '2022-08-04', '12:20:30', 3, 1, NULL, '2022-08-04 06:23:39', '2022-08-04 06:23:39'),
-(7, 'صرف ناهار', 'صرف ناهار با دوستان', 'retarded', '2022-08-05', '12:20:30', 1, 1, NULL, '2022-08-04 05:39:45', '2022-08-04 06:47:36'),
-(8, 'انجام پروژه 1', 'پروژه لاراول', 'retarded', '2022-08-06', '12:20:30', 1, 1, NULL, '2022-08-06 03:46:08', '2022-08-06 04:52:10'),
-(9, 'انجام پروژه 2', 'پروژه لاراول', 'retarded', '2022-08-05', '12:20:30', 1, 1, NULL, '2022-08-06 03:46:12', '2022-08-06 03:46:12'),
-(10, 'انجام پروژه 3', '\nپروژه لاراول\n\nنمونه پروه ؟؟', 'success', '2022-08-07', '16:20:30', 1, 1, NULL, '2022-08-06 03:46:18', '2022-08-16 04:19:09'),
-(11, 'انجام پروژه 2', 'پروژه لاراول', 'retarded', '2022-08-05', '12:20:30', 2, 1, NULL, '2022-08-06 03:46:12', '2022-08-06 03:46:12'),
-(12, 'وظیفه 1', 'نمونه\nخوبی ؟؟', 'planned', '2022-08-09', '15:37:39', 1, 1, NULL, '2022-08-09 03:35:18', '2022-08-09 03:35:18'),
-(13, 'وظیفه 1', 'نمونه\nخوبی ؟؟', 'retarded', '2022-08-09', '15:37:39', 1, 1, NULL, '2022-08-09 03:35:26', '2022-08-09 03:58:58'),
-(14, 'وظیفه 2', 'نمونه\n\n123', 'retarded', '2022-08-08', '12:36:31', 2, 1, NULL, '2022-08-09 03:36:54', '2022-08-15 08:39:14'),
-(15, '1233', '233', 'retarded', '2022-08-11', '12:39:04', 3, 1, '2022-08-16 04:20:12', '2022-08-09 03:40:40', '2022-08-16 04:20:12'),
-(16, '2566', '84\n566', 'cancel', '2022-08-10', '12:58:59', 3, 1, '2022-08-16 04:20:15', '2022-08-09 03:59:24', '2022-08-16 04:20:15'),
-(17, 'صرف', 'صرف با', 'planned', '2022-08-04', '12:20:30', 2, 1, NULL, '2022-08-09 09:18:14', '2022-08-16 04:25:29'),
-(18, 'تست نمونه', 'متن دلخواه', 'retarded', '2022-08-01', '14:27:00', 2, 1, NULL, '2022-08-15 08:56:12', '2022-08-15 08:56:12'),
-(19, 'GVZCZ', 'ZCZCZ', 'retarded', '2022-08-24', '02:42:00', 2, 1, '2022-08-16 04:20:26', '2022-08-15 09:11:35', '2022-08-16 04:20:26'),
-(20, 'dxadx', 'czczcz', 'doing', '2022-08-26', '01:43:00', 2, 1, '2022-08-16 10:47:40', '2022-08-15 09:13:02', '2022-08-16 10:47:40'),
-(21, 'ssfsf', 'sfsf', 'success', '2022-08-09', '02:53:00', 2, 2, '2022-08-16 04:20:08', '2022-08-15 09:22:08', '2022-08-16 04:20:08'),
-(22, 'تست', 'ببسی', 'retarded', '2022-07-22', '06:55:00', 2, 1, NULL, '2022-08-15 09:24:36', '2022-08-16 11:24:01'),
-(23, 'تست', 'ببسی', 'planned', '2022-08-16', '02:55:00', 2, 1, NULL, '2022-08-15 09:24:51', '2022-08-15 09:24:51'),
-(24, 'تست', 'ببسی', 'planned', '2022-08-22', '02:55:00', 2, 1, NULL, '2022-08-15 09:24:56', '2022-08-16 11:07:48'),
-(25, '123', 'fhfhfh', 'success', '2022-08-17', '03:34:00', 1, 1, '2022-08-16 04:20:22', '2022-08-15 10:03:08', '2022-08-16 04:20:22'),
-(26, '123', 'fhfhfh', 'success', '2022-08-08', '03:34:00', 1, 1, NULL, '2022-08-15 10:03:22', '2022-08-16 10:49:05'),
-(27, '1234', 'fhfhfh', 'success', '2022-08-01', '03:34:00', 2, 1, NULL, '2022-08-15 10:05:32', '2022-08-16 10:56:44'),
-(28, '256', 'dgdg', 'success', '2022-08-24', '03:37:00', 2, 2, '2022-08-16 04:20:29', '2022-08-15 10:06:26', '2022-08-16 04:20:29'),
-(29, 'xghxg', 'gxgxgxg', 'doing', '2022-08-16', '15:00:00', 2, 2, '2022-08-16 04:20:19', '2022-08-15 10:06:46', '2022-08-16 04:20:19'),
-(30, 'نمونه جدید', 'نمونه', 'doing', '2022-07-27', '13:00:00', 3, 1, NULL, '2022-08-15 10:29:50', '2022-08-15 10:29:50'),
-(31, 'نمونه', 'متن', 'planned', '2643-11-15', '00:00:00', 1, 1, NULL, '2022-08-16 08:29:40', '2022-08-16 08:29:40'),
-(32, '1401/05/09', 'نمونه یادداشت', 'planned', '2643-10-24', '00:00:00', 1, 1, NULL, '2022-08-16 08:45:28', '2022-08-16 08:45:28'),
-(33, '1401-05-09', '1401-05-09', 'planned', '2022-07-31', '01:00:00', 1, 1, NULL, '2022-08-16 08:51:54', '2022-08-16 08:51:54'),
-(34, '  -  -  - 1401-05-18', 'OK?\n\n---', 'doing', '2022-08-10', '00:00:00', 1, 1, NULL, '2022-08-16 08:55:31', '2022-08-16 10:49:44'),
-(35, '1401-05-25', 'نمونه', 'doing', '2022-08-16', '01:00:00', 1, 1, NULL, '2022-08-16 08:56:21', '2022-08-16 08:56:21'),
-(36, '1401-05-12', '1401-05-12', 'planned', '2022-08-03', '00:00:00', 1, 1, NULL, '2022-08-16 08:56:48', '2022-08-16 08:56:48'),
-(37, '1401-05-11', '1401-05-11', 'planned', '2022-08-02', '00:00:00', 1, 1, NULL, '2022-08-16 08:57:10', '2022-08-16 08:57:10'),
-(38, '1401-05-11', '1401-05-11', 'planned', '2022-08-02', '00:00:00', 2, 1, NULL, '2022-08-16 08:57:15', '2022-08-16 08:57:15'),
-(39, '1401-05-11', '1401-05-11', 'planned', '2022-08-02', '00:00:00', 3, 1, NULL, '2022-08-16 08:57:25', '2022-08-16 08:57:25'),
-(40, '1401-05-12', 'me', 'planned', '2022-08-03', '00:00:00', 2, 2, NULL, '2022-08-16 08:58:16', '2022-08-16 08:58:16'),
-(41, 'نمونه 26', 'نمونه 26\nاوکی ؟', 'planned', '2022-08-17', '00:00:00', 2, 2, NULL, '2022-08-16 09:16:04', '2022-08-16 11:23:24'),
-(42, '1401-04-31', '1401-04-31', 'planned', '2022-07-22', '01:00:00', 1, 1, NULL, '2022-08-16 11:16:01', '2022-08-16 11:23:54');");
+        DB::table('tasks_status')->insert($status_task);
+
+        $tasks = array();
+
+        $comments = array();
+
+        $status = array(
+            'planned',
+            'doing',
+            'success',
+            'retarded',
+            'cancel'
+        );
+
+        for($i=1;$i<178;$i++){
+
+            $date = $this->randomDate();
+
+            $user_id = rand(1,3);
+            $create_by_id = rand(0,1)?$user_id:1;
+
+            $tasks[]=array(
+                'id' => $i,
+                'name' => 'Task Number '.$i,
+                'note' => $this->lorem(rand(1,5)),
+                'status' => $status[rand(0,4)],
+                'date_start' => $date['date_start'],
+                'time_start' => $date['time_start'],
+                'date_finish' => $date['date_finish'],
+                'time_finish' => $date['time_finish'],
+                'time_tracking' => rand(0,30),
+                'user_id' => $user_id,
+                'create_by_id' => $create_by_id,
+            );
+
+            for($j=1;$j<rand(0,6);$j++){
+
+                $comments[]=array(
+                    'note' => $this->lorem(rand(1,5)),
+                    'task_id' => $i,
+                    'create_by_id' => rand(0,1)?$user_id:$create_by_id,
+                    'created_at' => date('Y-m-d H:i:s',strtotime($date['date_start'])+rand(0,9000))
+                );
+            }
+
+        }
+
+        DB::table('tasks')->insert($tasks);
+        DB::table('comments_task')->insert($comments);
+
+    }
+
+    public function randomDate()
+    {
+        // Convert to timetamps
+        $min = strtotime('-20 days');
+        $max = strtotime('+20 days');
+
+        // Generate random number using above bounds
+        $val = rand($min, $max);
+
+        $val_end =  $val+rand(60,9000);
+
+        $date = array(
+            'date_start' => date('Y-m-d', $val),
+            'date_finish' => date('Y-m-d',$val_end),
+            'time_start' => date('H:i:s', $val),
+            'time_finish' => date('H:i:s',$val_end)
+        );
+        // Convert back to desired date format
+        return $date;
+    }
+
+    public function lorem($count = 1, $max = 20, $standard = true) {
+        $output = '';
+
+        if ($standard) {
+            $output = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, ' .
+                'sed do eiusmod tempor incididunt ut labore et dolore magna ' .
+                'aliqua.';
+        }
+
+        $pool = explode(
+            ' ',
+            'a ab ad accusamus adipisci alias aliquam amet animi aperiam ' .
+            'architecto asperiores aspernatur assumenda at atque aut beatae ' .
+            'blanditiis cillum commodi consequatur corporis corrupti culpa ' .
+            'cum cupiditate debitis delectus deleniti deserunt dicta ' .
+            'dignissimos distinctio dolor ducimus duis ea eaque earum eius ' .
+            'eligendi enim eos error esse est eum eveniet ex excepteur ' .
+            'exercitationem expedita explicabo facere facilis fugiat harum ' .
+            'hic id illum impedit in incidunt ipsa iste itaque iure iusto ' .
+            'laborum laudantium libero magnam maiores maxime minim minus ' .
+            'modi molestiae mollitia nam natus necessitatibus nemo neque ' .
+            'nesciunt nihil nisi nobis non nostrum nulla numquam occaecati ' .
+            'odio officia omnis optio pariatur perferendis perspiciatis ' .
+            'placeat porro possimus praesentium proident quae quia quibus ' .
+            'quo ratione recusandae reiciendis rem repellat reprehenderit ' .
+            'repudiandae rerum saepe sapiente sequi similique sint soluta ' .
+            'suscipit tempora tenetur totam ut ullam unde vel veniam vero ' .
+            'vitae voluptas'
+        );
+
+        $max = ($max <= 3) ? 4 : $max;
+        $count = ($count < 1) ? 1 : (($count > 2147483646) ? 2147483646 : $count);
+
+        for ($i = 0, $add = ($count - (int) $standard); $i < $add; $i++) {
+            shuffle($pool);
+            $words = array_slice($pool, 0, mt_rand(3, $max));
+            $output .= ((! $standard && $i === 0) ? '' : ' ') . ucfirst(implode(' ', $words)) . '.';
+        }
+
+        return $output;
     }
 }

@@ -135,6 +135,23 @@ class TasksController extends Controller
         return redirect()->route('dashboard');
     }
 
+    /**
+     * show fullcalendar view tasks
+     * @return view
+     */
+    public function tasksKanban(){
+        //check permission view task
+        if(Auth::user()->canany(['view tasks', 'view all tasks'])){
+            $tasks_status = TaskStatus::byValue();
+            return view('dashboard.task.kanban',[
+                'tasks_status' => $tasks_status
+            ]);
+        }
+
+        //not permission redirect
+        return redirect()->route('dashboard');
+    }
+
 
 
     /**
