@@ -112,6 +112,7 @@
                             @includeWhen( $order_by == 'time', 'dashboard.task.order', ['order' => $order])
                         </a>
                     </th>
+                    <th scope="col">{{__('Time Tracking')}}</th>
                     <th scope="col">{{__('User')}}</th>
                     <th scope="col">{{__('Create By')}}</th>
                     @if(Auth::user()->canany(['edit me task','edit all tasks','delete tasks']) || Auth::user()->hasRole('admin') && $deleted)
@@ -151,6 +152,7 @@
                         <input readonly="readonly" class="readonly form-control text-center"
                                wire:model="search_tasks.time_end" id="endTime" placeholder="{{__('Time End')}}"/>
                     </th>
+                    <th scope="col" style="min-width: 100px;"></th>
                     <th scope="col">
                         @if (Auth::user()->hasRole('admin'))
                             <select wire:model="search_tasks.user_id" class="custom-select form-select"
@@ -192,6 +194,22 @@
                         </td>
                         <td>{!! \Morilog\Jalali\CalendarUtils::strftime('l d F Y', strtotime($task->date_start))  !!}</td>
                         <td>{{$task->time_start}}</td>
+                        <td>
+                            @if(!$deleted)
+                                <span class="time_tracking">
+                                    <span class="show_time_tracking_{{$task->id}}">
+                                        {{floor($task->time_tracking/60).'m '.($task->time_tracking%60).'s'}}
+                                    </span>
+                                    <span data-taskid="{{$task->id}}" data-time="{{$task->time_tracking}}" data-status="stop" type="button" class="action_time_tracking action_time_tracking_{{$task->id}}">
+                                        <svg style="color: #198754;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-circle-fill" viewBox="0 0 16 16">
+                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z"/>
+                                        </svg>
+                                    </span>
+                                </span>
+                            @else
+                                {{floor($task->time_tracking/60).'m '.($task->time_tracking%60).'s'}}
+                            @endif
+                        </td>
                         <td>{{$task->user->user_name . ' ' .$task->user->user_last_name}}</td>
                         <td>{{$task->creator->creator_name . ' ' .$task->creator->creator_last_name}}</td>
                         @if(Auth::user()->canany(['edit me task','edit all tasks','delete tasks']) || Auth::user()->hasRole('admin') && $deleted)

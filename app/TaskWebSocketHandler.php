@@ -2,6 +2,7 @@
 namespace App;
 
 use App\Models\NotificationUser;
+use App\Models\Tasks;
 use Ratchet\ConnectionInterface;
 use Ratchet\RFC6455\Messaging\MessageInterface;
 use Ratchet\WebSocket\MessageComponentInterface;
@@ -40,6 +41,8 @@ class TaskWebSocketHandler implements MessageComponentInterface
         if(count($arr_msg)==2 && trim($arr_msg[0]) == 'tasks'){
             $tasks = NotificationUser::where('user_id',(int)$arr_msg[1])->where('show',0)->get();
             $connection->send(json_encode($tasks));
+        }elseif(count($arr_msg)==3 && trim($arr_msg[0]) == 'time'){
+            Tasks::where('id',(int)$arr_msg[1])->update(['time_tracking'=>(int)$arr_msg[2]]);
         }elseif(count($arr_msg)==3 && trim($arr_msg[0]) == 'notification'){
             NotificationUser::where('user_id',(int)$arr_msg[1])->where('show',0)->where('id', (int)$arr_msg[2])
                 ->update(['show' => 1]);
