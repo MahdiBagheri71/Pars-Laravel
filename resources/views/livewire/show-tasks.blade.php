@@ -102,13 +102,13 @@
                     </th>
                     <th scope="col">
                         <a href="#" wire:click="orderBy('date')">
-                            {{__('Date')}}
+                            {{__('Date Start')}}
                             @includeWhen( $order_by == 'date', 'dashboard.task.order', ['order' => $order])
                         </a>
                     </th>
                     <th scope="col">
                         <a href="#" wire:click="orderBy('time')">
-                            {{__('Time')}}
+                            {{__('Time Start')}}
                             @includeWhen( $order_by == 'time', 'dashboard.task.order', ['order' => $order])
                         </a>
                     </th>
@@ -186,12 +186,12 @@
                         {{--                    Show row by start & pagination--}}
                         <th scope="row">{{$row+($tasks->firstItem())}}</th>
                         <td>{{$task->name}}</td>
-                        <td style="white-space: pre-wrap; white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;">{!! $task->note !!}</td>
+                        <td style="white-space: pre-wrap; white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;">{!! substr($task->note,0,25).(strlen($task->note)>25?' ...':'') !!}</td>
                         <td class="text-{{$task->status}}" {!! (Auth::user()->can('edit status tasks') && !$deleted) ? ' type="button" wire:click="showModal('.$task->id.',\'edit_status\')"':''  !!}>
                             {{__(isset($tasks_status[$task->status])?$tasks_status[$task->status]['label']:$task->status)}}
                         </td>
-                        <td>{!! \Morilog\Jalali\CalendarUtils::strftime('l d F Y', strtotime($task->date))  !!}</td>
-                        <td>{{$task->time}}</td>
+                        <td>{!! \Morilog\Jalali\CalendarUtils::strftime('l d F Y', strtotime($task->date_start))  !!}</td>
+                        <td>{{$task->time_start}}</td>
                         <td>{{$task->user->user_name . ' ' .$task->user->user_last_name}}</td>
                         <td>{{$task->creator->creator_name . ' ' .$task->creator->creator_last_name}}</td>
                         @if(Auth::user()->canany(['edit me task','edit all tasks','delete tasks']) || Auth::user()->hasRole('admin') && $deleted)
@@ -264,21 +264,12 @@
             <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalCenterTitle"
                  aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">
-                                {{__("Edit")}}
-                            </h5>
-                        </div>
-                        <div class="modal-body">
-                            @if($modal_task)
-                                @if(Auth::user()->canany(['edit me task','edit all tasks']))
-                                    {{--                        live wire edit taks--}}
-                                    @livewire('edit-task',['task'=>$modal_task,'users'=>$users,'live_wire'=>true])
-                                @endif
-                            @endif
-                        </div>
-                    </div>
+                    @if($modal_task)
+                        @if(Auth::user()->canany(['edit me task','edit all tasks']))
+                            {{--                        live wire edit taks--}}
+                            @livewire('edit-task',['task'=>$modal_task,'users'=>$users,'live_wire'=>true])
+                        @endif
+                    @endif
                 </div>
             </div>
 

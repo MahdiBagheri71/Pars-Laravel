@@ -78,13 +78,13 @@ class TaskSeeder extends Seeder
                 'create_by_id' => $create_by_id,
             );
 
-            for($j=1;$j<rand(0,6);$j++){
+            for($j=1;$j<rand(2,10);$j++){
 
                 $comments[]=array(
                     'note' => $this->lorem(rand(1,5)),
                     'task_id' => $i,
                     'create_by_id' => rand(0,1)?$user_id:$create_by_id,
-                    'created_at' => date('Y-m-d H:i:s',strtotime($date['date_start'])+rand(0,9000))
+                    'created_at' => date('Y-m-d H:i:s',rand(strtotime('-15 days'),time()))
                 );
             }
 

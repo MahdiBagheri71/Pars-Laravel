@@ -31,7 +31,6 @@
             color: {{$status['color']}} !important;
         }
         @endforeach
-
     </style>
 @endsection
 

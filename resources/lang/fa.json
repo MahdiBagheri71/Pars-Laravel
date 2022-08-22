@@ -767,5 +767,10 @@
     "Label" : "برچسب",
     "Color" : "رنگ",
     "Translate" : "ترجمه",
-    "Status Task Create" : "ایجاد وضعیت وظیفه"
+    "Status Task Create" : "ایجاد وضعیت وظیفه",
+    "List Comments Task" : "لیست یادداشت های وظیفه",
+    "Edit Task" : "ویرایش وظیفه",
+    "Comment" : "یادداشت",
+    "Submit" : "ثبت",
+    "Comment added successfully" : "یادداشت با موفقیت افزوده شد"
 }

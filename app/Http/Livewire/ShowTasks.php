@@ -265,23 +265,23 @@ class ShowTasks extends Component
         //filter date start
         if(isset($this->search_tasks['date_start']) && $this->search_tasks['date_start'] && !$validator->errors()->has('date_start')){
             $date = \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d', $this->search_tasks['date_start'])->format('Y-m-d');
-            $tasks->where('tasks.date' , '>=',  $date);
+            $tasks->where('tasks.date_start' , '>=',  $date);
         }
 
         //filter date end
         if(isset($this->search_tasks['date_end']) && $this->search_tasks['date_end'] && !$validator->errors()->has('date_end')){
             $date = \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d', $this->search_tasks['date_end'])->format('Y-m-d');
-            $tasks->where('tasks.date' , '<=', $date);
+            $tasks->where('tasks.date_start' , '<=', $date);
         }
 
         //filter time start
         if(isset($this->search_tasks['time_start']) && $this->search_tasks['time_start'] && !$validator->errors()->has('time_start')){
-            $tasks->where('tasks.time' , '>=', $this->search_tasks['time_start']);
+            $tasks->where('tasks.time_start' , '>=', $this->search_tasks['time_start']);
         }
 
         //filter time end
         if(isset($this->search_tasks['time_end']) && $this->search_tasks['time_end'] && !$validator->errors()->has('time_end')){
-            $tasks->where('tasks.time' , '<=', $this->search_tasks['time_end']);
+            $tasks->where('tasks.time_start' , '<=', $this->search_tasks['time_end']);
         }
 
         //order by and paginate
