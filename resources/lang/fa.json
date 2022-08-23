@@ -730,6 +730,10 @@
     "Planned" : "برنامه ریزی شده",
     "Date" : "تاریخ",
     "Time" : "زمان",
+    "Date finish" : "تاریخ پایان",
+    "Date Finish" : "تاریخ پایان",
+    "Time finish" : "زمان پایان",
+    "Time Finish" : "زمان پایان",
     "User" : "کاربر",
     "Create By" : "ایجاد شده بوسیله",
     "Task status updated successfully" : "وضعیت وظیفه با موفقیت به روز شد",
@@ -773,5 +777,8 @@
     "Comment" : "یادداشت",
     "Submit" : "ثبت",
     "Comment added successfully" : "یادداشت با موفقیت افزوده شد",
-    "Time Tracking" : "زمان اجرا"
+    "Time Tracking" : "زمان اجرا",
+    "Columns deleted successfully" : "ستون با موفقیت حذف گردید",
+    "Columns updated successfully" : "ستون با موفقیت بروزرسانی گردید",
+    "Configure columns" : "پیکربندی ستون ها"
 }

@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\ColumnsModel;
 use App\Models\TaskStatus;
 use App\Models\User;
+use App\Models\ViewUserModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
@@ -48,6 +50,43 @@ class ShowTasks extends Component
     //tasks status list
     public $tasks_status;
 
+    //columns task
+    public $columns_task,$columns_list_task,$column_add;
+
+    public function updatedColumnAdd($column_id)
+    {
+        ViewUserModel::updateOrInsert(
+                ['column_id' => $column_id],
+                ['sorting' => 0, 'user_id' => Auth::id()],
+            );
+        $this->columns_task = ViewUserModel::with('columns')->whereHas(
+            'columns', function($q){
+            $q->where('columns_model.model',  'Task');
+        }
+        )->where('user_id',  Auth::id())
+            ->orderBy('sorting','ASC')->get()->keyBy('columns.field')->all();
+        $this->emit('closeColumnModal');
+        $this->message_type = 'success';
+        session()->flash('message', __('Columns updated successfully'));
+    }
+
+    public function updateColumnSorting($columns_list){
+        foreach ($columns_list as $column_id=>$sorting){
+            ViewUserModel::updateOrInsert(
+                ['column_id' => $column_id],
+                ['sorting' => $sorting, 'user_id' => Auth::id()],
+            );
+        }
+        $this->columns_task = ViewUserModel::with('columns')->whereHas(
+            'columns', function($q){
+            $q->where('columns_model.model',  'Task');
+        }
+        )->where('user_id',  Auth::id())
+            ->orderBy('sorting','ASC')->get()->keyBy('columns.field')->all();
+        $this->message_type = 'success';
+        session()->flash('message', __('Columns updated successfully'));
+    }
+
     /**
      * for show spinner
      */
@@ -72,7 +111,12 @@ class ShowTasks extends Component
     {
         $this->modal_task = false;
         $this->modal_task_create = false;
-
+        $this->columns_task = ViewUserModel::with('columns')->whereHas(
+            'columns', function($q){
+            $q->where('columns_model.model',  'Task');
+        }
+        )->where('user_id',  Auth::id())
+            ->orderBy('sorting','ASC')->get()->keyBy('columns.field')->all();
     }
 
     /**
@@ -81,6 +125,13 @@ class ShowTasks extends Component
     public function mount(){
         $this->users = User::all();//get list user for tasks user id & create user filter
         $this->tasks_status = TaskStatus::byValue();//get status task by value
+        $this->columns_task = ViewUserModel::with('columns')->whereHas(
+            'columns', function($q){
+            $q->where('columns_model.model',  'Task');
+        }
+        )->where('user_id',  Auth::id())
+            ->orderBy('sorting','ASC')->get()->keyBy('columns.field')->all();
+        $this->columns_list_task = ColumnsModel::where('model',  'Task')->get();
     }
 
     /**
@@ -101,6 +152,33 @@ class ShowTasks extends Component
             Tasks::where('id', $task_id)->delete();
             $this->message_type = 'success';
             session()->flash('message', __('Tasks deleted successfully'));
+        }else{
+            $this->message_type = 'danger';
+            session()->flash('message', __('Not Allow!!!'));
+        }
+    }
+
+    /**
+     * @param $column_id
+     * delete Columns
+     */
+    public function deleteColumns($column_id){
+        $count = ViewUserModel::with('columns')->whereHas(
+            'columns', function($q){
+            $q->where('columns_model.model',  'Task');
+        }
+        )->where('user_id',  Auth::id())->count();
+        if($count>2){
+            ViewUserModel::where('user_id',Auth::id())->where('id',$column_id)->delete();
+            $this->columns_task = ViewUserModel::with('columns')->whereHas(
+                'columns', function($q){
+                $q->where('columns_model.model',  'Task');
+            }
+            )->where('user_id',  Auth::id())
+                ->orderBy('sorting','ASC')
+                ->get()->keyBy('columns.field')->all();
+            $this->message_type = 'success';
+            session()->flash('message', __('Columns deleted successfully'));
         }else{
             $this->message_type = 'danger';
             session()->flash('message', __('Not Allow!!!'));

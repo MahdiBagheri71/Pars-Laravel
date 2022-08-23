@@ -16,12 +16,11 @@ class ViewUserModel extends Migration
         Schema::create('view_user_model', function (Blueprint $table) {
             $table->collation = 'utf8mb4_general_ci';//BY Mahdi FOr utf8mb4_general_ci collation
             $table->id();
-            $table->string('model');
-            $table->string('column');
-            $table->string('table');
-            $table->string('Label');
+            $table->integer('sorting');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('column_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('column_id')->references('id')->on('columns_model')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -158,12 +158,28 @@ window.livewire.on('closeModal', () => {
     $('.resetCloseCreate').val('');
 });
 
+//for close Modal create task save event
+window.livewire.on('closeColumnModal', () => {
+    $('#columnModal').modal('hide');
+});
+
 //for restore modal task
 window.livewire.on('modal_restore', () => {
     $('#restoreModal').modal('show');
     $('.restoreModalClose').click(function (){
         $('#restoreModal').modal('hide');
     })
+});
+
+//for column modal task
+window.livewire.on('modal_column', () => {
+    $('#columnModal').modal('show');
+    $('.columnModalClose').click(function (){
+        $('#columnModal').modal('hide');
+    });
+    $('.deleteColumns').click(function (){
+        $('#columnModal').modal('hide');
+    });
 });
 
 //for hide spinner task

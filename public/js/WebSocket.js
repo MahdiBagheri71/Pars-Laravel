@@ -42,9 +42,7 @@ websocket.onopen = function (ev) { // connection is open
     },3000);
 }
 websocket.onclose = function (ev) {
-
-    console.log("onclose  --- > ")
-    console.log(ev)
+    console.log("close  websocket")
 };
 function isJson(str) {
     try {
