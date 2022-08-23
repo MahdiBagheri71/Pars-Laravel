@@ -11,6 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -80,7 +81,7 @@
                                     <span id="number_task_list" class="position-absolute top-50 start-100 translate-middle badge rounded-pill bg-secondary rounded-circle"></span>
                                 </a>
 
-                                <div id="task_list_show_socket" class="text-center dropdown-menu  dropdown-menu-start" aria-labelledby="navbarDropdown">
+                                <div id="task_list_show_socket" style="overflow: auto;height: 200px;padding: 5px;"  class="text-center dropdown-menu  dropdown-menu-start" aria-labelledby="navbarDropdown">
 
                                 </div>
                             </li>
@@ -168,7 +169,6 @@
             var SITEURL = "{{ url('/') }}";
             var user_id = {{Auth::id()}};
         </script>
-        <script src="{{ asset('js/jquery.min.js') }}"></script>
         <script src="{{ asset('js/WebSocket.js') }}" defer></script>
     @endif
 </body>

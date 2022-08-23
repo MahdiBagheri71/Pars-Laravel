@@ -54,7 +54,7 @@ class EditTask extends Component
     {
         $this->emit("hide_spinner_task");
     }
-    
+
     /**
      * mount var
      */
@@ -132,7 +132,7 @@ class EditTask extends Component
             ],
             'task_data.date_start' => [
                 'required',
-                'before:task_data.date_finish',
+                'before_or_equal:task_data.date_finish',
 //                'date_format:Y-m-d',
                 function ($attribute, $value, $fail) {
                     $this->checkValidateJalali($value, $fail);

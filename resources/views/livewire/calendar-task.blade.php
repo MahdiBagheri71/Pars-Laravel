@@ -188,26 +188,6 @@
                 $('.popover').hide();
                 $('#createModal').modal('show');
 
-                //flatpickr date select jalali
-                flatpickr("#dateCreate", {
-                    enableTime: false,
-                    "locale": "fa" ,
-                    noCalendar: false,
-                    time_24hr: true,
-                    dateFormat: "Y-m-d",
-                    static: true
-                });
-
-                //flatpickr time select
-                flatpickr("#timeCreate", {
-                    enableTime: true,
-                    "locale": "fa" ,
-                    noCalendar: true,
-                    time_24hr: true,
-                    dateFormat: "H:i",
-                    static: true
-                });
-
                 //close modal create
                 $('.createModalClose').click(function (){
                     $('#createModal').modal('hide');
@@ -222,24 +202,6 @@
             @this.on('modal_edit', () => {
                 $('.popover').hide();
                 $('#editModal').modal('show');
-
-                flatpickr(".dateEdit", {
-                    enableTime: false,
-                    "locale": "fa" ,
-                    noCalendar: false,
-                    time_24hr: true,
-                    dateFormat: "Y-m-d",
-                    static: true
-                });
-
-                flatpickr(".timeEdit", {
-                    enableTime: true,
-                    "locale": "fa" ,
-                    noCalendar: true,
-                    time_24hr: true,
-                    dateFormat: "H:i",
-                    static: true
-                });
 
                 $('.editModalClose').click(function (){
                     $('#editModal').modal('hide');
@@ -258,6 +220,25 @@
             $('.popover').hide();
             setTimeout(function (){
                 $('#spinner_task').hide();
+
+
+                flatpickr(".dateEdit", {
+                    enableTime: false,
+                    "locale": "fa" ,
+                    noCalendar: false,
+                    time_24hr: true,
+                    dateFormat: "Y-m-d",
+                    static: true
+                });
+
+                flatpickr(".timeEdit", {
+                    enableTime: true,
+                    "locale": "fa" ,
+                    noCalendar: true,
+                    time_24hr: true,
+                    dateFormat: "H:i",
+                    static: true
+                });
             },200);
         });
 

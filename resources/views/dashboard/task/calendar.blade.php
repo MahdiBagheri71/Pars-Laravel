@@ -4,8 +4,6 @@
     @livewireStyles
     <link rel="stylesheet" href="{{ asset('css/fullcalendar.min.css') }}" />
 
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
-
     <script src="{{ asset('js/moment.min.js') }}"></script>
 
     <script src="{{ asset('js/moment-jalaali.js') }}"></script>

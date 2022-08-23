@@ -109,10 +109,10 @@ class CalendarTask extends Component
         $this->modal_task = false;
 
         //get tasks by date ( start & end )
-        $tasks = Tasks::where('date','>=',date('Y-m-d',strtotime($start)))
-            ->where('date','<=', date('Y-m-d',strtotime($end)))
-            ->where('time','>=','00:00:00')
-            ->where('time','<=','23:59:59');
+        $tasks = Tasks::where('date_start','>=',date('Y-m-d',strtotime($start)))
+            ->where('date_start','<=', date('Y-m-d',strtotime($end)))
+            ->where('time_start','>=','00:00:00')
+            ->where('time_start','<=','23:59:59');
 
         //not allow show all tasks
         if(!Auth::user()->can('view all tasks')){
@@ -136,8 +136,8 @@ class CalendarTask extends Component
                 'id' => $task->id,
                 'title' => $task->name,
                 'description' => $task->note,
-                'start' => $task->date.' '.$task->time,
-                'end' => $task->date.' '.$task->time,
+                'start' => $task->date_start.' '.$task->time_start,
+                'end' => $task->date_finish.' '.$task->time_finish,
                 'color' => isset($this->tasks_status[$task->status])?$this->tasks_status[$task->status]['color']:'#7b8a8c'
             ];
         }

@@ -85,7 +85,7 @@ class CreateTask extends Component
             ],
             'task_data.date_start' => [
 //                'required:Y-m-d',
-                'before:task_data.date_finish',
+                'before_or_equal:task_data.date_finish',
                 function ($attribute, $value, $fail) {
                     $this->checkValidateJalali( $value, $fail);
                 },
