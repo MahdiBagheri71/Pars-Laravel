@@ -23,7 +23,7 @@ class ShowTasks extends Component
     protected $paginationTheme = 'bootstrap';
 
     //for filter object
-    public $search_tasks = ['date_end'=>'','date_start'=>''];
+    public $search_tasks = ['date_start_end'=>'','date_start_start'=>'','date_finish_end'=>'','date_finish_start'=>''];
 
     //order by
     public $order_by ='id';
@@ -270,24 +270,35 @@ class ShowTasks extends Component
                         }
                     },
                 ],
-                'date_start' => [
-//                    'date_format:Y-m-d',
-                    'before_or_equal:date_end',
+                'date_start_start' => [
+                    'before_or_equal:date_start_end',
                     function ($attribute, $value, $fail) {
                         $this->checkValidateJalali( $value, $fail);
                     },
                 ],
-                'date_end' => [
-//                    'date_format:Y-m-d',
-                    'before_or_equal:date_end',
+                'date_start_end' => [
                     function ($attribute, $value, $fail) {
                         $this->checkValidateJalali( $value, $fail);
                     },
                 ],
-                'time_start' => 'date_format:H:i|before_or_equal:time_end',
-                'time_end' => 'date_format:H:i|after_or_equal:time_start',
+                'date_finish_start' => [
+//                    'date_format:Y-m-d',
+                    'before_or_equal:date_finish_end',
+                    function ($attribute, $value, $fail) {
+                        $this->checkValidateJalali( $value, $fail);
+                    },
+                ],
+                'date_finish_end' => [
+                    function ($attribute, $value, $fail) {
+                        $this->checkValidateJalali( $value, $fail);
+                    },
+                ],
+                'time_start_start' => 'date_format:H:i|before_or_equal:time_start_end',
+                'time_start_end' => 'date_format:H:i|after_or_equal:time_start_start',
+                'time_finish_start' => 'date_format:H:i|before_or_equal:time_finish_end',
+                'time_finish_end' => 'date_format:H:i|after_or_equal:time_finish_start',
                 'user_id' => 'exists:users,id',
-                'create_by' => 'exists:users,id',
+                'create_by_id' => 'exists:users,id',
             ]
         );
 
@@ -335,30 +346,52 @@ class ShowTasks extends Component
         }
 
         //filter create by id
-        if(isset($this->search_tasks['create_by']) && $this->search_tasks['create_by']  && !$validator->errors()->has('create_by')){
-            $tasks->where('tasks.create_by_id', $this->search_tasks['create_by']);
+        if(isset($this->search_tasks['create_by_id']) && $this->search_tasks['create_by_id']  && !$validator->errors()->has('create_by_id')){
+            $tasks->where('tasks.create_by_id', $this->search_tasks['create_by_id']);
         }
 
-        //filter date start
-        if(isset($this->search_tasks['date_start']) && $this->search_tasks['date_start'] && !$validator->errors()->has('date_start')){
-            $date = \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d', $this->search_tasks['date_start'])->format('Y-m-d');
+        //filter date start start
+        if(isset($this->search_tasks['date_start_start']) && $this->search_tasks['date_start_start'] && !$validator->errors()->has('date_start_start')){
+            $date = \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d', $this->search_tasks['date_start_start'])->format('Y-m-d');
             $tasks->where('tasks.date_start' , '>=',  $date);
         }
 
-        //filter date end
-        if(isset($this->search_tasks['date_end']) && $this->search_tasks['date_end'] && !$validator->errors()->has('date_end')){
-            $date = \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d', $this->search_tasks['date_end'])->format('Y-m-d');
+        //filter date start end
+        if(isset($this->search_tasks['date_start_end']) && $this->search_tasks['date_start_end'] && !$validator->errors()->has('date_start_end')){
+            $date = \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d', $this->search_tasks['date_start_end'])->format('Y-m-d');
             $tasks->where('tasks.date_start' , '<=', $date);
         }
 
+        //filter date finish start
+        if(isset($this->search_tasks['date_finish_start']) && $this->search_tasks['date_finish_start'] && !$validator->errors()->has('date_finish_start')){
+            $date = \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d', $this->search_tasks['date_finish_start'])->format('Y-m-d');
+            $tasks->where('tasks.date_finish' , '>=',  $date);
+        }
+
+        //filter date finish end
+        if(isset($this->search_tasks['date_finish_end']) && $this->search_tasks['date_finish_end'] && !$validator->errors()->has('date_finish_end')){
+            $date = \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d', $this->search_tasks['date_finish_end'])->format('Y-m-d');
+            $tasks->where('tasks.date_finish' , '<=', $date);
+        }
+
         //filter time start
-        if(isset($this->search_tasks['time_start']) && $this->search_tasks['time_start'] && !$validator->errors()->has('time_start')){
-            $tasks->where('tasks.time_start' , '>=', $this->search_tasks['time_start']);
+        if(isset($this->search_tasks['time_start_start']) && $this->search_tasks['time_start_start'] && !$validator->errors()->has('time_start_start')){
+            $tasks->where('tasks.time_start' , '>=', $this->search_tasks['time_start_start']);
         }
 
         //filter time end
-        if(isset($this->search_tasks['time_end']) && $this->search_tasks['time_end'] && !$validator->errors()->has('time_end')){
-            $tasks->where('tasks.time_start' , '<=', $this->search_tasks['time_end']);
+        if(isset($this->search_tasks['time_start_end']) && $this->search_tasks['time_start_end'] && !$validator->errors()->has('time_start_end')){
+            $tasks->where('tasks.time_start' , '<=', $this->search_tasks['time_start_end']);
+        }
+
+        //filter time finish start
+        if(isset($this->search_tasks['time_finish_start']) && $this->search_tasks['time_finish_start'] && !$validator->errors()->has('time_finish_start')){
+            $tasks->where('tasks.time_finish' , '>=', $this->search_tasks['time_finish_start']);
+        }
+
+        //filter time finish end
+        if(isset($this->search_tasks['time_finish_end']) && $this->search_tasks['time_finish_end'] && !$validator->errors()->has('time_finish_end')){
+            $tasks->where('tasks.time_finish' , '<=', $this->search_tasks['time_finish_end']);
         }
 
         //order by and paginate

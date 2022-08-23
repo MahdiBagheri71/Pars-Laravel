@@ -34,40 +34,23 @@ $(document).ready(function() {
 });
 //after load
 document.addEventListener('livewire:load', function () {
-    //flatpickr date select jalali
-    flatpickr("#startDate", {
+    flatpickr(".dateEdit", {
         enableTime: false,
         "locale": "fa" ,
         noCalendar: false,
         time_24hr: true,
-        dateFormat: "Y-m-d"
+        dateFormat: "Y-m-d",
+        static: true
     });
 
-    flatpickr("#endDate", {
-        enableTime: false,
-        "locale": "fa" ,
-        noCalendar: false,
-        time_24hr: true,
-        dateFormat: "Y-m-d"
-    });
-
-    //flatpickr time select
-    flatpickr("#startTime", {
+    flatpickr(".timeEdit", {
         enableTime: true,
         "locale": "fa" ,
         noCalendar: true,
         time_24hr: true,
-        dateFormat: "H:i"
+        dateFormat: "H:i",
+        static: true
     });
-
-    flatpickr("#endTime", {
-        enableTime: true,
-        "locale": "fa" ,
-        noCalendar: true,
-        time_24hr: true,
-        dateFormat: "H:i"
-    });
-
 
 });
 

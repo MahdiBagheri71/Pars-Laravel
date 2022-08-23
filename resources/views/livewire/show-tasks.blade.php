@@ -88,97 +88,24 @@
                             </a>
                         </th>
                     @endforeach
-{{--                    <th scope="col">--}}
-{{--                        <a href="#" wire:click="orderBy('note')">--}}
-{{--                            {{__('Note')}}--}}
-{{--                            @includeWhen( $order_by == 'note', 'dashboard.task.order', ['order' => $order])--}}
-{{--                        </a>--}}
-{{--                    </th>--}}
-{{--                    <th scope="col" style="min-width: 100px;">--}}
-{{--                        <a href="#" wire:click="orderBy('status')">--}}
-{{--                            {{__('Status')}}--}}
-{{--                            @includeWhen( $order_by == 'status', 'dashboard.task.order', ['order' => $order])--}}
-{{--                        </a>--}}
-{{--                    </th>--}}
-{{--                    <th scope="col">--}}
-{{--                        <a href="#" wire:click="orderBy('date')">--}}
-{{--                            {{__('Date Start')}}--}}
-{{--                            @includeWhen( $order_by == 'date', 'dashboard.task.order', ['order' => $order])--}}
-{{--                        </a>--}}
-{{--                    </th>--}}
-{{--                    <th scope="col">--}}
-{{--                        <a href="#" wire:click="orderBy('time')">--}}
-{{--                            {{__('Time Start')}}--}}
-{{--                            @includeWhen( $order_by == 'time', 'dashboard.task.order', ['order' => $order])--}}
-{{--                        </a>--}}
-{{--                    </th>--}}
-{{--                    <th scope="col">{{__('Time Tracking')}}</th>--}}
-{{--                    <th scope="col">{{__('User')}}</th>--}}
-{{--                    <th scope="col">{{__('Create By')}}</th>--}}
                     @if(Auth::user()->canany(['edit me task','edit all tasks','delete tasks']) || Auth::user()->hasRole('admin') && $deleted)
                         <th scope="col">{{__('Action')}}</th>
                     @endif
                 </tr>
 
                 {{--for fiter tasks--}}
-<!--                <tr>
+                <tr>
                     <th scope="col"></th>
-                    <th scope="col">
-                        <input class="form-control" wire:model="search_tasks.name" type="text"
-                               placeholder="{{__('Name')}}"/>
-                    </th>
-                    <th scope="col">
-                        <input class="form-control" wire:model="search_tasks.note" type="text"
-                               placeholder="{{__('Note')}}"/>
-                    </th>
-                    <th scope="col">
-                        <select wire:model="search_tasks.status" class="form-select custom-select"
-                                aria-label="{{__('Status')}}" style="text-align: center;">
-                            <option value="" style="background : #fff;">{{__('All')}}</option>
-                            @foreach($tasks_status as $key=>$task_status)
-                                <option value="{{$key}}" class="text-{{$key}}">{{__($task_status['label'])}}</option>
-                            @endforeach
-                        </select>
-                    </th>
-                    <th scope="col">
-                        <input readonly="readonly" class="readonly form-control text-center"
-                               wire:model="search_tasks.date_start" id="startDate" placeholder="{{__('Date Start')}}"/>
-                        <input readonly="readonly" class="readonly form-control text-center"
-                               wire:model="search_tasks.date_end" id="endDate" placeholder="{{__('Date End')}}"/>
-                    </th>
-                    <th scope="col">
-                        <input readonly="readonly" class="readonly form-control text-center"
-                               wire:model="search_tasks.time_start" id="startTime" placeholder="{{__('Time Start')}}"/>
-                        <input readonly="readonly" class="readonly form-control text-center"
-                               wire:model="search_tasks.time_end" id="endTime" placeholder="{{__('Time End')}}"/>
-                    </th>
-                    <th scope="col" style="min-width: 100px;"></th>
-                    <th scope="col">
-                        @if (Auth::user()->hasRole('admin'))
-                            <select wire:model="search_tasks.user_id" class="custom-select form-select"
-                                    aria-label="{{__('User')}}" style="text-align: center;">
-                                <option value="">{{__('All')}}</option>
-                                @foreach ($users as $user)
-                                    <option value="{{$user->id}}}">{{$user->name.' '.$user->last_name}}</option>
-                                @endforeach
-                            </select>
-                        @endif
-                    </th>
-                    <th scope="col">
-                        @if (Auth::user()->hasRole('admin'))
-                            <select wire:model="search_tasks.create_by" class="custom-select form-select"
-                                    aria-label="{{__('Create By')}}" style="text-align: center;">
-                                <option value="">{{__('All')}}</option>
-                                @foreach ($users as $user)
-                                    <option value="{{$user->id}}}">{{$user->name.' '.$user->last_name}}</option>
-                                @endforeach
-                            </select>
-                        @endif
-                    </th>
+
+                    @foreach($columns_task as $column)
+                            @include('dashboard.task.filterColumns')
+                        </th>
+                    @endforeach
+
                     @if(Auth::user()->canany(['edit me task','edit all tasks','delete tasks']) || Auth::user()->hasRole('admin') && $deleted)
                         <th scope="col"></th>
                     @endif
-                </tr>-->
+                </tr>
 
                 </thead>
                 <tbody>
@@ -188,33 +115,11 @@
                         {{--Show row by start & pagination--}}
                         <th scope="row">{{$row+($tasks->firstItem())}}</th>
                         @foreach($columns_task as $column)
-                            <td>{{$task[$column['columns']['field']]}}</td>
+                            <td>
+                                @include('dashboard.task.showColumns')
+                            </td>
                         @endforeach
-{{--                        <td>{{$task->name}}</td>--}}
-{{--                        <td style="white-space: pre-wrap; white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;">{!! substr($task->note,0,25).(strlen($task->note)>25?' ...':'') !!}</td>--}}
-{{--                        <td class="text-{{$task->status}}" {!! (Auth::user()->can('edit status tasks') && !$deleted) ? ' type="button" wire:click="showModal('.$task->id.',\'edit_status\')"':''  !!}>--}}
-{{--                            {{__(isset($tasks_status[$task->status])?$tasks_status[$task->status]['label']:$task->status)}}--}}
-{{--                        </td>--}}
-{{--                        <td>{!! \Morilog\Jalali\CalendarUtils::strftime('l d F Y', strtotime($task->date_start))  !!}</td>--}}
-{{--                        <td>{{$task->time_start}}</td>--}}
-{{--                        <td>--}}
-{{--                            @if(!$deleted)--}}
-{{--                                <span class="time_tracking">--}}
-{{--                                    <span class="show_time_tracking_{{$task->id}}">--}}
-{{--                                        {{floor($task->time_tracking/60).'m '.($task->time_tracking%60).'s'}}--}}
-{{--                                    </span>--}}
-{{--                                    <span data-taskid="{{$task->id}}" data-time="{{$task->time_tracking}}" data-status="stop" type="button" class="action_time_tracking action_time_tracking_{{$task->id}}">--}}
-{{--                                        <svg style="color: #198754;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-circle-fill" viewBox="0 0 16 16">--}}
-{{--                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z"/>--}}
-{{--                                        </svg>--}}
-{{--                                    </span>--}}
-{{--                                </span>--}}
-{{--                            @else--}}
-{{--                                {{floor($task->time_tracking/60).'m '.($task->time_tracking%60).'s'}}--}}
-{{--                            @endif--}}
-{{--                        </td>--}}
-{{--                        <td>{{$task->user->user_name . ' ' .$task->user->user_last_name}}</td>--}}
-{{--                        <td>{{$task->creator->creator_name . ' ' .$task->creator->creator_last_name}}</td>--}}
+
                         @if(Auth::user()->canany(['edit me task','edit all tasks','delete tasks']) || Auth::user()->hasRole('admin') && $deleted)
                             <td>
                             @if(!$deleted)
