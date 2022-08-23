@@ -67,6 +67,8 @@ document.addEventListener('livewire:load', function () {
         time_24hr: true,
         dateFormat: "H:i"
     });
+
+
 });
 
 //for delete modal task
@@ -122,24 +124,6 @@ window.livewire.on('modal_edit', () => {
 window.livewire.on('modal_create', () => {
     $('#createModal').modal('show');
 
-    flatpickr("#dateCreate", {
-        enableTime: false,
-        "locale": "fa" ,
-        noCalendar: false,
-        time_24hr: true,
-        dateFormat: "Y-m-d",
-        static: true
-    });
-
-    flatpickr("#timeCreate", {
-        enableTime: true,
-        "locale": "fa" ,
-        noCalendar: true,
-        time_24hr: true,
-        dateFormat: "H:i",
-        static: true
-    });
-
     $('#createModal').on('hidden.bs.modal', function () {
         Livewire.emit('regeneratedCodes');
     });
@@ -186,6 +170,25 @@ window.livewire.on('modal_column', () => {
 window.livewire.on('hide_spinner_task', () => {
     setTimeout(function (){
         $('#spinner_task').hide();
+
+
+        flatpickr(".dateEdit", {
+            enableTime: false,
+            "locale": "fa" ,
+            noCalendar: false,
+            time_24hr: true,
+            dateFormat: "Y-m-d",
+            static: true
+        });
+
+        flatpickr(".timeEdit", {
+            enableTime: true,
+            "locale": "fa" ,
+            noCalendar: true,
+            time_24hr: true,
+            dateFormat: "H:i",
+            static: true
+        });
     },200);
 });
 

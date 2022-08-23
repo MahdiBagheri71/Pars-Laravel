@@ -25,6 +25,7 @@ class Tasks extends Model
         'time_finish',
         'user_id',
         'create_by_id',
+        'time_tracking'
     ];
 
      /**

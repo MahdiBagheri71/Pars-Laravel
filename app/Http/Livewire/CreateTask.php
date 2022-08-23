@@ -30,6 +30,24 @@ class CreateTask extends Component
     //tasks status list
     public $tasks_status;
 
+
+
+    /**
+     * for show spinner
+     */
+    public function boot()
+    {
+        $this->emit("show_spinner_task");
+    }
+
+    /**
+     * for hide spinner
+     */
+    public function dehydrate()
+    {
+        $this->emit("hide_spinner_task");
+    }
+
     /**
      * mount var
      */
@@ -39,8 +57,10 @@ class CreateTask extends Component
             'status' => 'planned',
             'name' => '',
             'note' => '',
-            'date' => \Morilog\Jalali\CalendarUtils::strftime('Y-m-d', strtotime($this->date_time?$this->date_time:time())), // convert to jalali
-            'time' => $this->date_time?date('H:i',strtotime($this->date_time)):date('H:i'),
+            'date_start' => \Morilog\Jalali\CalendarUtils::strftime('Y-m-d', strtotime($this->date_time?$this->date_time:time())), // convert to jalali
+            'date_finish' => \Morilog\Jalali\CalendarUtils::strftime('Y-m-d', strtotime($this->date_time?$this->date_time:time())), // convert to jalali
+            'time_start' => $this->date_time?date('H:i',strtotime($this->date_time)):date('H:i'),
+            'time_finish' => $this->date_time?date('H:i',strtotime($this->date_time)):date('H:i'),
             'user_id' => Auth::user()->id
         ];
         $this->tasks_status = TaskStatus::byValue();//get status task by value
@@ -63,13 +83,21 @@ class CreateTask extends Component
                     }
                 },
             ],
-            'task_data.date' => [
+            'task_data.date_start' => [
+//                'required:Y-m-d',
+                'before:task_data.date_finish',
+                function ($attribute, $value, $fail) {
+                    $this->checkValidateJalali( $value, $fail);
+                },
+            ],
+            'task_data.date_finish' => [
 //                'required:Y-m-d',
                 function ($attribute, $value, $fail) {
                     $this->checkValidateJalali( $value, $fail);
                 },
             ],
-            'task_data.time' => 'required|date_format:H:i',
+            'task_data.time_start' => 'required|date_format:H:i',
+            'task_data.time_finish' => 'required|date_format:H:i',
             'task_data.user_id' => 'required|exists:users,id'
         ];
     }
@@ -108,17 +136,21 @@ class CreateTask extends Component
         $this->validate();
 
         //date jalali
-        $date = \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d',$this->task_data['date'])->format('Y-m-d');
+        $date_start = \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d',$this->task_data['date_start'])->format('Y-m-d');
+        $date_finish = \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d',$this->task_data['date_finish'])->format('Y-m-d');
 
         //create task
         $task = Tasks::create([
             'name' => $this->task_data['name'],
             'note' => $this->task_data['note'],
             'status' => $this->task_data['status'],
-            'date' => $date,
-            'time' => $this->task_data['time'],
+            'date_start' => $date_start,
+            'time_start' => $this->task_data['time_start'],
+            'date_finish' => $date_finish,
+            'time_finish' => $this->task_data['time_finish'],
             'user_id' => Auth::user()->canany(['add tasks'])?$this->task_data['user_id']:Auth::user()->id,
-            'create_by_id' => Auth::user()->id
+            'create_by_id' => Auth::user()->id,
+            'time_tracking' => 0
         ]);
 
         //check task create
@@ -148,7 +180,10 @@ class CreateTask extends Component
                 'status' => 'planned',
                 'name' => '',
                 'note' => '',
-                'date' => \Morilog\Jalali\CalendarUtils::strftime('Y-m-d', strtotime($this->date_time?$this->date_time:time())), // convert to jalali
+                'date_start' => \Morilog\Jalali\CalendarUtils::strftime('Y-m-d', strtotime($this->date_time?$this->date_time:time())), // convert to jalali
+                'date_finish' => \Morilog\Jalali\CalendarUtils::strftime('Y-m-d', strtotime($this->date_time?$this->date_time:time())), // convert to jalali
+                'time_start' => $this->date_time?date('H:i',strtotime($this->date_time)):date('H:i'),
+                'time_finish' => $this->date_time?date('H:i',strtotime($this->date_time)):date('H:i'),
                 'time' => $this->date_time?date('H:i',strtotime($this->date_time)):date('H:i'),
                 'user_id' => Auth::user()->id
             ];
