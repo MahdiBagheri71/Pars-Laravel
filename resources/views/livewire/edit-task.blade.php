@@ -54,15 +54,27 @@
         </div>
 
         <div class="form-group">
-            <label>{{__('Date')}}</label>
-            <input name="date" value="{{$task_data['date']}}" class="form-control text-center dateEdit" placeholder="{{__('Date')}}">
-            @error('task_data.date') <span class="error text-danger">{{ $message }}</span> @enderror
+            <label>{{__('Date Start')}}</label>
+            <input name="date_start" value="{{$task_data['date_start']}}" class="form-control text-center dateEdit" placeholder="{{__('Date')}}">
+            @error('task_data.date_start') <span class="error text-danger">{{ $message }}</span> @enderror
         </div>
 
         <div class="form-group">
-            <label>{{__('Time')}}</label>
-            <input name="time" value="{{$task_data['time']}}" class="form-control text-center timeEdit" placeholder="{{__('Time')}}">
-            @error('task_data.time') <span class="error text-danger">{{ $message }}</span> @enderror
+            <label>{{__('Time Start')}}</label>
+            <input name="time_start" value="{{$task_data['time_start']}}" class="form-control text-center timeEdit" placeholder="{{__('Time')}}">
+            @error('task_data.time_start') <span class="error text-danger">{{ $message }}</span> @enderror
+        </div>
+
+        <div class="form-group">
+            <label>{{__('Date Finish')}}</label>
+            <input name="date_finish" value="{{$task_data['date_finish']}}" class="form-control text-center dateEdit" placeholder="{{__('Date')}}">
+            @error('task_data.date_finish') <span class="error text-danger">{{ $message }}</span> @enderror
+        </div>
+
+        <div class="form-group">
+            <label>{{__('Time Finish')}}</label>
+            <input name="time_finish" value="{{$task_data['time_finish']}}" class="form-control text-center timeEdit" placeholder="{{__('Time')}}">
+            @error('task_data.time_finish') <span class="error text-danger">{{ $message }}</span> @enderror
         </div>
 
         @if(Auth::user()->can('edit all tasks'))

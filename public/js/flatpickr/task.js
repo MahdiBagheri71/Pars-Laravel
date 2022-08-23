@@ -97,24 +97,6 @@ window.livewire.on('modal_edit', () => {
         Livewire.emit('regeneratedCodes');
     });
 
-    flatpickr(".dateEdit", {
-        enableTime: false,
-        "locale": "fa" ,
-        noCalendar: false,
-        time_24hr: true,
-        dateFormat: "Y-m-d",
-        static: true
-    });
-
-    flatpickr(".timeEdit", {
-        enableTime: true,
-        "locale": "fa" ,
-        noCalendar: true,
-        time_24hr: true,
-        dateFormat: "H:i",
-        static: true
-    });
-
     $('.editModalClose').click(function (){
         $('#editModal').modal('hide');
     })

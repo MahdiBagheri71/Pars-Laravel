@@ -26,8 +26,10 @@ class EditTask extends Component
         'name' => '',
         'status' => '',
         'note' => '',
-        'date' => '',
-        'time' => '',
+        'date_start' => '',
+        'time_start' => '',
+        'date_finish' => '',
+        'time_finish' => '',
         'user_id' => ''
     ];
 
@@ -36,6 +38,23 @@ class EditTask extends Component
     //tasks status list
     public $tasks_status;
 
+
+    /**
+     * for show spinner
+     */
+    public function boot()
+    {
+        $this->emit("show_spinner_task");
+    }
+
+    /**
+     * for hide spinner
+     */
+    public function dehydrate()
+    {
+        $this->emit("hide_spinner_task");
+    }
+    
     /**
      * mount var
      */
@@ -57,8 +76,10 @@ class EditTask extends Component
             'status' => $this->task->status,
             'name' => $this->task->name,
             'note' => $this->task->note,
-            'date' => \Morilog\Jalali\CalendarUtils::strftime('Y-m-d', strtotime($this->task->date)), // convert to jalali
-            'time' => date('H:i', strtotime($this->task->time)),
+            'date_start' => \Morilog\Jalali\CalendarUtils::strftime('Y-m-d', strtotime($this->task->date_start)), // convert to jalali
+            'time_start' => date('H:i', strtotime($this->task->time_start)),
+            'date_finish' => \Morilog\Jalali\CalendarUtils::strftime('Y-m-d', strtotime($this->task->date_finish)), // convert to jalali
+            'time_finish' => date('H:i', strtotime($this->task->time_finish)),
             'user_id' => $this->task->user_id,
         ];
         $this->tasks_status = TaskStatus::byValue();//get status task by value
@@ -109,14 +130,23 @@ class EditTask extends Component
                     }
                 },
             ],
-            'task_data.date' => [
+            'task_data.date_start' => [
+                'required',
+                'before:task_data.date_finish',
+//                'date_format:Y-m-d',
+                function ($attribute, $value, $fail) {
+                    $this->checkValidateJalali($value, $fail);
+                }
+            ],
+            'task_data.time_start' => 'required|date_format:H:i',
+            'task_data.date_finish' => [
                 'required',
 //                'date_format:Y-m-d',
                 function ($attribute, $value, $fail) {
                     $this->checkValidateJalali($value, $fail);
                 }
             ],
-            'task_data.time' => 'required|date_format:H:i',
+            'task_data.time_finish' => 'required|date_format:H:i',
             'task_data.user_id' => 'required|integer|exists:users,id'
         ];
     }
@@ -155,14 +185,17 @@ class EditTask extends Component
         }
 
         //date jalali
-        $date = \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d', $this->task_data['date'])->format('Y-m-d');
+        $date_start = \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d', $this->task_data['date_start'])->format('Y-m-d');
+        $date_finish = \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d', $this->task_data['date_finish'])->format('Y-m-d');
 
         //set var for edit
         $task->name = $this->task_data['name'];
         $task->note = $this->task_data['note'];
         $task->status = $this->task_data['status'];
-        $task->date = $date;
-        $task->time = $this->task_data['time'];
+        $task->date_start = $date_start;
+        $task->date_finish = $date_finish;
+        $task->time_start = $this->task_data['time_start'];
+        $task->time_finish = $this->task_data['time_finish'];
         $task->user_id = $this->task_data['user_id'];
 
         //for notification
@@ -189,6 +222,7 @@ class EditTask extends Component
     }
 
     /**
+     * add comment for task
      * @param $comment_data
      */
     public function comment($comment_data)

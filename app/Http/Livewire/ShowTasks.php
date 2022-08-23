@@ -101,7 +101,6 @@ class ShowTasks extends Component
     public function dehydrate()
     {
         $this->emit("hide_spinner_task");
-//        $this->setPage(1);
     }
 
     /**
