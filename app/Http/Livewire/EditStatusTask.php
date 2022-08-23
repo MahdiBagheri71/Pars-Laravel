@@ -69,6 +69,8 @@ class EditStatusTask extends Component
     {
         //Not task for me only permission "edit me task"
         if(!Auth::user()->can('edit status tasks')){
+            session()->flash('type', 'error');
+            session()->flash('message',  __('Not Allow!!!'));
             return ;
         }
         $this->validateOnly($propertyName);

@@ -113,6 +113,12 @@
                                         </a>
                                     @endif
 
+                                    @if(Auth::user()->canany(['view tasks', 'view all tasks']))
+                                        <a class="dropdown-item" href="{{ route('tasksKanban') }}">
+                                            {{ __('Kanban Tasks') }}
+                                        </a>
+                                    @endif
+
                                     @if(Auth::user()->hasRole('admin'))
                                         <a class="dropdown-item" href="{{ route('tasksStatus') }}">
                                             {{ __('List Status Task') }}

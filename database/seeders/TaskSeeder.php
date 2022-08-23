@@ -34,7 +34,7 @@ class TaskSeeder extends Seeder
             array(
                 'value' => 'retarded',
                 'label' => 'Retarded',
-                'color' => '#eecd18'
+                'color' => '#ee9018'
             ),
             array(
                 'value' => 'cancel',
