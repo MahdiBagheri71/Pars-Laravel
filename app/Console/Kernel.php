@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Events\TestMeEvent;
+use App\Jobs\TestMeJob;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -16,6 +18,15 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->job(new TestMeJob())
+//            ->daily()
+            ->everyMinute()
+            ->description('Test Me job')
+            ->onSuccess(function () {
+                return event(new TestMeEvent("OK Event load .. .".date('H:i:s')));
+            })->onFailure(function () {
+                return event(new TestMeEvent("Failed Event load ...".date('H:i:s')));
+            });
     }
 
     /**

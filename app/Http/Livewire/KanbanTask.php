@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Events\TestMeEvent;
 use App\Models\NotificationUser;
 use App\Models\Tasks;
 use Illuminate\Support\Facades\Auth;
@@ -39,6 +40,10 @@ class KanbanTask extends Component
         $this->emit("hide_spinner_task");
     }
 
+    /**
+     * cahnge sorting task show kanban
+     * @param $sorting
+     */
     public function changeSorting($sorting){
         $tasks = Tasks::select('id','sorting')->orderBy('sorting', 'DESC')->whereIn('id',$sorting)->get()->toArray();
         foreach ($sorting as $key=>$id){
@@ -46,6 +51,7 @@ class KanbanTask extends Component
                 Tasks::where('id',$id)->update(['sorting'=> $tasks[$key]['sorting']]);
             }
         }
+        event(new TestMeEvent(json_encode($tasks)));
     }
 
     /**
