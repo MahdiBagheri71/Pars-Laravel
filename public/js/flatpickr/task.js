@@ -107,11 +107,6 @@ window.livewire.on('closeModal', () => {
     $('.resetCloseCreate').val('');
 });
 
-//for close Modal create task save event
-window.livewire.on('closeColumnModal', () => {
-    $('#columnModal').modal('hide');
-});
-
 //for restore modal task
 window.livewire.on('modal_restore', () => {
     $('#restoreModal').modal('show');
@@ -123,12 +118,20 @@ window.livewire.on('modal_restore', () => {
 //for column modal task
 window.livewire.on('modal_column', () => {
     $('#columnModal').modal('show');
+    $('#columnModal').on('hidden.bs.modal', function () {
+        $('.alert-message-show').hide();
+        Livewire.emit('regeneratedCodes');
+    });
     $('.columnModalClose').click(function (){
         $('#columnModal').modal('hide');
     });
-    $('.deleteColumns').click(function (){
-        $('#columnModal').modal('hide');
+    Sortable.create(column_list_select, {
+        handle: '.handle', // handle's class
+        animation: 150
     });
+    // $('.deleteColumns').click(function (){
+    //     $('#columnModal').modal('hide');
+    // });
 });
 
 //for hide spinner task

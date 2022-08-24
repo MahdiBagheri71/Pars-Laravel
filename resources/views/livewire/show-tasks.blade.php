@@ -19,7 +19,7 @@
         </div>
 
 
-        <a wire:click="refresh" type="button"  title="{{__("Refresh")}}" class="text-dark float-start m-1">
+        <a id="refresh_tasks" wire:click="refresh" type="button"  title="{{__("Refresh")}}" class="text-dark float-start m-1">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-counterclockwise"><path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"></path> <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"></path></svg>
         </a>
         {{--create task for admin--}}
@@ -271,20 +271,7 @@
     <div class="modal fade" id="columnModal" tabindex="-1" role="dialog"
          aria-labelledby="columnModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        {{__("Configure columns")}}
-                    </h5>
-                </div>
-                <div class="modal-body">
-                    @include('dashboard.task.columns')
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary columnModalClose">{{__('Cancel')}}</button>
-                    <button id="columnModalSave" type="button" class="btn btn-success columnModalClose">{{__('Save')}}</button>
-                </div>
-            </div>
+            @livewire('column-list')
         </div>
     </div>
 
@@ -294,5 +281,4 @@
             {{ $tasks->links() }}
         </div>
     </div>
-
 </div>

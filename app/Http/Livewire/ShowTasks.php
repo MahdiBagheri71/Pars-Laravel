@@ -50,42 +50,7 @@ class ShowTasks extends Component
     //tasks status list
     public $tasks_status;
 
-    //columns task
-    public $columns_task,$columns_list_task,$column_add;
-
-    public function updatedColumnAdd($column_id)
-    {
-        ViewUserModel::updateOrInsert(
-                ['column_id' => $column_id],
-                ['sorting' => 0, 'user_id' => Auth::id()],
-            );
-        $this->columns_task = ViewUserModel::with('columns')->whereHas(
-            'columns', function($q){
-            $q->where('columns_model.model',  'Task');
-        }
-        )->where('user_id',  Auth::id())
-            ->orderBy('sorting','ASC')->get()->keyBy('columns.field')->all();
-        $this->emit('closeColumnModal');
-        $this->message_type = 'success';
-        session()->flash('message', __('Columns updated successfully'));
-    }
-
-    public function updateColumnSorting($columns_list){
-        foreach ($columns_list as $column_id=>$sorting){
-            ViewUserModel::updateOrInsert(
-                ['column_id' => $column_id],
-                ['sorting' => $sorting, 'user_id' => Auth::id()],
-            );
-        }
-        $this->columns_task = ViewUserModel::with('columns')->whereHas(
-            'columns', function($q){
-            $q->where('columns_model.model',  'Task');
-        }
-        )->where('user_id',  Auth::id())
-            ->orderBy('sorting','ASC')->get()->keyBy('columns.field')->all();
-        $this->message_type = 'success';
-        session()->flash('message', __('Columns updated successfully'));
-    }
+    public $columns_task;
 
     /**
      * for show spinner
@@ -130,7 +95,6 @@ class ShowTasks extends Component
         }
         )->where('user_id',  Auth::id())
             ->orderBy('sorting','ASC')->get()->keyBy('columns.field')->all();
-        $this->columns_list_task = ColumnsModel::where('model',  'Task')->get();
     }
 
     /**
@@ -151,33 +115,6 @@ class ShowTasks extends Component
             Tasks::where('id', $task_id)->delete();
             $this->message_type = 'success';
             session()->flash('message', __('Tasks deleted successfully'));
-        }else{
-            $this->message_type = 'danger';
-            session()->flash('message', __('Not Allow!!!'));
-        }
-    }
-
-    /**
-     * @param $column_id
-     * delete Columns
-     */
-    public function deleteColumns($column_id){
-        $count = ViewUserModel::with('columns')->whereHas(
-            'columns', function($q){
-            $q->where('columns_model.model',  'Task');
-        }
-        )->where('user_id',  Auth::id())->count();
-        if($count>2){
-            ViewUserModel::where('user_id',Auth::id())->where('id',$column_id)->delete();
-            $this->columns_task = ViewUserModel::with('columns')->whereHas(
-                'columns', function($q){
-                $q->where('columns_model.model',  'Task');
-            }
-            )->where('user_id',  Auth::id())
-                ->orderBy('sorting','ASC')
-                ->get()->keyBy('columns.field')->all();
-            $this->message_type = 'success';
-            session()->flash('message', __('Columns deleted successfully'));
         }else{
             $this->message_type = 'danger';
             session()->flash('message', __('Not Allow!!!'));

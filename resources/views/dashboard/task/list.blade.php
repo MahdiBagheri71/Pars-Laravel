@@ -48,5 +48,7 @@
 @endsection
 
 @section('js_end')
+    <!-- Latest Sortable -->
+    <script src="http://SortableJS.github.io/Sortable/Sortable.js"></script>
     <script src="{{ asset('js/flatpickr/task.js') }}"></script>
 @endsection
