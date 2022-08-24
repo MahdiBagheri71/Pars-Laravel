@@ -1,6 +1,22 @@
 <div class="card">
     <div class="card-header">
-        {{ __('Kanban Tasks') }}
+        <div class="nav-link float-end m-1">
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a class="nav-link" href="{{ route('dashboard') }}">
+                            {{ __('Dashboard') }}
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        {{ __('Kanban Tasks') }}
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <a id="refresh_tasks" wire:click="$emit('regeneratedCodes')" type="button"  title="{{__("Refresh")}}" class="text-dark float-start m-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-counterclockwise"><path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"></path> <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"></path></svg>
+        </a>
     </div>
     <div class="card-body">
 

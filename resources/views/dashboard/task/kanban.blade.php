@@ -5,6 +5,16 @@
     @livewireScripts
 
     <style>
+        .flatpickr-wrapper{
+            display: block !important;
+        }
+        .breadcrumb-item + .breadcrumb-item::before {
+            float: right;
+            padding-left: var(--bs-breadcrumb-item-padding-x);
+            color: var(--bs-breadcrumb-divider-color);
+            content: var(--bs-breadcrumb-divider, "/");
+        }
+
         .card.draggable {
             margin-bottom: 1rem;
             cursor: grab;

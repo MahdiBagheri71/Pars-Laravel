@@ -20,6 +20,9 @@ class KanbanTask extends Component
     //tasks status list
     public $tasks_status;
 
+    //refresh listeners
+    protected $listeners = ['regeneratedCodes' => '$refresh'];
+
     /**
      * for show spinner
      */
@@ -111,7 +114,7 @@ class KanbanTask extends Component
         $tasks->where('user_id', Auth::user()->id);
 
         //order by and paginate
-        $tasks=$tasks->paginate(20);
+        $tasks=$tasks->paginate(20)->fragment('id');
 
         return view('livewire.kanban-task',
         [
