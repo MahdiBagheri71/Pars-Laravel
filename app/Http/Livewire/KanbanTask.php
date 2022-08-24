@@ -37,7 +37,12 @@ class KanbanTask extends Component
     }
 
     public function changeSorting($sorting){
-        dd($sorting);
+        $tasks = Tasks::select('id','sorting')->orderBy('sorting', 'DESC')->whereIn('id',$sorting)->get()->toArray();
+        foreach ($sorting as $key=>$id){
+            if(isset($tasks[$key]) && $tasks[$key]['id']!=$id){
+                Tasks::where('id',$id)->update(['sorting'=> $tasks[$key]['sorting']]);
+            }
+        }
     }
 
     /**

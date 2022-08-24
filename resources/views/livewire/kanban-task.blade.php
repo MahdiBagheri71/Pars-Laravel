@@ -23,17 +23,15 @@
                     <div class="card bg-light">
                         <div class="card-body">
                             <h6 data-status="{{$key}}" style="background-color: #cccdce;border-radius: 6px;" class="card-title text-uppercase text-truncate py-2 text-center text-{{$key}} tasks_status">{{__($status['label'])}}</h6>
-                            @php
-                                $count_status = 0;
-                            @endphp
+
+                            <div class="items border border-light text-center">
+                                <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>
+                            </div>
 
                             @foreach($tasks as $task)
                                 @if($task->status == $key)
-                                    @php
-                                        $count_status = 1;
-                                    @endphp
                                     <div class="items border border-light text-center">
-                                        <div class="tasks_id card draggable shadow-sm" data-id="{{$task->id}}" id="cd{{$task->id}}" draggable="true" ondragstart="drag(event)">
+                                        <div class="tasks_id card draggable shadow-sm" data-id="{{$task->id}}" data-sorting="{{$task->sorting}}" id="cd{{$task->id}}" draggable="true" ondragstart="drag(event)">
                                             <div class="tasks_name p-1 lead font-weight-light text-bg-{{$key}}">
                                                 {{$task->name}}
                                             </div>
@@ -51,11 +49,6 @@
                                 @endif
                             @endforeach
 
-                            @if($count_status == 0)
-                                <div class="items border border-light text-center">
-                                    <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>
-                                </div>
-                            @endif
                         </div>
                     </div>
                 </div>
@@ -102,15 +95,15 @@
                     $(element).find('.tasks_name').removeClass (function (index, className) {
                         return (className.match (/(^|\s)text-bg-\S+/g) || []).join(' ');
                     }).addClass('text-bg-'+status);
-                    var task_list_sorting = []
+                    var task_list_sorting = [];
                     $.each($(element).parents('.column_status').find('.tasks_id'),function (key,el){
-                        let t_id = $(el).attr('data-id');
-                        task_list_sorting[key] = Number(t_id);
+                        let t_id = Number($(el).attr('data-id'));
+                        task_list_sorting[key] = t_id;
                     })
                     @this.changeStatus(task_id,status);
                     @this.changeSorting(task_list_sorting);
-                    console.log('status : '+status+' ==> task_id : '+task_id)
-                    console.log(task_list_sorting);
+                    // console.log('status : '+status+' ==> task_id : '+task_id)
+                    // console.log(task_list_sorting);
                     // remove the dropzone parent
                     unwrap(event.target);
                 } catch (error) {
