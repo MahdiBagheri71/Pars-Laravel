@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\ColumnsModel;
 use App\Models\TaskStatus;
 use App\Models\User;
 use App\Models\ViewUserModel;

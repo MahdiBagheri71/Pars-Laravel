@@ -86,7 +86,7 @@ class EditStatusTask extends Component
         }
 
         //for notification
-        NotificationUser::insert([
+        NotificationUser::createNotification(
             [
                 'notification' => __('وضعیت از مقدار :status1 به :status2 تغییر یافت.',[
                     'status1' => __($this->tasks_status[$task->status]['label']),
@@ -95,8 +95,7 @@ class EditStatusTask extends Component
                 'link' => '/task/'.$task->id,
                 'show' => 0,
                 'user_id' => $task->user_id
-            ]
-        ]);
+            ]);
 
         //set var for edit
         $task->status = $this->status;

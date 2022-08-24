@@ -199,7 +199,7 @@ class EditTask extends Component
         $task->user_id = $this->task_data['user_id'];
 
         //for notification
-        NotificationUser::insert([
+        NotificationUser::createNotification(
             [
                 'notification' => __('وظیفه توسط کاربر :user تغییر یافت.', [
                     'user' => Auth::user()->name . ' ' . Auth::user()->last_name
@@ -207,8 +207,7 @@ class EditTask extends Component
                 'link' => '/task/' . $task->id,
                 'show' => 0,
                 'user_id' => $task->user_id
-            ]
-        ]);
+            ]);
 
         //update task
         $task->save();
@@ -285,14 +284,13 @@ class EditTask extends Component
 
             if($user){
 
-                NotificationUser::insert([
+                NotificationUser::createNotification(
                     [
                         'notification' => $comment_data['note'],
                         'link' => '/task/' . $this->task_id,
                         'show' => 0,
                         'user_id' => $user->id
-                    ]
-                ]);
+                    ]);
 
             }
         }

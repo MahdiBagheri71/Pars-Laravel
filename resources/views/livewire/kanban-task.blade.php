@@ -102,8 +102,15 @@
                     $(element).find('.tasks_name').removeClass (function (index, className) {
                         return (className.match (/(^|\s)text-bg-\S+/g) || []).join(' ');
                     }).addClass('text-bg-'+status);
+                    var task_list_sorting = []
+                    $.each($(element).parents('.column_status').find('.tasks_id'),function (key,el){
+                        let t_id = $(el).attr('data-id');
+                        task_list_sorting[key] = Number(t_id);
+                    })
                     @this.changeStatus(task_id,status);
+                    @this.changeSorting(task_list_sorting);
                     console.log('status : '+status+' ==> task_id : '+task_id)
+                    console.log(task_list_sorting);
                     // remove the dropzone parent
                     unwrap(event.target);
                 } catch (error) {

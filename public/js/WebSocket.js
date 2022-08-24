@@ -2,7 +2,26 @@ var wsUri =  "ws://127.0.0.1:8081/task-websocket";
 $('#task_list_show_socket').removeClass('dropdown-menu');
 $('#task_list_show_socket_a').removeClass('dropdown-toggle');
 websocket = new WebSocket(wsUri);
-
+Echo.channel('Notification-'+user_id)
+    .listen('NotificationEvents', (e) => {
+        var data = e.notifications;
+        $('#task_list_show_socket_a').removeClass('dropdown-toggle');
+        $('#number_task_list').text(data.length);
+        var notification_html = '';
+        if(data.length>0){
+            $('#task_list_show_socket').addClass('dropdown-menu');
+            $('#task_list_show_socket_a').addClass('dropdown-toggle');
+        }else{
+            $('#task_list_show_socket').removeClass('dropdown-menu');
+        }
+        $.each(data,function (key,notification){
+            notification_html += '<li class="notification-user-row">' +
+                '<a type="button"  onclick="viewNotification('+notification.id+')" class="notification-user-row dropdown-item" data-href="'+SITEURL+notification.link+'">\n' +
+                notification.notification +
+                '</a></li>';
+        });
+        $('#task_list_show_socket').html(notification_html);
+    });
 function viewNotification(not_id){
     websocket.send('notification_'+user_id+'_'+not_id);
 
@@ -21,7 +40,6 @@ websocket.onopen = function (ev) { // connection is open
                 $('#task_list_show_socket_a').addClass('dropdown-toggle');
             }else{
                 $('#task_list_show_socket').removeClass('dropdown-menu');
-
             }
             $.each(data,function (key,notification){
                 notification_html += '<li class="notification-user-row">' +
@@ -37,11 +55,12 @@ websocket.onopen = function (ev) { // connection is open
         }
     };
     websocket.send('tasks_'+user_id);
-    setInterval(function (){
-        websocket.send('tasks_'+user_id);
-    },3000);
+    // setInterval(function (){
+    //     websocket.send('tasks_'+user_id);
+    // },3000);
 }
 websocket.onclose = function (ev) {
+    $('#task_list_show_socket').hide();
     console.log("close  websocket")
 };
 function isJson(str) {

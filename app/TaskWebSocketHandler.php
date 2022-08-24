@@ -39,7 +39,7 @@ class TaskWebSocketHandler implements MessageComponentInterface
         // TODO: Implement onMessage() method.
         $arr_msg = explode('_',$msg);
         if(count($arr_msg)==2 && trim($arr_msg[0]) == 'tasks'){
-            $tasks = NotificationUser::where('user_id',(int)$arr_msg[1])->where('show',0)->get();
+            $tasks = NotificationUser::where('user_id',(int)$arr_msg[1])->orderBY('id','DESC')->where('show',0)->get();
             $connection->send(json_encode($tasks));
         }elseif(count($arr_msg)==3 && trim($arr_msg[0]) == 'time'){
             Tasks::where('id',(int)$arr_msg[1])->update(['time_tracking'=>(int)$arr_msg[2]]);

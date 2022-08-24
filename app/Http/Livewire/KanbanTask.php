@@ -36,6 +36,10 @@ class KanbanTask extends Component
         $this->emit("hide_spinner_task");
     }
 
+    public function changeSorting($sorting){
+        dd($sorting);
+    }
+
     /**
      * updated
      * @param $propertyName
@@ -84,7 +88,7 @@ class KanbanTask extends Component
         }
 
         //for notification
-        NotificationUser::insert([
+        NotificationUser::createNotification(
             [
                 'notification' => __('وضعیت از مقدار :status1 به :status2 تغییر یافت.',[
                     'status1' => __($this->tasks_status[$status]['label']),
@@ -93,8 +97,7 @@ class KanbanTask extends Component
                 'link' => '/task/'.$task->id,
                 'show' => 0,
                 'user_id' => $task->user_id
-            ]
-        ]);
+            ]);
 
         //set var for edit
         $task->status = $status;
@@ -110,7 +113,7 @@ class KanbanTask extends Component
 
     public function render()
     {
-        $tasks = Tasks::orderBy('id', 'asc');
+        $tasks = Tasks::orderBy('sorting', 'DESC');
 
         $tasks->where('user_id', Auth::user()->id);
 

@@ -12,7 +12,6 @@ class CreateTask extends Component
 {
     public $users;
 
-
     public $task_data = [
         'name' => '',
         'status' => '',
@@ -150,13 +149,14 @@ class CreateTask extends Component
             'time_finish' => $this->task_data['time_finish'],
             'user_id' => Auth::user()->canany(['add tasks'])?$this->task_data['user_id']:Auth::user()->id,
             'create_by_id' => Auth::user()->id,
+            'sorting' => 1,
             'time_tracking' => 0
         ]);
 
         //check task create
         if($task){
             //for notification
-            NotificationUser::insert([
+            NotificationUser::createNotification(
                 [
                     'notification' => __('وظیفه توسط کاربر :user ایجاد گردید.',[
                         'user' => Auth::user()->name.' '.Auth::user()->last_name
@@ -165,7 +165,7 @@ class CreateTask extends Component
                     'show' => 0,
                     'user_id' => $task->user_id
                 ]
-            ]);
+            );
             //message success update
             session()->flash('type', 'success');
             session()->flash('message',  __('Tasks created successfully'));
