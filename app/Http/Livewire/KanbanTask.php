@@ -114,7 +114,7 @@ class KanbanTask extends Component
         $tasks->where('user_id', Auth::user()->id);
 
         //order by and paginate
-        $tasks=$tasks->paginate(20)->fragment('id');
+        $tasks=$tasks->paginate(20);
 
         return view('livewire.kanban-task',
         [
