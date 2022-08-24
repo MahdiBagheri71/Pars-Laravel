@@ -92,27 +92,15 @@ class KanbanTask extends Component
             return  ;
         }
 
-        //for notification
-        NotificationUser::createNotification(
-            [
-                'notification' => __('وضعیت از مقدار :status1 به :status2 تغییر یافت.',[
-                    'status1' => __($this->tasks_status[$status]['label']),
-                    'status2' => __($this->tasks_status[$status]['label'])
-                ]),
-                'link' => '/task/'.$task->id,
-                'show' => 0,
-                'user_id' => $task->user_id
-            ]);
-
         //set var for edit
         $task->status = $status;
 
         //update task
         $task->save();
 
-        //message success update
-        session()->flash('type', 'success');
-        session()->flash('message',  __('Task status updated successfully'));
+//        //message success update
+//        session()->flash('type', 'success');
+//        session()->flash('message',  __('Task status updated successfully'));
 
     }
 

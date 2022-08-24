@@ -76,6 +76,7 @@ class TaskSeeder extends Seeder
                 'time_tracking' => rand(0,30),
                 'user_id' => $user_id,
                 'create_by_id' => $create_by_id,
+                'sorting' => $i
             );
 
             for($j=1;$j<rand(2,10);$j++){
