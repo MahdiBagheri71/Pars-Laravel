@@ -19,6 +19,7 @@ class TaskStatus extends Migration
             $table->string('value', 255);
             $table->string('label', 255);
             $table->string('color', 255);
+            $table->integer('sorting');
             $table->softDeletes();
             $table->timestamps();
         });

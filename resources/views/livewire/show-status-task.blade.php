@@ -94,6 +94,12 @@
                             @includeWhen( $order_by == 'color', 'dashboard.task.order', ['order' => $order])
                         </a>
                     </th>
+                    <th scope="col" style="min-width: 100px;">
+                        <a href="#" wire:click="orderBy('sorting')">
+                            {{__('Sorting')}}
+                            @includeWhen( $order_by == 'sorting', 'dashboard.task.order', ['order' => $order])
+                        </a>
+                    </th>
                     <th scope="col">{{__('Translate')}}</th>
                     <th scope="col">{{__('Action')}}</th>
                 </tr>
@@ -115,6 +121,7 @@
                     </th>
                     <th scope="col"></th>
                     <th scope="col"></th>
+                    <th scope="col"></th>
                 </tr>
 
                 </thead>
@@ -127,6 +134,7 @@
                         <td>{{$task->value}}</td>
                         <td>{{$task->label}}</td>
                         <td style="direction: ltr;color:{{$task->color}}">{{$task->color}}</td>
+                        <td>{{$task->sorting}}</td>
                         <td>{{__($task->label)}}</td>
                         <td>
                                 @if(!$deleted)

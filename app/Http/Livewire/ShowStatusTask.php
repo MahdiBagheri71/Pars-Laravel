@@ -20,7 +20,7 @@ class ShowStatusTask extends Component
     public $search_status = [];
 
     //order by
-    public $order_by ='id';
+    public $order_by ='sorting';
     public $order = 'asc';//desc
 
     //message alert

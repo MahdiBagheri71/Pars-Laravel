@@ -16,7 +16,8 @@ class EditStatus extends Component
     public $task_data_status = [
         'value' => '',
         'label' => '',
-        'color' => ''
+        'color' => '',
+        'sorting' => 0
     ];
 
     public $task_status_id;
@@ -41,7 +42,8 @@ class EditStatus extends Component
         $this->task_data_status = [
             'value' => $this->task_status->value,
             'label' => $this->task_status->label,
-            'color' => $this->task_status->color
+            'color' => $this->task_status->color,
+            'sorting' => $this->task_status->sorting
         ];
     }
 
@@ -54,6 +56,7 @@ class EditStatus extends Component
             'task_data_status.value' => 'required|max:255|min:3',
             'task_data_status.label' => 'required|max:255|min:3',
             'task_data_status.color' => 'required|max:255|min:3',
+            'task_data_status.sorting' => 'required|integer',
         ];
     }
 
@@ -84,6 +87,7 @@ class EditStatus extends Component
         $task_status->value = $this->task_data_status['value'];
         $task_status->label = $this->task_data_status['label'];
         $task_status->color = $this->task_data_status['color'];
+        $task_status->sorting = $this->task_data_status['sorting'];
 
         //update task
         $task_status->save();

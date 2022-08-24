@@ -16,7 +16,7 @@ class ViewUserModel extends Migration
         Schema::create('view_user_model', function (Blueprint $table) {
             $table->collation = 'utf8mb4_general_ci';//BY Mahdi FOr utf8mb4_general_ci collation
             $table->id();
-            $table->integer('sorting');
+            $table->integer('sorting')->default(0);
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('column_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

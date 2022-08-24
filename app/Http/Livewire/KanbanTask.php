@@ -36,17 +36,6 @@ class KanbanTask extends Component
         $this->emit("hide_spinner_task");
     }
 
-
-    /**
-     * set rules for validation
-     */
-    public function rules()
-    {
-        return [
-
-        ];
-    }
-
     /**
      * updated
      * @param $propertyName
@@ -123,11 +112,7 @@ class KanbanTask extends Component
     {
         $tasks = Tasks::orderBy('id', 'asc');
 
-
-        //check permit view all tasks
-        if(!Auth::user()->can('view all tasks')){
-            $tasks->where('user_id', Auth::user()->id);
-        }
+        $tasks->where('user_id', Auth::user()->id);
 
         //order by and paginate
         $tasks=$tasks->paginate(20);

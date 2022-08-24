@@ -781,5 +781,7 @@
     "Columns deleted successfully" : "ستون با موفقیت حذف گردید",
     "Columns updated successfully" : "ستون با موفقیت بروزرسانی گردید",
     "Configure columns" : "پیکربندی ستون ها",
-    "Kanban Tasks" : "نمایه کانبان وظایف"
+    "Kanban Tasks" : "نمایه کانبان وظایف",
+    "Sorting" : "مرتب سازی",
+    "Convert" : "انتقال یافته"
 }

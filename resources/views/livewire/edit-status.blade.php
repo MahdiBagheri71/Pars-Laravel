@@ -32,6 +32,12 @@
         @error('task_data_status.color') <span class="error text-danger">{{ $message }}</span> @enderror
     </div>
 
+    <div class="form-group">
+        <label>{{__('Sorting')}}</label>
+        <input name="sorting" value="{{$task_data_status['sorting']}}" type="number" class="form-control" placeholder="{{__('Sorting')}}">
+        @error('task_data_status.sorting') <span class="error text-danger">{{ $message }}</span> @enderror
+    </div>
+
     <br>
 
     <div class="modal-footer">

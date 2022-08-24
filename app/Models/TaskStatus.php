@@ -19,7 +19,8 @@ class TaskStatus extends Model
     protected $fillable = [
         'value',
         'label',
-        'color'
+        'color',
+        'sorting'
     ];
 
     /**
@@ -38,6 +39,6 @@ class TaskStatus extends Model
      * @return mixed
      */
     protected function byValue(){
-        return TaskStatus::select('value','label','color')->get()->keyBy('value')->all();
+        return TaskStatus::select('value','label','color')->orderBy('sorting')->get()->keyBy('value')->all();
     }
 }
