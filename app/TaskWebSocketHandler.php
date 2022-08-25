@@ -42,7 +42,14 @@ class TaskWebSocketHandler implements MessageComponentInterface
             $tasks = NotificationUser::where('user_id',(int)$arr_msg[1])->orderBY('id','DESC')->where('show',0)->get();
             $connection->send(json_encode($tasks));
         }elseif(count($arr_msg)==3 && trim($arr_msg[0]) == 'time'){
-            Tasks::where('id',(int)$arr_msg[1])->update(['time_tracking'=>(int)$arr_msg[2]]);
+            $task = Tasks::where('id',(int)$arr_msg[2])->first();
+            if($task){
+                if(trim($arr_msg[1]) == 'start' && $task->time_tracking_start<=0){
+                    Tasks::where('id',(int)$arr_msg[2])->update(['time_tracking_start'=>time()]);
+                }else if(trim($arr_msg[1]) == 'stop' && $task->time_tracking_start>0){
+                    Tasks::where('id',(int)$arr_msg[2])->update(['time_tracking'=>($task->time_tracking+(time()-$task->time_tracking_start)),'time_tracking_start'=>0]);
+                }
+            }
         }elseif(count($arr_msg)==3 && trim($arr_msg[0]) == 'notification'){
             NotificationUser::where('user_id',(int)$arr_msg[1])->where('show',0)->where('id', (int)$arr_msg[2])
                 ->update(['show' => 1]);

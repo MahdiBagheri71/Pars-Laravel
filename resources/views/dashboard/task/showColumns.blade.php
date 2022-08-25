@@ -16,13 +16,29 @@
         @if(!$deleted)
             <span class="time_tracking">
                 <span class="show_time_tracking_{{$task->id}}">
-                    {{floor($task[$column['columns']['field']]/60).'m '.($task[$column['columns']['field']]%60).'s'}}
+                    @if($task->time_tracking_start>0)
+                        {{floor(($task[$column['columns']['field']]+(time()-$task->time_tracking_start))/60).'m '.(($task[$column['columns']['field']]+(time()-$task->time_tracking_start))%60).'s'}}
+                    @else
+                        {{floor($task[$column['columns']['field']]/60).'m '.($task[$column['columns']['field']]%60).'s'}}
+                    @endif
                 </span>
-                <span data-taskid="{{$task->id}}" data-time="{{$task[$column['columns']['field']]}}" data-status="stop" type="button" class="action_time_tracking action_time_tracking_{{$task->id}}">
+                <span id="show_time_tracking_click_{{$task->id}}" data-taskid="{{$task->id}}" data-time="{{$task->time_tracking_start>0?($task[$column['columns']['field']]+(time()-$task->time_tracking_start)):$task[$column['columns']['field']]}}" data-status="stop" type="button" class="action_time_tracking action_time_tracking_{{$task->id}}">
                     <svg style="color: #198754;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-circle-fill" viewBox="0 0 16 16">
                       <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z"/>
                     </svg>
                 </span>
+                @if($task->time_tracking_start>0)
+                    <script>
+                        $(document).ready(function (){
+                            setTimeout(function (){
+                                if($('#show_time_tracking_click_{{$task->id}}').attr('data-status') == 'stop') {
+                                    $('#show_time_tracking_click_{{$task->id}}').attr('data-time',Number($('#show_time_tracking_click_{{$task->id}}').attr('data-time'))+1);
+                                    $('#show_time_tracking_click_{{$task->id}}').click();
+                                }
+                            },1000);
+                        })
+                    </script>
+                @endif
             </span>
         @else
             {{floor($task->time_tracking/60).'m '.($task->time_tracking%60).'s'}}

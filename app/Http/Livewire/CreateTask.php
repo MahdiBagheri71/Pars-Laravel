@@ -150,7 +150,8 @@ class CreateTask extends Component
             'user_id' => Auth::user()->canany(['add tasks'])?$this->task_data['user_id']:Auth::user()->id,
             'create_by_id' => Auth::user()->id,
             'sorting' => Tasks::max('sorting'),
-            'time_tracking' => 0
+            'time_tracking' => 0,
+            'time_tracking_start' => 0
         ]);
 
         //check task create

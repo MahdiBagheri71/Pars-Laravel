@@ -27,7 +27,8 @@ class Tasks extends Model
         'user_id',
         'create_by_id',
         'time_tracking',
-        'sorting'
+        'sorting',
+        'time_tracking_start'
     ];
 
      /**
