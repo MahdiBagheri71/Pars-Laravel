@@ -277,10 +277,17 @@ class EditTask extends Component
         ]);
 
 
-        preg_match_all('#@(\w+)#', $comment_data['note'], $mentions);
-        foreach ($mentions[1] as $user_name){
+        preg_match_all('#\s@(\w+)#', $comment_data['note'], $mentions);
+        
+        foreach (array_unique($mentions[1]) as $user_name){
 
-            $user = User::where('username',$user_name)->first();
+            $user = User::where('username',$user_name);
+
+            if (!Auth::user()->can('edit all tasks')) {
+                $user->where('is_admin',0);
+            }
+
+            $user = $user->first();
 
             if($user){
 
