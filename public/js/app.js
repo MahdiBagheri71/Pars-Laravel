@@ -5390,8 +5390,10 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   cluster: "mt1",
   wsHost: window.location.hostname,
   wsPort: 8081,
+  authEndpoint: window.location.hostname + ":8081/broadcasting/auth",
   forceTLS: false,
-  disableStats: true
+  disableStats: true,
+  host: window.location.hostname + ':8081'
 });
 
 /***/ }),

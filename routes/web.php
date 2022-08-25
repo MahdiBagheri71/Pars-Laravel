@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');//change to dashboard by Mahdi
-Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');//change to dashboard by Mahdi
+Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');//change to dashboard by Mahdi
 Route::get('/tasksCalendar', [App\Http\Controllers\TasksController::class, 'tasksCalendar'])->name('tasksCalendar');//change by Mahdi
 Route::get('/tasksList', [App\Http\Controllers\TasksController::class, 'list'])->name('tasksList');//change by Mahdi
 Route::get('/tasksListDelete', [App\Http\Controllers\TasksController::class, 'listDelete'])->name('tasksListDelete');//change by Mahdi
@@ -37,14 +37,14 @@ Route::get('/usersList', [App\Http\Controllers\UserController::class, 'list'])->
 Route::get('/usersListDelete', [App\Http\Controllers\UserController::class, 'listDelete'])->name('usersListDelete');//change by Mahdi
 Route::get('/profile', [App\Http\Controllers\UserController::class, 'profile'])->name('profile');//change by Mahdi
 
+Route::resource('tasks', \App\Http\Controllers\TaskController::class)->middleware('auth');
+
 
 
 WebSocketsRouter::webSocket('/task-websocket', App\TaskWebSocketHandler::class);
 WebSocketsRouter::webSocket('/dashboard-websocket', App\DashboardWebSocketHandler::class);
 
 
-
-Route::resource('tasks', \App\Http\Controllers\TaskController::class)->middleware('auth');
 
 // Route::get('/fullcalendar', function () {//by Mahdi
 //     return view('fullcalendar');
