@@ -17,3 +17,12 @@ use Illuminate\Support\Facades\Artisan;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
+Artisan::command('say:hello {name} {description=:)}', function () {
+    $this->warn("Hi ".$this->argument('name')." ".$this->argument('description'));
+    $value = $this->ask('Are you ok ?(y/n)');
+    if($value=='y'){
+        $this->info('Good :)');
+    }else{
+        $this->error('Bad!!!');
+    }
+})->purpose('Hello');
