@@ -5393,7 +5393,9 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   authEndpoint: window.location.hostname + ":8081/broadcasting/auth",
   forceTLS: false,
   disableStats: true,
-  host: window.location.hostname + ':8081'
+  host: window.location.hostname + ':8081',
+  encrypted: true,
+  csrfToken: 'WORKING TOKEN'
 });
 
 /***/ }),

@@ -18,8 +18,7 @@ class TestMeListener implements ShouldQueue, ShouldBeUnique
      */
     public function handle($event)
     {
-        sleep(5);
-        //
+
         DB::table('test')->insert([
             'test' => $event->text
         ]);

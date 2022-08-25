@@ -34,4 +34,6 @@ window.Echo = new Echo({
     forceTLS: false,
     disableStats: true,
     host: window.location.hostname + ':8081',
+    encrypted: true,
+    csrfToken: 'WORKING TOKEN',
 });
