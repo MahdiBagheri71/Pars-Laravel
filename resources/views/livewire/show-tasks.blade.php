@@ -50,7 +50,7 @@
         <div>
             @if (session()->has('message'))
 
-                <div class="alert alert-{{$message_type}}">
+                <div class="alert alert-{{$message_type?$message_type:session('type')}}">
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     {{ session('message') }}
                 </div>

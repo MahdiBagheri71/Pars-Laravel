@@ -5386,7 +5386,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "base64:NTEUJmCVPXlG83rzEcztyccHQ5BPuesL74dHRvBt774=",
+  key: "NTEUJmCVPXlG83",
   cluster: "mt1",
   wsHost: window.location.hostname,
   wsPort: 8081,
@@ -39893,12 +39893,12 @@ if (true) {
             config.warnHandler.call(null, msg, vm, trace);
         }
         else if (hasConsole_1 && !config.silent) {
-            //console.error("[Vue warn]: ".concat(msg).concat(trace));
+            // console.error("[Vue warn]: ".concat(msg).concat(trace));
         }
     };
     tip = function (msg, vm) {
         if (hasConsole_1 && !config.silent) {
-            //console.warn("[Vue tip]: ".concat(msg) + (vm ? generateComponentTrace(vm) : ''));
+            // console.warn("[Vue tip]: ".concat(msg) + (vm ? generateComponentTrace(vm) : ''));
         }
     };
     formatComponentName = function (vm, includeFile) {

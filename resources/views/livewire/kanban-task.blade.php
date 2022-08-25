@@ -52,7 +52,7 @@
                                                 {{$task->name}}
                                             </div>
                                             <div class="card-body p-2">
-                                                {!! substr($task->note,0,30).(strlen($task->note)>30?' ...':'') !!}
+                                                {!! mb_substr($task->note,0,30).(strlen($task->note)>30?' ...':'') !!}
                                             </div>
                                             <div class="p-1 lead font-weight-light text-bg-{{$key}}" style="font-size: 12px;direction: ltr;display: none;">
                                                 {!! \Morilog\Jalali\CalendarUtils::strftime('Y-m-d H:i:s', strtotime($task->date_start.' '.$task->time_start))  !!}

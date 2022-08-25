@@ -2,7 +2,7 @@
 
     @case('text')
         <span style="white-space: pre-wrap; white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;">
-            {!! substr($task[$column['columns']['field']],0,25).(strlen($task[$column['columns']['field']])>25?' ...':'') !!}
+            {!! mb_substr($task[$column['columns']['field']],0,25).(mb_strlen($task[$column['columns']['field']])>25?' ...':'') !!}
         </span>
     @break
 
