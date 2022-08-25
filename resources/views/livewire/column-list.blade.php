@@ -48,12 +48,12 @@
 
         </div>
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary columnModalClose">{{__('Cancel')}}</button>
-        <button id="columnModalSave" type="button" class="btn btn-success">{{__('Save')}}</button>
-    </div>
+{{--    <div class="modal-footer">--}}
+{{--        <button type="button" class="btn btn-secondary columnModalClose">{{__('Cancel')}}</button>--}}
+{{--        <button id="columnModalSave" type="button" class="btn btn-success">{{__('Save')}}</button>--}}
+{{--    </div>--}}
     <script>
-        $(document).on("click","#columnModalSave",function() {
+        function sendSorting(){
             $('.alert-message-show').hide();
             var list_column = {};
             $.each($('#column_list_select>.list-group-item') ,function (key,el){
@@ -61,6 +61,10 @@
             });
             // console.log(list_column)
             @this.updateColumnSorting(list_column);
+        }
+
+        $(document).on("click","#columnModalSave",function() {
+            sendSorting();
         });
         $(document).on("click","#column_list_select",function() {
             $('.alert-message-show').hide();

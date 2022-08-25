@@ -127,7 +127,13 @@ window.livewire.on('modal_column', () => {
     });
     Sortable.create(column_list_select, {
         handle: '.handle', // handle's class
-        animation: 150
+        animation: 150,
+        // Changed sorting within list
+        onUpdate: function (evt) {
+            // same properties as onEnd
+            console.log("Updateing ....")
+            sendSorting();
+        },
     });
     // $('.deleteColumns').click(function (){
     //     $('#columnModal').modal('hide');
