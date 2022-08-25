@@ -278,7 +278,7 @@ class EditTask extends Component
 
 
         preg_match_all('#\s@(\w+)#', $comment_data['note'], $mentions);
-        
+
         foreach (array_unique($mentions[1]) as $user_name){
 
             $user = User::where('username',$user_name);
