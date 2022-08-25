@@ -45,7 +45,6 @@ WebSocketsRouter::webSocket('/task-websocket', App\TaskWebSocketHandler::class);
 WebSocketsRouter::webSocket('/dashboard-websocket', App\DashboardWebSocketHandler::class);
 
 
-
 // Route::get('/fullcalendar', function () {//by Mahdi
 //     return view('fullcalendar');
 // });
