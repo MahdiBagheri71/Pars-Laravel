@@ -51,7 +51,7 @@ class KanbanTask extends Component
                 Tasks::where('id',$id)->update(['sorting'=> $tasks[$key]['sorting']]);
             }
         }
-        event(new TestMeEvent(json_encode($tasks)));
+//        event(new TestMeEvent(json_encode($tasks)));
     }
 
     /**

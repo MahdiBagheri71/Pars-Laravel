@@ -2,15 +2,19 @@
 
 namespace App\Notifications;
 
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Auth;
 
 class Tasks extends Notification
 {
     use Queueable;
+
+    public $user;
 
     /**
      * Create a new notification instance.
@@ -19,6 +23,7 @@ class Tasks extends Notification
      */
     public function __construct()
     {
+        $this->user = Auth::user();
         //
     }
 
@@ -60,6 +65,11 @@ class Tasks extends Notification
         ];
     }
 
+    public function broadcastOn()
+    {
+        return new PrivateChannel('tasks.notification.'.$this->user->id);
+    }
+
     /**
      * Get the broadcastable representation of the notification.
      *
@@ -68,9 +78,9 @@ class Tasks extends Notification
      */
     public function toBroadcast($notifiable)
     {
-        return new BroadcastMessage([
+        return (new BroadcastMessage([
             'id' => $this->id,
             'notifiable' => $notifiable,
-        ]);
+        ]))->onConnection('sync')->onQueue('broadcasts');
     }
 }

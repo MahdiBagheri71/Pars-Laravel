@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\NotificationEvents;
+use App\Events\LoadEvent;
 use App\Models\Tasks;
 use App\Models\TaskStatus;
 use App\Models\User;
@@ -72,8 +73,8 @@ class TaskController extends Controller
         $user->notify(new \App\Notifications\Tasks());
         $task->notify(new \App\Notifications\Tasks());
         $task->notifications()->get()->markAsRead();
-        event(new NotificationEvents($user->id));
-        dd($task->notifications()->get()->toArray());
+//        broadcast(new LoadEvent($user->id));
+        dd($task->notifications()->limit(2)->get()->toArray());
         //
         return $task;
     }

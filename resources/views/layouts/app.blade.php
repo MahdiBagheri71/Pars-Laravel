@@ -39,7 +39,7 @@
     @yield('js_header')
 </head>
 <body>
-    <div id="app">
+    <div>
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}" title="{{ config('app.name', 'Laravel') }}">
@@ -167,6 +167,7 @@
             @yield('content')
         </main>
     </div>
+
     @yield('js_end')
 
     @if(Auth::check())
@@ -174,6 +175,9 @@
         <script>
             var SITEURL = "{{ url('/') }}";
             var user_id = {{Auth::id()}};
+            window.App = {!! json_encode([
+        'user' => auth()->check() ? auth()->user()->id : null,
+    ]) !!};
         </script>
         <script src="{{ asset('js/WebSocket.js') }}" defer></script>
     @endif

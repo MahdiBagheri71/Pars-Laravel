@@ -21,7 +21,9 @@ Echo.channel('Notification.'+user_id)
                 '</a></li>';
         });
         $('#task_list_show_socket').html(notification_html);
-    });
+    }).error(e => {
+    console.error(e)
+});
 function viewNotification(not_id){
     websocket.send('notification_'+user_id+'_'+not_id);
 
@@ -71,3 +73,18 @@ function isJson(str) {
     }
     return true;
 }
+// Echo.private(`load.${user_id}`)
+//     .listen('LoadEvent', (e) => {
+//         console.log(e)
+//     }).error(e => {
+//         console.error(e)
+// });
+
+// window.Echo.private(`tasks.notification.${user_id}`)
+//     .notification((n)=>{
+//         console.info("notification send : ")
+//         console.log(n)
+//     })
+//     .error(e => {
+//     console.error(e)
+// });
