@@ -73,7 +73,7 @@ class TaskController extends Controller
         $user->notify(new \App\Notifications\Tasks());
         $task->notify(new \App\Notifications\Tasks());
         $task->notifications()->get()->markAsRead();
-//        broadcast(new LoadEvent($user->id));
+        broadcast(new NotificationEvents($user->id));
         dd($task->notifications()->limit(2)->get()->toArray());
         //
         return $task;

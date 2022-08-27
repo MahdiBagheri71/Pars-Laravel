@@ -65,9 +65,22 @@ class Tasks extends Notification
         ];
     }
 
+    /**
+     * name channel
+     * @return PrivateChannel
+     */
     public function broadcastOn()
     {
         return new PrivateChannel('tasks.notification.'.$this->user->id);
+    }
+
+    /**
+     * type notification broadcast
+     * @return string
+     */
+    public function broadcastType()
+    {
+        return 'broadcast.message';
     }
 
     /**
@@ -81,6 +94,7 @@ class Tasks extends Notification
         return (new BroadcastMessage([
             'id' => $this->id,
             'notifiable' => $notifiable,
-        ]))->onConnection('sync')->onQueue('broadcasts');
+        ]))->onConnection('sync')//connection type
+            ->onQueue('broadcasts');
     }
 }

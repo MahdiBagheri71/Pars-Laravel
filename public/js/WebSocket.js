@@ -2,7 +2,7 @@ var wsUri =  "ws:/"+window.location.hostname+":8081/task-websocket";
 $('#task_list_show_socket').removeClass('dropdown-menu');
 $('#task_list_show_socket_a').removeClass('dropdown-toggle');
 websocket = new WebSocket(wsUri);
-Echo.channel('Notification.'+user_id)
+Echo.private(`Notification.${user_id}`)
     .listen('NotificationEvents', (e) => {
         var data = e.notifications;
         $('#task_list_show_socket_a').removeClass('dropdown-toggle');
@@ -80,11 +80,28 @@ function isJson(str) {
 //         console.error(e)
 // });
 
-// window.Echo.private(`tasks.notification.${user_id}`)
-//     .notification((n)=>{
-//         console.info("notification send : ")
-//         console.log(n)
-//     })
-//     .error(e => {
-//     console.error(e)
-// });
+window.Echo.private(`tasks.notification.${user_id}`)
+    .notification((n)=>{
+        console.info("notification send : ")
+        console.log(n)
+    })
+    .error(e => {
+    console.error(e)
+});
+
+
+var message_channel = Echo.private(`tasks.notification.${user_id}`)
+    .listenForWhisper('typing', (e) => {
+        console.log(`${e.name} is typing...`);
+
+    }).error(e => {
+    console.error(e)
+});
+
+
+setTimeout(function() {
+    message_channel.whisper('typing', {
+            name: 'Mahdi :)'
+        });
+    console.info('whisper')
+}, 3000);

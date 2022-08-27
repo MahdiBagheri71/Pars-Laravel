@@ -30,10 +30,9 @@ window.Echo = new Echo({
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
     wsHost: window.location.hostname,
     wsPort: 8081,
-    authEndpoint: "/Pars-Laravel/broadcasting/auth",
+    authEndpoint: process.env.MIX_PUSHER_APP_AUTH,
     forceTLS: false,
     disableStats: true,
-    host: window.location.hostname + ':8081',
     encrypted: true,
     csrfToken: 'WORKING TOKEN',
 });
