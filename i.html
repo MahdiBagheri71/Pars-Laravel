@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HI </title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js" integrity="sha512-u9akINsQsAkG9xjc1cnGF4zw5TFDwkxuc9vUp5dltDWYCSmyd0meygbvgXrlc/z7/o4a19Fb5V0OUE58J7dcyw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</head>
+<body>
+     HI Mahdi :)
+
+     <pre>
+ <IfModule mod_headers.c>
+    Header add Access-Control-Allow-Origin "*"
+    Header add Access-Control-Allow-Headers "origin, x-requested-with, content-type, Authorization"
+    Header add Access-Control-Allow-Methods "PUT, GET, POST, DELETE, OPTIONS"
+</IfModule>
+     </pre>
+
+<script>
+    var urlencoded = new URLSearchParams();
+    urlencoded.append("_operation", "Ping");
+    urlencoded.append("username", "MB730@rocketmail.com");
+    urlencoded.append("password", "123456789");
+    var config = {
+        method: 'post',
+        url: 'http://www.mahdibagherivar.ir/vt7/modules/CustomerPortal/api.php',
+        headers: {
+            'Authorization': 'Basic TUI3MzBAcm9ja2V0bWFpbC5jb206MjM2MTM3MQ==',
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data : urlencoded
+    };
+
+    axios(config)
+        .then(function (response) {
+            console.log(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+</script>
+</body>
+</html>
