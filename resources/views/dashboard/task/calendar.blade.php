@@ -45,7 +45,7 @@
 
 @section('content')
 
-    <div class="container">
+    <div class="container-fluid">
         {{-- live wire show taks calendar--}}
         @livewire('calendar-task')
     </div>

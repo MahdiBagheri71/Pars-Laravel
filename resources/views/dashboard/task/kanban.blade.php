@@ -43,7 +43,7 @@
     </style>
 @endsection
 @section('content')
-    <div class="col-md-11" style="margin: 0 auto;">
+    <div class="container-fluid" style="margin: 0 auto;">
         <div class="row justify-content-center">
             <div class="col-md-12">
                 @livewire('kanban-task',['tasks_status'=>$tasks_status])

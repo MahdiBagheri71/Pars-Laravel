@@ -35,7 +35,7 @@
                 <span class="visually-hidden">Loading...</span>
             </div>
             @foreach($tasks_status as $key=>$status)
-                <div class="col-sm-2 col-md-2 col-xl-2 column_status">
+                <div class="col column_status">
                     <div class="card bg-light">
                         <div class="card-body">
                             <h6 data-status="{{$key}}" style="background-color: #cccdce;border-radius: 6px;" class="card-title text-uppercase text-truncate py-2 text-center text-{{$key}} tasks_status">{{__($status['label'])}}</h6>

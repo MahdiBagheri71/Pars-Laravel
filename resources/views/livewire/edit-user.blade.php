@@ -52,7 +52,7 @@
     @if(!$profile)
         <div class="form-group">
             <label>{{__('Role')}}</label>
-            <select multiple wire:model="user_role" class="form-select" aria-label="{{__('Role')}}" style="text-align: center;">
+            <select multiple wire:model="user_role" class="form-select" size="2" aria-label="{{__('Role')}}" style="text-align: center;">
                 @foreach ($roles as $role)
                     <option value="{{$role}}" @selected({{in_array($role,$user_role)}})>{{$role}}</option>
                 @endforeach

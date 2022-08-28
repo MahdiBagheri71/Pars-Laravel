@@ -48,7 +48,6 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
@@ -86,76 +85,17 @@
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+
+                                <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuList" aria-controls="offcanvasExample">
+                                    <span class="navbar-toggler-icon"></span>
                                     {{ Auth::user()->name }}
+                                </button>
+{{--                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>--}}
+{{--                                    {{ Auth::user()->name }}--}}
 {{--                                    ({{Auth::user()->hasRole('admin') ? __('Admin') :  __('Employee') }})--}}
-                                </a>
+{{--                                </a>--}}
 
-                                <div class="text-center dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" role="menu">
 
-                                    <a class="dropdown-item" href="{{ route('dashboard') }}">
-                                        {{ __('Dashboard') }}
-                                    </a>
-
-{{--                                    <a class="dropdown-item" href="{{ route('tasksCalendar') }}">--}}
-{{--                                        {{ __('Calendar Tasks') }}--}}
-{{--                                    </a>--}}
-
-                                    @if(Auth::user()->canany(['view tasks', 'view all tasks']))
-                                        <a class="dropdown-item" href="{{ route('tasksList') }}">
-                                            {{ __('List Tasks') }}
-                                        </a>
-                                    @endif
-
-                                    @if(Auth::user()->canany(['view tasks', 'view all tasks']))
-                                        <a class="dropdown-item" href="{{ route('tasksFullCalendar') }}">
-                                            {{ __('Calendar Tasks') }}
-                                        </a>
-                                    @endif
-
-                                    @if(Auth::user()->canany(['view tasks', 'view all tasks']))
-                                        <a class="dropdown-item" href="{{ route('tasksKanban') }}">
-                                            {{ __('Kanban Tasks') }}
-                                        </a>
-                                    @endif
-
-                                    @if(Auth::user()->hasRole('admin'))
-                                        <a class="dropdown-item" href="{{ route('tasksStatus') }}">
-                                            {{ __('List Status Task') }}
-                                        </a>
-                                    @endif
-{{--                                    @if(Auth::user()->hasRole('admin'))--}}
-{{--                                        <a class="dropdown-item" href="{{ route('tasksListDelete') }}">--}}
-{{--                                            {{ __('List Tasks Delete') }}--}}
-{{--                                        </a>--}}
-{{--                                    @endif--}}
-
-                                    @if(Auth::user()->hasRole('admin'))
-                                        <a class="dropdown-item" href="{{ route('usersList') }}">
-                                            {{ __('List Users') }}
-                                        </a>
-                                    @endif
-
-{{--                                    @if(Auth::user()->hasRole('admin'))--}}
-{{--                                        <a class="dropdown-item" href="{{ route('usersListDelete') }}">--}}
-{{--                                            {{ __('List Users Delete') }}--}}
-{{--                                        </a>--}}
-{{--                                    @endif--}}
-
-                                    <a class="dropdown-item" href="{{ route('profile') }}">
-                                        {{ __('Profile') }}
-                                    </a>
-
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
                             </li>
                         @endguest
                     </ul>
@@ -163,6 +103,93 @@
             </div>
         </nav>
 
+        @if (Auth::check())
+            <nav class="navbar">
+                <div class="offcanvas offcanvas-start" tabindex="-1" id="menuList" aria-labelledby="offcanvasExampleLabel">
+                    <div class="offcanvas-header justify-content-center">
+                        <h5 class="offcanvas-title" id="offcanvasExampleLabel">
+                            {{ Auth::user()->name.' '.Auth::user()->last_name }}
+                        </h5>
+                    </div>
+                    <div class="offcanvas-body text-center">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 p-0">
+                            <li class="nav-item border  m-1">
+                                <a class="nav-link" href="{{ route('dashboard') }}">
+                                    {{ __('Dashboard') }}
+                                </a>
+                            </li>
+
+                            @if(Auth::user()->canany(['view tasks', 'view all tasks']))
+                                <li class="nav-item dropdown border  m-1">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        {{__('Tasks')}}
+                                    </a>
+                                    <ul class="dropdown-menu text-center">
+                                        @if(Auth::user()->canany(['view tasks', 'view all tasks']))
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('tasksList') }}">
+                                                    {{ __('List Tasks') }}
+                                                </a>
+                                            </li>
+                                        @endif
+
+                                        @if(Auth::user()->canany(['view tasks', 'view all tasks']))
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('tasksFullCalendar') }}">
+                                                    {{ __('Calendar Tasks') }}
+                                                </a>
+                                            </li>
+                                        @endif
+
+                                        @if(Auth::user()->canany(['view tasks', 'view all tasks']))
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('tasksKanban') }}">
+                                                    {{ __('Kanban Tasks') }}
+                                                </a>
+                                            </li>
+                                        @endif
+
+                                        @if(Auth::user()->hasRole('admin'))
+                                            <li>
+                                                <a class="dropdown-item" href="{{ route('tasksStatus') }}">
+                                                    {{ __('List Status Task') }}
+                                                </a>
+                                            </li>
+                                        @endif
+
+                                    </ul>
+                                </li>
+                            @endif
+
+                            @if(Auth::user()->hasRole('admin'))
+                                <li class="nav-item border  m-1">
+                                    <a class="nav-link" href="{{ route('usersList') }}">
+                                        {{ __('List Users') }}
+                                    </a>
+                                </li>
+                            @endif
+
+                            <li class="nav-item border  m-1">
+                                <a class="nav-link"  href="{{ route('profile') }}">
+                                    {{ __('Profile') }}
+                                </a>
+                            </li>
+
+
+                            <li class="nav-item border  m-1">
+                                <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+                            </li>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        @endif
         <main class="py-4">
             @yield('content')
         </main>
