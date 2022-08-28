@@ -9,19 +9,21 @@
 
 @section('content')
 <div class="container">
+
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
                 <div class="card-body">
+
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
                         </div>
                     @endif
 
-                    <div class="col-6 float-start">
+                    <div class="col-12 col-md-6 float-start">
                         <div class="card m-1">
                             <div class="card-header text-center">{{__('Your number of tasks')}}
                                 (
@@ -34,7 +36,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 float-end">
+                    <div class="col-12 col-md-6 float-end">
                         <div class="card m-1">
                             <div class="card-header text-center">{{__('Your number of tasks')}}(<span class="total_task">{{$total}}</span>)</div>
 
@@ -44,7 +46,7 @@
                         </div>
                     </div>
 
-                    <div class="col-6 float-end">
+                    <div class="col-12 col-md-6 float-end">
                         <div class="card m-1">
                             <div class="card-header text-center">{{__('Your number of tasks')}}(<span class="total_task">{{$total}}</span>)</div>
 
@@ -54,7 +56,7 @@
                         </div>
                     </div>
 
-                    <div class="col-6 float-end">
+                    <div class="col-12 col-md-6 float-end">
                         <div class="card m-1">
                             <div class="card-header text-center">{{__('Your number of tasks')}}(<span class="total_task">{{$total}}</span>)</div>
 

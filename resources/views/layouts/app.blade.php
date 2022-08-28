@@ -45,7 +45,7 @@
                 <a class="navbar-brand" href="{{ url('/') }}" title="{{ config('app.name', 'Laravel') }}">
                     <img src="{{asset('img/logo.png')}}" height="40" style="40px">
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuList" aria-controls="offcanvasExample">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -106,7 +106,7 @@
         @if (Auth::check())
             <nav class="navbar">
                 <div class="offcanvas offcanvas-start" tabindex="-1" id="menuList" aria-labelledby="offcanvasExampleLabel">
-                    <div class="offcanvas-header justify-content-center">
+                    <div type="button" class="offcanvas-header justify-content-center" data-bs-dismiss="offcanvas" aria-label="Close">
                         <h5 class="offcanvas-title" id="offcanvasExampleLabel">
                             {{ Auth::user()->name.' '.Auth::user()->last_name }}
                         </h5>
@@ -114,20 +114,20 @@
                     <div class="offcanvas-body text-center">
                         <ul class="navbar-nav justify-content-end flex-grow-1 p-0">
                             <li class="nav-item border  m-1">
-                                <a class="nav-link" href="{{ route('dashboard') }}">
+                                <a class="nav-link {{Route::currentRouteName()=='dashboard'?'active bg-primary text-light':''}}" href="{{ route('dashboard') }}">
                                     {{ __('Dashboard') }}
                                 </a>
                             </li>
 
                             @if(Auth::user()->canany(['view tasks', 'view all tasks']))
                                 <li class="nav-item dropdown border  m-1">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <a class="nav-link dropdown-toggle {{in_array(Route::currentRouteName(),['tasksList','tasksFullCalendar','tasksKanban','tasksStatus'])?'active bg-primary text-light show':''}}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         {{__('Tasks')}}
                                     </a>
-                                    <ul class="dropdown-menu text-center">
+                                    <ul class="dropdown-menu text-center p-3 {{in_array(Route::currentRouteName(),['tasksList','tasksFullCalendar','tasksKanban','tasksStatus'])?'active show':''}}">
                                         @if(Auth::user()->canany(['view tasks', 'view all tasks']))
                                             <li>
-                                                <a class="dropdown-item" href="{{ route('tasksList') }}">
+                                                <a class="dropdown-item border m-1 {{Route::currentRouteName()=='tasksList'?'active':''}}" href="{{ route('tasksList') }}">
                                                     {{ __('List Tasks') }}
                                                 </a>
                                             </li>
@@ -135,7 +135,7 @@
 
                                         @if(Auth::user()->canany(['view tasks', 'view all tasks']))
                                             <li>
-                                                <a class="dropdown-item" href="{{ route('tasksFullCalendar') }}">
+                                                <a class="dropdown-item border m-1 {{Route::currentRouteName()=='tasksFullCalendar'?'active':''}}" href="{{ route('tasksFullCalendar') }}">
                                                     {{ __('Calendar Tasks') }}
                                                 </a>
                                             </li>
@@ -143,7 +143,7 @@
 
                                         @if(Auth::user()->canany(['view tasks', 'view all tasks']))
                                             <li>
-                                                <a class="dropdown-item" href="{{ route('tasksKanban') }}">
+                                                <a class="dropdown-item border m-1 {{Route::currentRouteName()=='tasksKanban'?'active':''}}" href="{{ route('tasksKanban') }}">
                                                     {{ __('Kanban Tasks') }}
                                                 </a>
                                             </li>
@@ -151,7 +151,7 @@
 
                                         @if(Auth::user()->hasRole('admin'))
                                             <li>
-                                                <a class="dropdown-item" href="{{ route('tasksStatus') }}">
+                                                <a class="dropdown-item border m-1 {{Route::currentRouteName()=='tasksStatus'?'active':''}}" href="{{ route('tasksStatus') }}">
                                                     {{ __('List Status Task') }}
                                                 </a>
                                             </li>
@@ -163,14 +163,14 @@
 
                             @if(Auth::user()->hasRole('admin'))
                                 <li class="nav-item border  m-1">
-                                    <a class="nav-link" href="{{ route('usersList') }}">
+                                    <a class="nav-link {{Route::currentRouteName()=='usersList'?'active bg-primary text-light':''}}" href="{{ route('usersList') }}">
                                         {{ __('List Users') }}
                                     </a>
                                 </li>
                             @endif
 
                             <li class="nav-item border  m-1">
-                                <a class="nav-link"  href="{{ route('profile') }}">
+                                <a class="nav-link {{Route::currentRouteName()=='profile'?'active bg-primary text-light':''}}"  href="{{ route('profile') }}">
                                     {{ __('Profile') }}
                                 </a>
                             </li>
