@@ -9,6 +9,7 @@ use App\Models\TaskStatus;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class TaskController extends Controller
 {
@@ -70,10 +71,11 @@ class TaskController extends Controller
     public function show(Tasks $task)
     {
         $user = Auth::user();
-        $user->notify(new \App\Notifications\Tasks());
-        $task->notify(new \App\Notifications\Tasks());
-        $task->notifications()->get()->markAsRead();
-        broadcast(new NotificationEvents($user->id));
+        Mail::to($user)->send(new \App\Mail\Tasks());
+//        $user->notify(new \App\Notifications\Tasks());
+//        $task->notify(new \App\Notifications\Tasks());
+//        $task->notifications()->get()->markAsRead();
+//        broadcast(new NotificationEvents($user->id));
         dd($task->notifications()->limit(2)->get()->toArray());
         //
         return $task;
